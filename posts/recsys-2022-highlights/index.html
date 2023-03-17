@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-10-10">
+<meta name="description" content="Highlights from the conference">
+
+<title>Sam Watts - Blog - RecSys 2022 - My Top 5 Papers</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Sam Watts - Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sam-watts"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">RecSys 2022 - My Top 5 Papers</h1>
+                  <div>
+        <div class="description">
+          Highlights from the conference
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">ml</div>
+                <div class="quarto-category">recsys</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 10, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#augmenting-netflix-search-with-in-session-adapted-recommendations" id="toc-augmenting-netflix-search-with-in-session-adapted-recommendations" class="nav-link active" data-scroll-target="#augmenting-netflix-search-with-in-session-adapted-recommendations">Augmenting Netflix Search with In-Session Adapted Recommendations</a></li>
+  <li><a href="#recommendation-as-language-processing-rlp-a-unified-pretrain-personalized-prompt-predict-paradigm-p5" id="toc-recommendation-as-language-processing-rlp-a-unified-pretrain-personalized-prompt-predict-paradigm-p5" class="nav-link" data-scroll-target="#recommendation-as-language-processing-rlp-a-unified-pretrain-personalized-prompt-predict-paradigm-p5">Recommendation as Language Processing (RLP): A Unified Pretrain, Personalized Prompt &amp; Predict Paradigm (P5)</a></li>
+  <li><a href="#towards-psychologically-grounded-dynamic-preference-models" id="toc-towards-psychologically-grounded-dynamic-preference-models" class="nav-link" data-scroll-target="#towards-psychologically-grounded-dynamic-preference-models">Towards Psychologically-Grounded Dynamic Preference Models</a></li>
+  <li><a href="#reusable-self-attention-recommender-systems-in-fashion-industry-applications" id="toc-reusable-self-attention-recommender-systems-in-fashion-industry-applications" class="nav-link" data-scroll-target="#reusable-self-attention-recommender-systems-in-fashion-industry-applications">Reusable Self-Attention Recommender Systems in Fashion Industry Applications</a></li>
+  <li><a href="#streaming-session-based-recommendation-when-graph-neural-networks-meet-the-neighborhood" id="toc-streaming-session-based-recommendation-when-graph-neural-networks-meet-the-neighborhood" class="nav-link" data-scroll-target="#streaming-session-based-recommendation-when-graph-neural-networks-meet-the-neighborhood">Streaming Session-Based Recommendation: When Graph Neural Networks meet the Neighborhood</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>After reading papers from RecSys for several years, I was really happy to be able to (virtually) attend for the first time this year. If you haven’t heard of it, RecSys is the most important conference for new results in the field of recommender systems research.</p>
+<p>This was also my first academic conference of any kind! I found the mix of academic and industry talks really balanced each other out well - it was great to see exciting theory-driven ideas alongside real world implementation stories, with all the engineering problems that come with them.</p>
+<p>Below are the papers I found most interesting from the main conference, in no particular order. Links to the papers PDFs are included in the sub-titles.</p>
+<section id="augmenting-netflix-search-with-in-session-adapted-recommendations" class="level3">
+<h3 class="anchored" data-anchor-id="augmenting-netflix-search-with-in-session-adapted-recommendations"><a href="https://dl.acm.org/doi/pdf/10.1145/3523227.3547407">Augmenting Netflix Search with In-Session Adapted Recommendations</a></h3>
+<p><img src="netflix_1.png" class="img-fluid"></p>
+<p>Based on user research, Netflix found that users typically fall into 3 categories when searching for content: * Fetch  -  the user knows exactly what they want, and generally enter a query for an exact film or TV show * Find  -  the user broadly knows the kind of thing they want to see, but it’s not a fully formed idea - eg. comedy movies * Explore  -  the user has no fixed idea of what they are looking for, and are open to suggestions</p>
+<p>Based on this, Netflix reasoned that there was an opportunity to present the “Explore” users with recommendations on the pre-search page. The key point is that these recommendations would need to take into account user interactions from the current session, to align with whatever they might be looking for at the current moment. These kind of recommendations are commonly referred to as “Anticipatory Search” or “Pre-search Recommendations”.</p>
+<p>The authors designed a model to provide recommendations for this use case. This model uses features such as historical user data, context about the user and the session, and well as raw sequences of in-session browsing interactions. Video metadata and embeddings are also used to provide information about the items that are interacted with.</p>
+<p><img src="netflix_2.png" class="img-fluid"></p>
+<p>The authors experimented with different types of deep architectures, including both dense and sparse features. This was coupled with the raw interaction sequence, which they modelled with different types of neural network modules that can accommodate sequence data - attention blocks, LSTM and GRU.</p>
+<p><img src="netflix_3.png" class="img-fluid"></p>
+<p>They pick out a specific example of how the model reacts to in-session browsing activity. The ranking of the recommendations is influenced by the titles browsed by the user, which they contend should result in a good experience for the user when they navigate to the search page.</p>
+<p><img src="netflix_4.png" class="img-fluid"></p>
+<p>No specifics are mentioned regarding which objectives are used to train the model, or how the model performs when tested online. In offline performance they see a 6% relative increase in ranking metrics against the current production model. I would be interested in hearing more about the cost-benefit tradeoff involved in deploying this model online, due to the large engineering challenge required to make real-time features available to the model at inference time.</p>
+</section>
+<section id="recommendation-as-language-processing-rlp-a-unified-pretrain-personalized-prompt-predict-paradigm-p5" class="level3">
+<h3 class="anchored" data-anchor-id="recommendation-as-language-processing-rlp-a-unified-pretrain-personalized-prompt-predict-paradigm-p5"><a href="https://dl.acm.org/doi/pdf/10.1145/3523227.3546767">Recommendation as Language Processing (RLP): A Unified Pretrain, Personalized Prompt &amp; Predict Paradigm (P5)</a></h3>
+<p>This paper borrows heavily from recent advances in NLP models to create a multi-purpose model for different recommendation tasks.</p>
+<p><img src="t5.png" class="img-fluid"></p>
+<p>P5 is directly inspired by the influential T5 paper. T5 applies a unified approach to transfer learning, to effectively learn multiple tasks as part of a text-to-text framework. P5 applies these concepts to recommendation tasks, as shown below.</p>
+<p><img src="p5.png" class="img-fluid"></p>
+<p>The P5 framework allows for the use of prompt templates, which are filled with user interaction data and item metadata, to produce a fully text-based input based on the task described in the prompt. This means that all tasks can be learned simultaneously during pre-training. The authors present very promising results for this architecture compared to other state of the art models. If they can be replicated, this could lead to the use of more multi-purpose, pre-trained models in industry. I for one, look forward to becoming a rockstar prompt engineer! 🚀</p>
+</section>
+<section id="towards-psychologically-grounded-dynamic-preference-models" class="level3">
+<h3 class="anchored" data-anchor-id="towards-psychologically-grounded-dynamic-preference-models"><a href="https://dl.acm.org/doi/pdf/10.1145/3523227.3546778">Towards Psychologically-Grounded Dynamic Preference Models</a></h3>
+<p>One of the core assumptions in many recommender models is that user preferences are static. But what if a user’s preferences change due to the items we are showing the user with our recommender system? How could this feedback loop effect what a user wants over time? This paper focuses on a framework for formalising possible user preference changes due to human psychological effects.</p>
+<p>The best example included is the “Mere Exposure Effect” - which states that people are more likely to develop a preference for something that they are familiar with. This was first described by Robert Zajonc in the 60s - his experiment included nonsense words on the cover of a student newspaper. When tested, on average the students who read this paper rated the words they had been exposed to as more positive-sounding compared to other nonsense words.</p>
+<p>How better to explain this all, than a graph with a grumpy cat? 😻</p>
+<p><img src="psyc.png" class="img-fluid"></p>
+<p>The authors formalise the mere exposure effect applied to recommendations mathematically, as show on the left. A user’s initial preferences (πₜ) and items (ν) are both represented as vectors. In response to being recommended an item ν at time step t+1, the users preference moves from their starting preference vector, along the line the intersects the user’s baseline preference and the item vectors. This results in the updated preference vector, πₜ₊₁. The factor γ controls how far along this line the preferences move (where γ ϵ [0, 1]). The graph below the equation depicts this in a 2-dimensional preference space.</p>
+<p>The authors propose similar formulations for Operant Conditioning and Hedonic Adaptation, before including a section on simulations based on these ideas. This includes discussion on how recommenders may achieve different engagement scores in the case where user preferences are dynamic.</p>
+<p>The ideas in this paper feel some way from making it into most industrial settings anytime soon - but a more holistic focus on the role platforms might be playing in moulding user preferences is definitely welcome.</p>
+</section>
+<section id="reusable-self-attention-recommender-systems-in-fashion-industry-applications" class="level3">
+<h3 class="anchored" data-anchor-id="reusable-self-attention-recommender-systems-in-fashion-industry-applications"><a href="https://dl.acm.org/doi/pdf/10.1145/3523227.3547377">Reusable Self-Attention Recommender Systems in Fashion Industry Applications</a></h3>
+<p>Continuing the trend of unifying models - here engineers at the fashion website Zalando present their work on creating a single recommender model architecture that can be reused for several tasks, using the now ever-present Transformer architecture.</p>
+<p><img src="zalando.png" class="img-fluid"></p>
+<p>The authors unified the training datasets previously fed into separate models, and used them to train a recommender architecture that can be re-used for 3 different tasks: outfit ranking, outfit recommendation, real-time and personalised outfit generation. For the different subtasks, small changes are made to the Transformer architecture, and boolean masking is used to hide labels not relevant to the use case the model is being trained for.</p>
+<p>The inclusion of contextual data also allows the model to work with semi-cold start users, who may have fewer significant interactions with items, as well as fully-cold start users with no item interactions, who can be predicted based on contextual data alone.</p>
+<p>The model is able to learn from different interaction types due to a one-hot encoding of the interaction type. In addition, a simple integer of days-since-interaction allows the model to balance long and short term interests.&nbsp;</p>
+<p>In A/B testing the authors report increases in user engagement compared to the previous deployed algorithms of between 5–130%.</p>
+</section>
+<section id="streaming-session-based-recommendation-when-graph-neural-networks-meet-the-neighborhood" class="level3">
+<h3 class="anchored" data-anchor-id="streaming-session-based-recommendation-when-graph-neural-networks-meet-the-neighborhood"><a href="https://dl.acm.org/doi/pdf/10.1145/3523227.3548485">Streaming Session-Based Recommendation: When Graph Neural Networks meet the Neighborhood</a></h3>
+<p>I found this paper intriguing for the insight it gives into some methodology issues present in the recommender system literature.&nbsp;</p>
+<p>A recent focus of the RecSys field has been session-based recommendations - providing recommendations to users using in-session signals. Several deep learning model architectures have been proposed to address this task.&nbsp;</p>
+<p>The authors of this papers compared one of these complex approaches against some more simple baselines: * VSKNN+ - a session-based nearest neighbour approach. Finds past sessions that are similar to the current session. Items that appear in these similar sessions are used as recommendation candidates. The authors add an extension to the base VSKNN algorithm, that considers each user’s past sessions * SR+ - “Sequential Rules”, a variation of association rule learning. A rule is created when an item p appears after item q in a session, where the weight of the rule is a function of the number of items between p and q in the interaction sequence. The authors again extend this method to consider each user’s past sessions * GAG - an approached based on a Graph Neural Network</p>
+<p><img src="GAG.png" class="img-fluid"></p>
+<p>The final findings are shown in the table above, are that a hybrid approach (which simply combines the recommended items produced by VSKNN+ and SR+) performs better than GAG across all metrics and datasets the authors tested. Neither of these baselines were used as comparisons in the <a href="https://arxiv.org/pdf/2007.02747.pdf">original paper that proposed GAG</a>.</p>
+<hr>
+<p>In all, it was a great conference with so many intelligent people to learn from - I would really recommend it! I hope you found this interesting 👋</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

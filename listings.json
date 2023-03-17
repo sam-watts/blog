@@ -2,12 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/2021-07-31-debugging-dockerized-ml-python.html",
-      "/posts/2022-10-10-recys-2022-top-5.html",
-      "/posts/2023-03-01-google-timeline-transport-emissions.html",
-      "/posts/2023-03-14-draft.html",
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
+      "/posts/google-timeline-emissions/index.html",
+      "/posts/recsys-2022-highlights/index.html",
+      "/posts/dockerized-debugging-ml/index.html"
     ]
   }
 ]

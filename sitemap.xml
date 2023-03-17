@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sam-watts.github.io/blog_new/about.html</loc>
-    <lastmod>2023-03-14T20:24:58.381Z</lastmod>
+    <loc>https://sam-watts.github.io/blog/2023-03-01-google-timeline-transport-emissions.html</loc>
+    <lastmod>2023-03-17T14:41:35.298Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/index.html</loc>
-    <lastmod>2023-03-14T20:25:03.351Z</lastmod>
+    <loc>https://sam-watts.github.io/blog/about.html</loc>
+    <lastmod>2023-03-17T14:41:37.028Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/2021-07-31-debugging-dockerized-ml-python.html</loc>
-    <lastmod>2023-03-14T20:25:06.506Z</lastmod>
+    <loc>https://sam-watts.github.io/blog/index.html</loc>
+    <lastmod>2023-03-17T14:41:40.405Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/2022-10-10-recys-2022-top-5.html</loc>
-    <lastmod>2023-03-14T20:25:08.992Z</lastmod>
+    <loc>https://sam-watts.github.io/blog/posts/dockerized-debugging-ml/index.html</loc>
+    <lastmod>2023-03-17T14:41:43.783Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/2023-03-01-google-timeline-transport-emissions.html</loc>
-    <lastmod>2023-03-14T20:25:11.152Z</lastmod>
+    <loc>https://sam-watts.github.io/blog/posts/google-timeline-emissions/index.html</loc>
+    <lastmod>2023-03-17T14:41:46.804Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/2023-03-14-draft.html</loc>
-    <lastmod>2023-03-14T20:25:12.238Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/post-with-code/index.html</loc>
-    <lastmod>2023-03-14T20:25:13.296Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/welcome/index.html</loc>
-    <lastmod>2023-03-14T20:25:14.658Z</lastmod>
+    <loc>https://sam-watts.github.io/blog/posts/recsys-2022-highlights/index.html</loc>
+    <lastmod>2023-03-17T14:41:51.151Z</lastmod>
   </url>
 </urlset>
