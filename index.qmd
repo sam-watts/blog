@@ -1,5 +1,5 @@
 ---
-title: "blog_new"
+title: "Posts"
 listing:
   contents: posts
   sort: "date desc"
@@ -7,8 +7,9 @@ listing:
   categories: true
   sort-ui: false
   filter-ui: false
-page-layout: full
+page-layout: article
 title-block-banner: true
+comments: false
 ---
 
 

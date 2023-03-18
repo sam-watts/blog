@@ -1,13 +1,13 @@
 ---
 toc: true
-author: Sam Watts
-layout: post
 description: Using VScode and debugpy to make debugging a breeze
 categories: [ml, python]
-title: 🚢 Debugging for Dockerized ML applications in Python
-image: images/2021-07-31-debugging-dockerized-ml-python/Moby-logo.png
-badges: true
-comments: true
+title: Debugging for Dockerized ML applications in Python
+date: "2021-07-31"
+image: "Moby-logo.png"
+comments:
+   utterances:
+      repo: sam-watts/blog
 ---
 
 Docker has become ubiquitous in ML applications in the last few years. It can enable easy collaboration between engineers with different hardware — as well as easing the transition from prototyping on personal laptops to compute clusters in production. On the flip side, it introduces an extra layer of complexity for engineers to work with when developing and maintaining productionised models.
@@ -103,7 +103,7 @@ You should be good to go! The steps to debug are:
 1. Rebuild and run the Docker container
 1. Connect the debugger
 
-![]({{ site.baseurl }}/images/2021-07-31-debugging-dockerized-ml-python/1_tkD-QqtcEtUs6IdRTiDh2A.gif "The full debugging process")
+![](1_tkD-QqtcEtUs6IdRTiDh2A.gif "The full debugging process")
 
 
 The full code used for this example can be found below. Happy debugging! 😃

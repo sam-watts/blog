@@ -1,14 +1,16 @@
 ---
-keywords: climate
 title: "Google Timeline: The Big Brother of Your Transport Emissions"
+date: "2023-03-18"
+categories: [climate]
 hide: true
+image: "Why-for_the_climate-426x426.jpg" 
 ---
 
 A few weeks ago I came across this image and found the message striking. I've
 followed a vegan diet for the past 5 years, and try my best to take the train when travelling across europe, so
 I have some awareness of these impacts. Even so, the magnitude was surprising.
 
-![Taken from Flight Free UK](../images/2023-03-01-google-timeline-transport-emissions/Why-for_the_climate-426x426.jpg)
+![Taken from Flight Free UK](Why-for_the_climate-426x426.jpg)
 
 I wanted to see how much of my own transport emissions were coming from flights,
 and how that stacks up against the average person. 
@@ -20,7 +22,7 @@ your data from [Google Takeout](https://takeout.google.com/settings/takeout).
 You can take a look at own emissions by visiting the app I created to
 visualize this data: [https://transport-co2-emissions.streamlit.app/](https://transport-co2-emissions.streamlit.app/)
 
-<iframe src="https://transport-co2-emissions.streamlit.app/?embedded=true">
+<iframe src="https://transport-co2-emissions.streamlit.app/?embedded=true" width="100%" height="200"></iframe>
 
 The results for me personally? It's not a pretty picture. In 2017, the worst
 year I have data for, I took 13 flights
