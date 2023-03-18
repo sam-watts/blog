@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sam-watts.github.io/blog_new/2023-03-01-google-timeline-transport-emissions.html</loc>
-    <lastmod>2023-03-18T11:14:08.152Z</lastmod>
+    <loc>https://github.com/sam-watts/blog/about.html</loc>
+    <lastmod>2023-03-18T11:21:34.952Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/about.html</loc>
-    <lastmod>2023-03-18T11:14:10.199Z</lastmod>
+    <loc>https://github.com/sam-watts/blog/posts/recsys-2022-highlights/index.html</loc>
+    <lastmod>2023-03-18T11:21:35.796Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/index.html</loc>
-    <lastmod>2023-03-18T11:14:23.856Z</lastmod>
+    <loc>https://github.com/sam-watts/blog/posts/dockerized-debugging-ml/index.html</loc>
+    <lastmod>2023-03-18T11:21:36.200Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/dockerized-debugging-ml/index.html</loc>
-    <lastmod>2023-03-18T11:14:29.604Z</lastmod>
+    <loc>https://github.com/sam-watts/blog/posts/google-timeline-emissions/index.html</loc>
+    <lastmod>2023-03-18T11:21:36.560Z</lastmod>
   </url>
   <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/google-timeline-emissions/index.html</loc>
-    <lastmod>2023-03-18T11:14:38.608Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog_new/posts/recsys-2022-highlights/index.html</loc>
-    <lastmod>2023-03-18T11:14:42.676Z</lastmod>
+    <loc>https://github.com/sam-watts/blog/index.html</loc>
+    <lastmod>2023-03-18T11:21:36.936Z</lastmod>
   </url>
 </urlset>
