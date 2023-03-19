@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2023-03-18">
+<meta name="description" content="Quantifying personal CO2 emissions with Google Timeline and other thoughts">
 
-<title>Sam Watts - Blog - Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets</title>
+<title>Sam Watts - Blog - Flight Free</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -63,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Sam Watts - Blog - Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets">
-<meta property="og:description" content="A few weeks ago I came across this image and found the relative impact of flying versus avoiding meat striking.">
+<meta property="og:title" content="Sam Watts - Blog - Flight Free">
+<meta property="og:description" content="Quantifying personal CO2 emissions with Google Timeline and other thoughts">
 <meta property="og:image" content="https://github.com/sam-watts/blog/posts/google-timeline-emissions/Why-for_the_climate-426x426.jpg">
 <meta property="og:site-name" content="Sam Watts - Blog">
 </head>
@@ -104,8 +105,13 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets</h1>
-                                <div class="quarto-categories">
+      <h1 class="title">Flight Free</h1>
+                  <div>
+        <div class="description">
+          Quantifying personal CO2 emissions with Google Timeline and other thoughts
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">climate</div>
               </div>
                   </div>
@@ -136,6 +142,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<hr>
+<p><strong><a href="https://transport-co2-emissions.streamlit.app/">&gt;&gt;&gt; Dashboard to analyse your own Google Timeline data &lt;&lt;&lt;</a></strong></p>
+<hr>
 <p>A few weeks ago I came across this image and found the relative impact of flying versus avoiding meat striking. I’ve followed a vegan diet for the past 5 years, and try my best to take the train when travelling across europe, so I have some awareness of my personal emissions. I think sometimes it’s easy for these numbers to get lost in the wider conversation about climate change.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -147,7 +156,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Being a lazy programmer at heart, I decided to try and use Google Timeline to gather data on my past flights, rather than manually recording my flights from the past <code>n</code> years.</p>
 <p>Google Timeline tracks your phone location, storing start and end locations for journeys between any two locations. Based on this, it estimates your method of transport with a confidence score (presumably using a machine learning model) and also calculates the distance.</p>
 <p>When we know the distance and method of transport of a journey, we can apply some emissions factors to calculate the grams of CO2 equivalent produced for that journey. For our purposes, I used figures sourced by Oliver Corradi in his general post about climate change<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>If you have Google Timeline enabled in the Google Maps app, you can download your data from <a href="https://takeout.google.com/settings/takeout">Google Takeout</a>. I decided to create a dashboard to visualize my own data, and make it available so that others can do the same: <a href="https://transport-co2-emissions.streamlit.app/">https://transport-co2-emissions.streamlit.app/</a></p>
+<p>If you have Google Timeline enabled in the Google Maps app, you can download your data from <a href="https://takeout.google.com/settings/takeout">Google Takeout</a>. I decided to create a dashboard to visualize my own data, and make it available so that others can do the same: <a href="https://transport-co2-emissions.streamlit.app/" class="uri">https://transport-co2-emissions.streamlit.app/</a></p>
 <p>My transport emissions were highest in 2017, where I took 13 flights, totalling around 25,000km. This puts my total transport emissions at more than 3x the UK and almost 2x the US average. In this year flying was responsible for 75% of my transport emissions.</p>
 <p><img src="sam_transport_emissions.png" class="img-fluid"></p>
 <p>Looking at the breakdown of individual flights, all of them are short to medium haul in the last few years, with the furthest flight being from the UK to Egypt.</p>
