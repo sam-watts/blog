@@ -1,9 +1,17 @@
 ---
-title: "Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets"
+title: "Flight Free"
 date: "2023-03-18"
 categories: [climate]
 image: "Why-for_the_climate-426x426.jpg" 
+description: "Quantifying personal CO2 emissions with Google Timeline and other thoughts"
 ---
+***
+
+**[>>> Dashboard to analyse your own Google Timeline data <<<](
+   https://transport-co2-emissions.streamlit.app/
+)**
+
+***
 
 A few weeks ago I came across this image and found the relative impact of flying
 versus avoiding meat striking. I've
@@ -32,7 +40,7 @@ that journey. For our purposes, I used figures sourced by Oliver Corradi in his 
 If you have Google Timeline enabled in the Google Maps app, you can download
 your data from [Google Takeout](https://takeout.google.com/settings/takeout). I
 decided to create a dashboard to visualize my own data, and make it available so
-that others can do the same: [https://transport-co2-emissions.streamlit.app/](https://transport-co2-emissions.streamlit.app/)
+that others can do the same: <https://transport-co2-emissions.streamlit.app/>
 
 My transport emissions were highest in 2017, where I took 13 flights, totalling around 25,000km.
 This puts my total transport emissions at more than 3x the UK and
