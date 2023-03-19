@@ -4,6 +4,7 @@ project:
 website:
   title: "Sam Watts - Blog"
   favicon: favicon.ico
+  open-graph: true
   navbar:
     background: "#008E97"
     right:
@@ -15,6 +16,10 @@ website:
     utterances:
       repo: sam-watts/blog
 
+theme:
+  light: flatly
+  dark: darkly
+  
 format:
   html:
     theme: cosmo
