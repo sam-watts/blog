@@ -16,35 +16,35 @@
   {
     "objectID": "posts/dockerized-debugging-ml/index.html",
     "href": "posts/dockerized-debugging-ml/index.html",
-    "title": "Debugging for Dockerized ML applications in Python",
+    "title": "Debugging for Dockerized ML Applications in Python",
     "section": "",
     "text": "Docker has become ubiquitous in ML applications in the last few years. It can enable easy collaboration between engineers with different hardware — as well as easing the transition from prototyping on personal laptops to compute clusters in production. On the flip side, it introduces an extra layer of complexity for engineers to work with when developing and maintaining productionised models.\nIn my professional work, I’ve found debugging to be one of the things made harder by this extra layer of complexity. In this post I’m going to outline my current setup with VSCode and debugpy that greatly simplifies this process when applied to a model training application."
   },
   {
     "objectID": "posts/dockerized-debugging-ml/index.html#why-do-we-need-this",
     "href": "posts/dockerized-debugging-ml/index.html#why-do-we-need-this",
-    "title": "Debugging for Dockerized ML applications in Python",
+    "title": "Debugging for Dockerized ML Applications in Python",
     "section": "Why do we need this?",
     "text": "Why do we need this?\nWhen debugging code, we want to be able to inspect its environment at runtime as accurately as possible. Any deviation from this can lead to fixes that plainly don’t work in the runtime environment.\nWhilst getting to grips with Docker, my debugging process would generally entail recreating the scaffolding around the Python script that I wanted to inspect in my local development environment, and then debugging that script directly. In model training applications that contain bash scripts, multiple entrypoints and use of environment variables, this can quickly add a large development overhead. With this added complexity comes the increased chance of errors creeping in, rendering the whole process slow and frustrating.\nSo how do we avoid this? We need a debugging system that can interact with Docker, and let our code run as it was designed to!"
   },
   {
     "objectID": "posts/dockerized-debugging-ml/index.html#the-solution",
     "href": "posts/dockerized-debugging-ml/index.html#the-solution",
-    "title": "Debugging for Dockerized ML applications in Python",
+    "title": "Debugging for Dockerized ML Applications in Python",
     "section": "The Solution",
     "text": "The Solution\nWhat worked best in the end for me is a debugger that can connect to a Docker container where your model training application is running, and directly inspect the environment of a given Python script.\nThis is where debugpy comes in!\nPreviously known as ptvsd, this package is developed by Microsoft specifically for use in VSCode with Python. It implements all of the common debugging tools you would expect, as well as allowing for attaching to remote environments, such as Docker containers or even remote machines via SSH.\nAs an aside, debugpy implements the Debug Adapter Protocol (DAP), which is a standardised way for development tools to communicate with debuggers.\nUsing debugpy with Docker containers is wonderfully simple, and requires 3 distinct steps. I’ll dive into each of these in turn, before demonstrating the whole process afterwards.\n\nConfiguring debugpy in Python\nConfiguring the connection to the Docker container\nSetting up breakpoints\n\n\n1. Configuring debugpy in Python\nIn the script you would like to debug, the following snippet should be added before any other code.\nimport debugpy\n\ndebugpy.listen((\"0.0.0.0\", 5678))\nprint(\"Waiting for client to attach...\")\ndebugpy.wait_for_client()\nThis will setup debugpy to listen on port 5678 for a client to attach, and will also pause the execution until a client connects via that port.\n\n\n2. Configuring the connection to the Docker container\nNow we have our Python script configured, we need to make sure the VSCode debugger client can connect to debugpy when it is running inside a Docker container.\nFirstly, when you run your Docker container, the port that debugpy is listening on must be mapped to a local port\ndocker run \\\n    -p 5678:5678 \\  # map container port to local port\n    temp-container\nSecondly, we need to create a launch.json file to configure how the local VSCode debugging client will run. This minimal example tells the debugger to attach to port 5678, which will be mapped to the Docker port of the same number when we run the container.\n{\n   \"version\":\"0.2.0\",\n   \"configurations\":[\n      {\n         \"name\":\"Python: Docker Attach\",\n         \"type\":\"python\",\n         \"request\":\"attach\",\n         \"connect\":{\n            \"host\":\"localhost\",\n            \"port\":5678\n         },\n         \"pathMappings\":[\n            {\n               \"localRoot\":\"${workspaceFolder}\",\n               \"remoteRoot\":\".\"\n            }\n         ]\n      }\n   ]\n}\n\n\n3. Setting up breakpoints\nI was surprised when I first tried this that when you set breakpoints via the VSCode UI on the local version of a Python script, that will correspond to the copied scripts that run inside your Docker container! Pure wizardry from VSCode.\nIn addition, you can also use debugpy.breakpoint() to explicitly set breakpoints via the debugpy API. An additional benefit of this is that these calls will be ignored if you exclude the debugpy configuration mentioned in step (1), providing a quick way of temporarily removing debugging."
   },
   {
     "objectID": "posts/dockerized-debugging-ml/index.html#debugging-in-action",
     "href": "posts/dockerized-debugging-ml/index.html#debugging-in-action",
-    "title": "Debugging for Dockerized ML applications in Python",
+    "title": "Debugging for Dockerized ML Applications in Python",
     "section": "Debugging in action",
     "text": "Debugging in action\nYou should be good to go! The steps to debug are:\n\nAdd breakpoints in the UI\nRebuild and run the Docker container\nConnect the debugger\n\n\nThe full code used for this example can be found below. Happy debugging! 😃\nGitHub - sam-watts/vscode-docker-debugging: A template for debugging long running, dockerized programs in python with vscode"
   },
   {
     "objectID": "posts/dockerized-debugging-ml/index.html#links",
     "href": "posts/dockerized-debugging-ml/index.html#links",
-    "title": "Debugging for Dockerized ML applications in Python",
+    "title": "Debugging for Dockerized ML Applications in Python",
     "section": "Links",
     "text": "Links\n\ndebugpy Github: https://github.com/microsoft/debugpy\nDocker run reference: https://docs.docker.com/engine/reference/run/"
   },
@@ -53,6 +53,6 @@
     "href": "index.html",
     "title": "Posts",
     "section": "",
-    "text": "RecSys 2022 - My Top 5 Papers\n\n\n\n\n\n\n\nml\n\n\nrecsys\n\n\n\n\nHighlights from the conference\n\n\n\n\n\n\nOct 10, 2022\n\n\n\n\n\n\n  \n\n\n\n\nDebugging for Dockerized ML applications in Python\n\n\n\n\n\n\n\nml\n\n\npython\n\n\n\n\nUsing VScode and debugpy to make debugging a breeze\n\n\n\n\n\n\nJul 31, 2021\n\n\n\n\n\n\nNo matching items"
+    "text": "RecSys 2022 - My Top 5 Papers\n\n\n\n\n\n\n\nml\n\n\nrecsys\n\n\n\n\nHighlights from the conference\n\n\n\n\n\n\nOct 10, 2022\n\n\n\n\n\n\n  \n\n\n\n\nDebugging for Dockerized ML Applications in Python\n\n\n\n\n\n\n\nml\n\n\npython\n\n\n\n\nUsing VScode and debugpy to make debugging a breeze\n\n\n\n\n\n\nJul 31, 2021\n\n\n\n\n\n\nNo matching items"
   }
 ]

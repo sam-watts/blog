@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-03-18">
 
-<title>Sam Watts - Blog - Google Timeline: The Big Brother of Your Transport Emissions</title>
+<title>Sam Watts - Blog - Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -63,6 +63,10 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Sam Watts - Blog - Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets">
+<meta property="og:description" content="A few weeks ago I came across this image and found the relative impact of flying versus avoiding meat striking.">
+<meta property="og:image" content="https://github.com/sam-watts/blog/posts/google-timeline-emissions/Why-for_the_climate-426x426.jpg">
+<meta property="og:site-name" content="Sam Watts - Blog">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -100,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Google Timeline: The Big Brother of Your Transport Emissions</h1>
+      <h1 class="title">Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">climate</div>
               </div>
@@ -132,27 +136,55 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>A few weeks ago I came across this image and found the message striking. I’ve followed a vegan diet for the past 5 years, and try my best to take the train when travelling across europe, so I have some awareness of these impacts. Even so, the magnitude was surprising.</p>
+<p>A few weeks ago I came across this image and found the relative impact of flying versus avoiding meat striking. I’ve followed a vegan diet for the past 5 years, and try my best to take the train when travelling across europe, so I have some awareness of my personal emissions. I think sometimes it’s easy for these numbers to get lost in the wider conversation about climate change.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Why-for_the_climate-426x426.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Taken from Flight Free UK</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Taken from <a href="https://flightfree.co.uk/" class="uri">https://flightfree.co.uk/</a></figcaption><p></p>
 </figure>
 </div>
-<p>I wanted to see how much of my own transport emissions were coming from flights, and how that stacks up against the average person.</p>
-<p>Being a lazy programmer, I decided to try and use Google Timeline data to get this rather than manually entering all my flights for the last <code>n</code> years. If you are have Google Timeline enabled in the Google Maps app, you can download your data from <a href="https://takeout.google.com/settings/takeout">Google Takeout</a>. You can take a look at own emissions by visiting the app I created to visualize this data: <a href="https://transport-co2-emissions.streamlit.app/">https://transport-co2-emissions.streamlit.app/</a></p>
-<iframe src="https://transport-co2-emissions.streamlit.app/?embedded=true" width="100%" height="200">
-</iframe>
-<p>The results for me personally? It’s not a pretty picture. In 2017, the worst year I have data for, I took 13 flights</p>
-<p>For starters, flying is distributed highly non-uniformly across the global population. An often quoted statistic is that 1% of the world’s population accounts for 50% of all flights.</p>
-<p>More worryingly, the path towards decarbonization for aviation is unclear. In general, airlines seem to be relying on a combination of sustainable aviation fuel (SAFs) and carbon offsets to reach net zero. Just a week ago the Royal Society published a report into the viability of SAFs in covering the current level of flying in the UK aviation industry, with two main conclusions: 1) To use biofuels, half of all agricultural land in UK would need to be repurposed 2) To use hydrogen, double the current renewable energy production level would be needed</p>
-<p>This becomes even more challenging when you consider the increased demand on the electricity grid from personal vehicle and home heating electrification, which in the UK is projected to contribute to a 15% increase in demand by 2035.</p>
-<p>As it stands, the continuing</p>
-<p>Since diving into these numbers, I decided to take Flight Free UK’s challenge of a flight free year for 2023.</p>
+<p>This image got me thinking about trying to work out how much of my own transport emissions were coming from flights, and how that stacks up against the average person.</p>
+<p>Being a lazy programmer at heart, I decided to try and use Google Timeline to gather data on my past flights, rather than manually recording my flights from the past <code>n</code> years.</p>
+<p>Google Timeline tracks your phone location, storing start and end locations for journeys between any two locations. Based on this, it estimates your method of transport with a confidence score (presumably using a machine learning model) and also calculates the distance.</p>
+<p>When we know the distance and method of transport of a journey, we can apply some emissions factors to calculate the grams of CO2 equivalent produced for that journey. For our purposes, I used figures sourced by Oliver Corradi in his general post about climate change<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>If you have Google Timeline enabled in the Google Maps app, you can download your data from <a href="https://takeout.google.com/settings/takeout">Google Takeout</a>. I decided to create a dashboard to visualize my own data, and make it available so that others can do the same: <a href="https://transport-co2-emissions.streamlit.app/">https://transport-co2-emissions.streamlit.app/</a></p>
+<p>My transport emissions were highest in 2017, where I took 13 flights, totalling around 25,000km. This puts my total transport emissions at more than 3x the UK and almost 2x the US average. In this year flying was responsible for 75% of my transport emissions.</p>
+<p><img src="sam_transport_emissions.png" class="img-fluid"></p>
+<p>Looking at the breakdown of individual flights, all of them are short to medium haul in the last few years, with the furthest flight being from the UK to Egypt.</p>
+<p><img src="sam_flights.PNG" class="img-fluid"></p>
+<p>Although my flight emissions were higher than the UK average, this still puts me below the 1% of the world’s most frequent flyers, who travel around 56,000km per year on average<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. This group are responsible for 50% of global aviation emissions, which shows the highly non-uniform distribution of flying in the world population.</p>
+<p>Flying contributes 2.5% of total global carbon emissions - which is smaller than other sectors such as animal livestock (5.8%) and road transport (11.9%)<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> - but the difference is that the impact is being caused by a smaller subset of the population. In wealthy subsets of the population, this generally means that flying will take up a larger proportion of an individual’s total emissions.</p>
+<p>Worryingly, the path towards decarbonization for aviation seems highly flawed. In the UK at least, the government seem to be mainly relying on a combination of sustainable aviation fuels (SAFs) and carbon offsets to reach net zero for aviation<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>Just weeks ago the Royal Society published a report<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> into the viability of SAFs in covering the current level of flying in the UK aviation industry, with two main conclusions:</p>
+<ol type="1">
+<li>To use biofuels, half of all agricultural land in UK would need to be repurposed</li>
+<li>To use hydrogen, double the current renewable energy production level would be needed</li>
+</ol>
+<p>Decarbonization of aviation becomes even more challenging when you consider the increased demand on the electricity grid from personal vehicle and home heating electrification, which in the UK is projected to contribute to a 15% increase in demand by 2035. This is on top of other increases in demand on the electricity grid driven by the pursuit of growth in other sectors of the economy.</p>
+<p>Carbon offsets have their own fundamental problems - it has been shown that “more than 90% of carbon offsets by [the] biggest certifier are worthless”<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>Based on these factors it seems unrealistic to expect that the aviation industry can continue to grow at its current rate, and become net zero by 2050.</p>
+<p>Individual action - ie. choosing not to fly - feels important in the context of aviation, in an industry that seems unwilling to embrace the reality of the climate crisis. Whilst I think we desperately need huge changes to our public institutions, the engagement and careful thought that comes with individual lifestyle changes feels important to me as part of building greater consciousness of change. I think Rebecca Solnit captures this best:</p>
+<blockquote class="blockquote">
+<p>Individual choices do add up […]. That vegan options are available at a lot of fast-food chains is because enough consumers have created a profitable market for them. We do influence others through our visible choices. Ideas spread, values spread, habits spread; we are social animals and both good and bad behaviors are contagious.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+</blockquote>
+<p>Reflecting on these ideas, I think there is a more general point here about when “enough is enough”. Personally, I’ve flown to many interesting places around the world already. Will it really make much of a difference to my life flying to one more, when weighed against the costs to everyone currently living, as well as future generations?</p>
+<p>I’ve decided to take <a href="https://flightfree.co.uk/">Flight Free UK’s</a> challenge of a flight free year for 2023. Making this decision clearly isn’t possible for people who absolutely have to fly for work, or those who need to visit close family who live in far away countries. I fully recognize the priviledge I have to be able to make this descision. Even so, I hope some of you might relate to my feelings, and consider going flight free for 2023 too.</p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://oliviercorradi.com/climate-change/#transportation--reduce-long-distance-travels" class="uri">https://oliviercorradi.com/climate-change/#transportation--reduce-long-distance-travels</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.theguardian.com/business/2020/nov/17/people-cause-global-aviation-emissions-study-covid-19" class="uri">https://www.theguardian.com/business/2020/nov/17/people-cause-global-aviation-emissions-study-covid-19</a> referring to <a href="https://www.sciencedirect.com/science/article/pii/S0959378020307779" class="uri">https://www.sciencedirect.com/science/article/pii/S0959378020307779</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://ourworldindata.org/emissions-by-sector" class="uri">https://ourworldindata.org/emissions-by-sector</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1095952/jet-zero-strategy.pdf" class="uri">https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1095952/jet-zero-strategy.pdf</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a href="https://royalsociety.org/topics-policy/projects/low-carbon-energy-programme/net-zero-aviation-fuels/" class="uri">https://royalsociety.org/topics-policy/projects/low-carbon-energy-programme/net-zero-aviation-fuels/</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a href="https://www.theguardian.com/environment/2023/jan/18/revealed-forest-carbon-offsets-biggest-provider-worthless-verra-aoe" class="uri">https://www.theguardian.com/environment/2023/jan/18/revealed-forest-carbon-offsets-biggest-provider-worthless-verra-aoe</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><a href="https://www.theguardian.com/commentisfree/2021/aug/23/big-oil-coined-carbon-footprints-to-blame-us-for-their-greed-keep-them-on-the-hook" class="uri">https://www.theguardian.com/commentisfree/2021/aug/23/big-oil-coined-carbon-footprints-to-blame-us-for-their-greed-keep-them-on-the-hook</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
