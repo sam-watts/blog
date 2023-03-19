@@ -2,7 +2,6 @@
 title: "Google Timeline: The Unforgiving Tracker of Your Dirty Carbon Secrets"
 date: "2023-03-18"
 categories: [climate]
-draft: true
 image: "Why-for_the_climate-426x426.jpg" 
 ---
 
