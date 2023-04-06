@@ -3,6 +3,7 @@ description: A talk whilst working about TGTG about the benefits of effective ML
 categories: [ml, talk]
 title: "Recommender Systems with Metaflow"
 date: "2022-11-30"
+embed-resources: true
 ---
 
 {{< video https://www.youtube.com/embed/BHogBeExJ8I?t=186 >}}
