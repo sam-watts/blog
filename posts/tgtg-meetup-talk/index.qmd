@@ -7,6 +7,5 @@ embed-resources: true
 ---
 
 {{< video https://www.youtube.com/embed/BHogBeExJ8I
-    title="What is the CERN?"
     start="186"
 >}}
