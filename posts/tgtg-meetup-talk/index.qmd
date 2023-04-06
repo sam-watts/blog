@@ -1,5 +1,5 @@
 ---
-description: A talk whilst working about TGTG about the benefits of effective ML infrastructure
+description: A talk whilst working at TGTG about the benefits of effective ML infrastructure
 categories: [ml, talk]
 title: "Recommender Systems with Metaflow"
 date: "2022-11-30"
