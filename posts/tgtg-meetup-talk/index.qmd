@@ -6,4 +6,7 @@ date: "2022-11-30"
 embed-resources: true
 ---
 
-{{< video https://www.youtube.com/embed/BHogBeExJ8I?t=186 >}}
+{{< video https://www.youtube.com/embed/BHogBeExJ8I
+    title="What is the CERN?"
+    start="186"
+>}}
