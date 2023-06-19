@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-09-28">
+<meta name="description" content="Using your own data to create a robust computer vision model">
+
+<title>Sam Watts - Blog - Building a Custom Semantic Segmentation Model</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Sam Watts - Blog - Building a Custom Semantic Segmentation Model">
+<meta property="og:description" content="Using your own data to create a robust computer vision model">
+<meta property="og:image" content="https://github.com/sam-watts/blog/posts/futoshiki-semantic-seg/front.png">
+<meta property="og:site-name" content="Sam Watts - Blog">
+<meta property="og:image:height" content="800">
+<meta property="og:image:width" content="800">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Sam Watts - Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sam-watts" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Building a Custom Semantic Segmentation Model</h1>
+                  <div>
+        <div class="description">
+          Using your own data to create a robust computer vision model
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">computer vision</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 28, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+<p>Following on from my <a href="../../posts/solving-futoshiki-puzzles/index.html">previous post on solving futoshiki puzzles</a>, I wanted to see how feasible it would be to reliably detect and segment a futoshiki puzzle grid from an image without using a clunky capture grid. It works surprisingly well even when trained on a tiny dataset!</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="front.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption margin-caption">An example pixel-level prediction from the semantic segmentation model</figcaption>
+</figure>
+</div>
+<section id="so-what-is-semantic-segmentation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="so-what-is-semantic-segmentation">So what is Semantic Segmentation?</h3>
+<p>Semantic Segmentation is a step up in complexity versus the more common computer vision tasks such as classification and object detection. The goal is to produce a pixel-level prediction for one or more classes. This prediction is referred to as an image ‘mask’. The example here shows 3 overlaid masks for person, sheep, and dog represented by the different foreground colours.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="deepmind_img.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption margin-caption">From Deepmind’s course on Deep Learning <a href="https://www.youtube.com/watch?v=_aUq7lmMfxo&amp;list=PLqYmG7hTraZCDxZ44o4p3N5Anz3lLRVZF&amp;index=4" class="uri">https://www.youtube.com/watch?v=_aUq7lmMfxo&amp;list=PLqYmG7hTraZCDxZ44o4p3N5Anz3lLRVZF&amp;index=4</a></figcaption>
+</figure>
+</div>
+<p>For my task, the setup is somewhat simpler as there is only one class to predict - the puzzle grid. To train the model, we need pairs of images and masks. The images we are using are full colour, so as an array will have the shape (H, W, 3). The masks on the other hand only have a single value per pixel (1 or 0), so will have shape (H, W, 1).</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="training_pair.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption margin-caption">An example training pair of image and mask for my model</figcaption>
+</figure>
+</div>
+</section>
+<section id="labelling-your-dataset" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="labelling-your-dataset">Labelling your dataset</h3>
+<p>How do we get the image masks I’ve just talked about? <a href="http://www.robots.ox.ac.uk/~vgg/software/via/">VIA</a> is a great tool for image labelling — it’s open source and runs in a browser from a standalone HTML file.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="via.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">VIA in action</figcaption>
+</figure>
+</div>
+<p>VIA lets you export labels for multiple images as a csv, with the coordinates of each polygon in json format:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"name"</span><span class="fu">:</span><span class="st">"polygon"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"all_points_x"</span><span class="fu">:</span><span class="ot">[</span><span class="dv">1973</span><span class="ot">,</span><span class="dv">2576</span><span class="ot">,</span><span class="dv">2579</span><span class="ot">,</span><span class="dv">1964</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"all_points_y"</span><span class="fu">:</span><span class="ot">[</span><span class="dv">2792</span><span class="ot">,</span><span class="dv">2816</span><span class="ot">,</span><span class="dv">3423</span><span class="ot">,</span><span class="dv">3398</span><span class="ot">]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I then wrote a custom pytorch dataloader, which converts the polygon json into a single channel image mask. The training image and the target mask are then passed on to the model.</p>
+<p>In total I labelled 43 images, which I split 75:25 into training and validation sets. I later added an extra 7 images to serve as a test set. This might not seem like much data to be training a large neural network on - but fortunately there are some techniques we can use to get the most out of this small set of images!</p>
+</section>
+<section id="building-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="building-the-model">Building the model</h3>
+<p>As this is a prototype, I wanted to see if the approach would achieve decent results without building the whole thing myself from scratch and potentially wasting a lot of effort. With that in mind, I used the awesome <a href="https://github.com/qubvel/segmentation_models.pytorch"><code>segmentation-models-pytorch</code></a> library. The power of this library hinges on transfer learning, which means we can avoid having to train the entire network from a standing start.</p>
+</section>
+<section id="u-net" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="u-net">U-Net</h3>
+<p>U-Net consists of a coupled encoder and decoder structure, which builds high level abstractions of input images before expanding out these abstractions to provide a pixel-level prediction.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="unet.webp" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Original U-Net architecture <a href="https://arxiv.org/abs/1505.04597" class="uri">https://arxiv.org/abs/1505.04597</a></figcaption>
+</figure>
+</div>
+<p>The grey arrows signify residual connections between the encoder and decoder pathways. This means that at every upwards step of the decoder, the encoder matrices of the same dimensions are concatenated together with the decoder matrices. The benefits of this are twofold:</p>
+<ol type="1">
+<li>At each level of the decoder - which would otherwise only contain high level abstraction information of the image - the network is able to combine it’s learning about high and low level features, increasing the fidelity of predictions.</li>
+<li>Residual connections allow backpropagation during training to skip past layers, making optimisation easier. This is also crucial when training deeper models to avoid issues with vanishing gradients.</li>
+<li>The beauty of this architecture is also that we can use a pre-trained model that has been used for a classification task - on a dataset such as ImageNet - as our encoder. Once we remove the final classification layer from this model, this can be connected to a decoder with untrained weights, and skip-connections are added to reflect the U-Net structure. This saves a lot of compute time, as our pre-trained encoder already has good parameters for building high levels abstractions of images.</li>
+</ol>
+<p><code>segmentation-models-pytorch</code> provides pre-trained weights for a number of different encoder architectures.</p>
+</section>
+<section id="encoder-efficientnet-b3" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="encoder-efficientnet-b3">Encoder — EfficientNet-B3</h3>
+<p>Google AI published their EfficientNet paper in 2019 with new thinking behind how to scale up convolutional neural networks. Alongside this, the paper proposed a range of models of increasing complexity that achieve state of the art performance.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="efficient_net.webp" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">EffiecientNet Accuracy vs.&nbsp;Size of model <a href="https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html" class="uri">https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html</a></figcaption>
+</figure>
+</div>
+<p>As a trade off between size and performance, I chose the B3 variant to use in my model.</p>
+</section>
+<section id="putting-it-all-together" class="level3">
+<h3 class="anchored" data-anchor-id="putting-it-all-together">Putting it all together</h3>
+<p>Specifying these architecture choices with segmentation-models-pytorch is a breeze:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> segmentation_models_pytorch <span class="im">as</span> smp</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ENCODER <span class="op">=</span> <span class="st">'efficientnet-b3'</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ENCODER_WEIGHTS <span class="op">=</span> <span class="st">'imagenet'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>CLASSES <span class="op">=</span> [<span class="st">'grid'</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ACTIVATION <span class="op">=</span> <span class="st">'sigmoid'</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>DEVICE <span class="op">=</span> torch.device(<span class="st">'cuda:0'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smp.Unet(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    encoder_name<span class="op">=</span>ENCODER, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    encoder_weights<span class="op">=</span>ENCODER_WEIGHTS, </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    classes<span class="op">=</span><span class="bu">len</span>(CLASSES), </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    activation<span class="op">=</span>ACTIVATION,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>).to(DEVICE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="data-augmentation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="data-augmentation">Data Augmentation</h3>
+<p>As the training dataset only contains 36 images, overfitting is a serious concern. If we train for multiple epochs over this small dataset, we might worry that our model will start fitting to the noise in this small dataset, leading to poor performance on out-of-sample examples. This problem can be somewhat mitigated by data augmentation. As each training image and mask pair is read into memory to pass to the model, we apply several layers of non-deterministic image processing, as shown below.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> albumentations <span class="im">as</span> albu</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_training_augmentation():</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    train_transform <span class="op">=</span> [</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        albu.HorizontalFlip(p<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        albu.ShiftScaleRotate(scale_limit<span class="op">=</span><span class="fl">0.2</span>, rotate_limit<span class="op">=</span><span class="dv">20</span>, shift_limit<span class="op">=</span><span class="fl">0.2</span>, p<span class="op">=</span><span class="fl">0.8</span>, border_mode<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        albu.PadIfNeeded(min_height<span class="op">=</span><span class="dv">320</span>, min_width<span class="op">=</span><span class="dv">320</span>, always_apply<span class="op">=</span><span class="va">True</span>, border_mode<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        albu.RandomCrop(height<span class="op">=</span><span class="dv">320</span>, width<span class="op">=</span><span class="dv">320</span>, always_apply<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        albu.IAAAdditiveGaussianNoise(p<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        albu.IAAPerspective(p<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        albu.OneOf(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            [</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                albu.CLAHE(p<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                albu.RandomBrightness(p<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                albu.RandomGamma(p<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            p<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> albu.Compose(train_transform)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>adapted from <a href="https://github.com/qubvel/segmentation_models.pytorch/blob/master/examples/cars%20segmentation%20(camvid).ipynb">https://github.com/qubvel/segmentation_models.pytorch…</a></p>
+</div></div><p>It’s useful to look at an example image to see the individual effects of each of these augmentations. This is the first image from our training set:</p>
+<p><img src="example_image.png" class="img-fluid"></p>
+<p>As you can see below, most of the augmentations by themselves only provide a subtle change - however when stacked up, they add enough novelty to our training data to stop the model fitting to the noise of the base dataset</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="augs.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Each augmentation used in isolation</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="aug_types.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Stacked augmentations, to be passed to the model</figcaption>
+</figure>
+</div>
+</section>
+<section id="training-evaluation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="training-evaluation">Training &amp; Evaluation</h3>
+<p>The most commonly used loss function is pixel wise Cross-Entropy Loss - similar to what is used in general classification tasks. Here, we instead use Dice Loss, which was introduced to address the issue of class imbalance in semantic segmentation:</p>
+<p><span class="math display">\[Dice Loss = \frac{2|A ∩ B|}{|A| + |B|}\]</span></p>
+<p>In practice, the intersection term of this equation is approximated by calculating the element-wise product of the prediction and target mask matrices:</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="dice_loss.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">image from <a href="https://www.jeremyjordan.me/semantic-segmentation/" class="uri">https://www.jeremyjordan.me/semantic-segmentation/</a></figcaption>
+</figure>
+</div>
+<p>We also use Intersection-over-Union (IoU) as a scoring metric. This essentially looks at the overlapping over total area of both predicted and ground truth masks, which is a similar concept to Dice Loss.</p>
+<p>Training regime:</p>
+<ul>
+<li>Trained for 40 epochs, initial learning rate = 5x10e-4</li>
+<li>After the 30th epoch, learning rate = 5x10e-5</li>
+</ul>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="dice_loss_vs_epoch.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Dice loss of the model on training and validation sets at each epoch of training</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="iou_vs_epoch.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Intersection-over-Union of the model on training and validation sets at each epoch of training</figcaption>
+</figure>
+</div>
+</section>
+<section id="prediction" class="level3">
+<h3 class="anchored" data-anchor-id="prediction">Prediction</h3>
+<p>I tested the trained model on 7 held out images from my labelled dataset, and the model achieved a IOU Score = 0.94 for these images, including some with puzzles at odd angles and as a smaller part of the image.</p>
+<p><img src="preds.png" class="img-fluid" style="width:80.0%"></p>
+<p><img src="preds2.png" class="img-fluid" style="width:80.0%"></p>
+<p>I also ran the model over a short video to see the results more visually, which was also pretty good - it also deals well with an object covering the puzzle!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="pred_gif.gif" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="final-results-integration-into-solver-tool" class="level3">
+<h3 class="anchored" data-anchor-id="final-results-integration-into-solver-tool">Final Results — integration into solver tool</h3>
+<p>The enhanced version of the code base I discussed in my prior post can be found <a href="https://github.com/sam-watts/futoshiki-solver/tree/v2.0">here</a>. This version of the model shows some slight activation on background features, which is perhaps the sign of some overfitting.</p>
+<p><img src="full_run.gif" class="img-fluid" style="width:80.0%"></p>
+<p>To conclude, this approach showed some pretty impressive results, especially given the tiny amount of training data that was used!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="sam-watts/blog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
