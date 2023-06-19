@@ -1,9 +1,10 @@
 ---
-description: A talk whilst working at TGTG about the benefits of effective ML infrastructure
+description: A talk I gave with a colleague whilst working at Too Good To Go about the benefits of effective ML infrastructure
 categories: [ml, talk]
 title: "Recommender Systems with Metaflow"
 date: "2022-11-30"
 embed-resources: true
+image: metaflow_logo.png
 ---
 
 {{< video https://www.youtube.com/embed/BHogBeExJ8I
