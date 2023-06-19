@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/sam-watts/blog/posts/recsys-2022-highlights/index.html</loc>
-    <lastmod>2023-04-06T17:42:57.137Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/sam-watts/blog/posts/tgtg-meetup-talk/index.html</loc>
-    <lastmod>2023-04-06T17:42:58.977Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/sam-watts/blog/posts/google-timeline-emissions/index.html</loc>
-    <lastmod>2023-04-06T17:42:59.449Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/sam-watts/blog/posts/dockerized-debugging-ml/index.html</loc>
-    <lastmod>2023-04-06T17:42:59.909Z</lastmod>
-  </url>
-  <url>
     <loc>https://github.com/sam-watts/blog/index.html</loc>
-    <lastmod>2023-04-06T17:43:00.317Z</lastmod>
+    <lastmod>2023-06-19T16:24:43.411Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/about.html</loc>
-    <lastmod>2023-04-06T17:43:00.629Z</lastmod>
+    <lastmod>2023-06-19T16:24:44.031Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/sam-watts/blog/posts/dockerized-debugging-ml/index.html</loc>
+    <lastmod>2023-06-19T16:24:44.467Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/sam-watts/blog/posts/recsys-2022-highlights/index.html</loc>
+    <lastmod>2023-06-19T16:24:44.983Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/sam-watts/blog/posts/tgtg-meetup-talk/index.html</loc>
+    <lastmod>2023-06-19T16:24:46.435Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/sam-watts/blog/posts/google-timeline-emissions/index.html</loc>
+    <lastmod>2023-06-19T16:24:49.911Z</lastmod>
   </url>
 </urlset>
