@@ -10,6 +10,7 @@ listing:
 page-layout: article
 title-block-banner: true
 comments: false
+image-height: 50%
 ---
 
 
