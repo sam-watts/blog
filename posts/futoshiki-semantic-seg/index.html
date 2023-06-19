@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2020-09-28">
+<meta name="dcterms.date" content="2020-11-21">
 <meta name="description" content="Using your own data to create a robust computer vision model">
 
 <title>Sam Watts - Blog - Building a Custom Semantic Segmentation Model</title>
@@ -166,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 28, 2020</p>
+        <p class="date">November 21, 2020</p>
       </div>
     </div>
     
@@ -245,8 +245,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>At each level of the decoder - which would otherwise only contain high level abstraction information of the image - the network is able to combine it’s learning about high and low level features, increasing the fidelity of predictions.</li>
 <li>Residual connections allow backpropagation during training to skip past layers, making optimisation easier. This is also crucial when training deeper models to avoid issues with vanishing gradients.</li>
-<li>The beauty of this architecture is also that we can use a pre-trained model that has been used for a classification task - on a dataset such as ImageNet - as our encoder. Once we remove the final classification layer from this model, this can be connected to a decoder with untrained weights, and skip-connections are added to reflect the U-Net structure. This saves a lot of compute time, as our pre-trained encoder already has good parameters for building high levels abstractions of images.</li>
 </ol>
+<p>The beauty of this architecture is also that we can use a pre-trained model that has been used for a classification task - on a dataset such as ImageNet - as our encoder. Once we remove the final classification layer from this model, this can be connected to a decoder with untrained weights, and skip-connections are added to reflect the U-Net structure. This saves a lot of compute time, as our pre-trained encoder already has good parameters for building high levels abstractions of images.</p>
 <p><code>segmentation-models-pytorch</code> provides pre-trained weights for a number of different encoder architectures.</p>
 </section>
 <section id="encoder-efficientnet-b3" class="level3 page-columns page-full">
@@ -282,28 +282,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-augmentation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="data-augmentation">Data Augmentation</h3>
 <p>As the training dataset only contains 36 images, overfitting is a serious concern. If we train for multiple epochs over this small dataset, we might worry that our model will start fitting to the noise in this small dataset, leading to poor performance on out-of-sample examples. This problem can be somewhat mitigated by data augmentation. As each training image and mask pair is read into memory to pass to the model, we apply several layers of non-deterministic image processing, as shown below.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> albumentations <span class="im">as</span> albu</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_training_augmentation():</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    train_transform <span class="op">=</span> [</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        albu.HorizontalFlip(p<span class="op">=</span><span class="fl">0.5</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        albu.ShiftScaleRotate(scale_limit<span class="op">=</span><span class="fl">0.2</span>, rotate_limit<span class="op">=</span><span class="dv">20</span>, shift_limit<span class="op">=</span><span class="fl">0.2</span>, p<span class="op">=</span><span class="fl">0.8</span>, border_mode<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        albu.PadIfNeeded(min_height<span class="op">=</span><span class="dv">320</span>, min_width<span class="op">=</span><span class="dv">320</span>, always_apply<span class="op">=</span><span class="va">True</span>, border_mode<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        albu.RandomCrop(height<span class="op">=</span><span class="dv">320</span>, width<span class="op">=</span><span class="dv">320</span>, always_apply<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        albu.IAAAdditiveGaussianNoise(p<span class="op">=</span><span class="fl">0.1</span>),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        albu.IAAPerspective(p<span class="op">=</span><span class="fl">0.5</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        albu.OneOf(</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            [</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                albu.CLAHE(p<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                albu.RandomBrightness(p<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                albu.RandomGamma(p<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            p<span class="op">=</span><span class="fl">0.9</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> albu.Compose(train_transform)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="column-page-inset-right">
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> albumentations <span class="im">as</span> albu</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_training_augmentation():</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    train_transform <span class="op">=</span> [</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        albu.HorizontalFlip(p<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        albu.ShiftScaleRotate(scale_limit<span class="op">=</span><span class="fl">0.2</span>, rotate_limit<span class="op">=</span><span class="dv">20</span>, shift_limit<span class="op">=</span><span class="fl">0.2</span>, p<span class="op">=</span><span class="fl">0.8</span>, border_mode<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        albu.PadIfNeeded(min_height<span class="op">=</span><span class="dv">320</span>, min_width<span class="op">=</span><span class="dv">320</span>, always_apply<span class="op">=</span><span class="va">True</span>, border_mode<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        albu.RandomCrop(height<span class="op">=</span><span class="dv">320</span>, width<span class="op">=</span><span class="dv">320</span>, always_apply<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        albu.IAAAdditiveGaussianNoise(p<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        albu.IAAPerspective(p<span class="op">=</span><span class="fl">0.5</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        albu.OneOf(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            [</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                albu.CLAHE(p<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                albu.RandomBrightness(p<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                albu.RandomGamma(p<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            p<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> albu.Compose(train_transform)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>adapted from <a href="https://github.com/qubvel/segmentation_models.pytorch/blob/master/examples/cars%20segmentation%20(camvid).ipynb">https://github.com/qubvel/segmentation_models.pytorch…</a></p>
@@ -356,9 +357,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="prediction" class="level3">
 <h3 class="anchored" data-anchor-id="prediction">Prediction</h3>
 <p>I tested the trained model on 7 held out images from my labelled dataset, and the model achieved a IOU Score = 0.94 for these images, including some with puzzles at odd angles and as a smaller part of the image.</p>
-<p><img src="preds.png" class="img-fluid" style="width:80.0%"></p>
-<p><img src="preds2.png" class="img-fluid" style="width:80.0%"></p>
-<p>I also ran the model over a short video to see the results more visually, which was also pretty good - it also deals well with an object covering the puzzle!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="preds.png" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="preds2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>I also ran the model over all of the frames in a short video to see the results more visually, which was also pretty good - it also deals well with an object covering the puzzle!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="pred_gif.gif" class="img-fluid figure-img"></p>
@@ -368,7 +377,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="final-results-integration-into-solver-tool" class="level3">
 <h3 class="anchored" data-anchor-id="final-results-integration-into-solver-tool">Final Results — integration into solver tool</h3>
 <p>The enhanced version of the code base I discussed in my prior post can be found <a href="https://github.com/sam-watts/futoshiki-solver/tree/v2.0">here</a>. This version of the model shows some slight activation on background features, which is perhaps the sign of some overfitting.</p>
-<p><img src="full_run.gif" class="img-fluid" style="width:80.0%"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="full_run.gif" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
 <p>To conclude, this approach showed some pretty impressive results, especially given the tiny amount of training data that was used!</p>
 
 
