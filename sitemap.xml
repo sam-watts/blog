@@ -2,26 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/sam-watts/blog/index.html</loc>
-    <lastmod>2023-06-19T16:24:43.411Z</lastmod>
+    <lastmod>2023-06-19T16:29:34.177Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/about.html</loc>
-    <lastmod>2023-06-19T16:24:44.031Z</lastmod>
+    <lastmod>2023-06-19T16:29:34.873Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/dockerized-debugging-ml/index.html</loc>
-    <lastmod>2023-06-19T16:24:44.467Z</lastmod>
+    <lastmod>2023-06-19T16:29:35.405Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/recsys-2022-highlights/index.html</loc>
-    <lastmod>2023-06-19T16:24:44.983Z</lastmod>
+    <lastmod>2023-06-19T16:29:35.953Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/tgtg-meetup-talk/index.html</loc>
-    <lastmod>2023-06-19T16:24:46.435Z</lastmod>
+    <lastmod>2023-06-19T16:29:37.773Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/sam-watts/blog/posts/solving-futoshiki-puzzles/index.html</loc>
+    <lastmod>2023-06-19T16:29:38.753Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/google-timeline-emissions/index.html</loc>
-    <lastmod>2023-06-19T16:24:49.911Z</lastmod>
+    <lastmod>2023-06-19T16:29:41.849Z</lastmod>
   </url>
 </urlset>

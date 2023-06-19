@@ -256,12 +256,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="extracting-puzzle-features" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="extracting-puzzle-features">Extracting Puzzle Features</h3>
-<p>Once we have a cropped image of the puzzle we need to find a way of extracting each box and any inequalities in a repeatable, structured way. The puzzle can then be represented in a constant data structure to pass to the solver. For this problem I took inspiration from a great article on retrieving boxes from images. I added some of my own tweaks to this.</p>
+<p>Once we have a cropped image of the puzzle we need to find a way of extracting each box and any inequalities in a repeatable, structured way. The puzzle can then be represented by a consistent data structure to pass to the solver. For this problem I took inspiration from a great article on retrieving boxes from images. I added some of my own tweaks to this.</p>
 <p>One of the trickiest things I found was getting a decent binary image — this involves removing colour and any lighting gradient from the photo, leaving the image in clear black and white. This make the subsequent task of box detection much simpler.</p>
 <p>To begin with I tried Otsu’s method. This makes a key assumption that an image has a bimodal distribution of pixel values, and tries to fit the threshold in between the two bimodal peaks. For images with a clear foreground / background separation this can work well. In my case, it makes a bit of a hash of more challenging images.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="thresholding.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption margin-caption">Two different methods of binary thresholding of a puzzle image</figcaption>
 </figure>
 </div>
 <p>A more robust method I found was the Adaptive Gaussian Threshold. This deals effectively with variable lighting levels we are likely to encounter in a smartphone or webcam image. Essentially what this does is passes a kernel over the image. For each position of the kernel the threshold is calculated as the weighted sum of the pixel value and the kernel — otherwise known in deep learning as a convolution. The values of the kernel essentially look like a 3D Gaussian curve. As a final step, a constant is added which is useful for dealing with varying amounts of noise across the whole image.</p>
