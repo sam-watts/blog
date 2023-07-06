@@ -12,7 +12,7 @@ Following on from my [previous post on solving futoshiki puzzles](../solving-fut
 
 ![An example pixel-level prediction from the semantic segmentation model](front.png){width=80%}
 
-### So what is Semantic Segmentation?
+## So what is Semantic Segmentation?
 
 Semantic Segmentation is a step up in complexity versus the more common computer vision tasks such as classification and object detection. The goal is to produce a pixel-level prediction for one or more classes. This prediction is referred to as an image ‘mask’. The example here shows 3 overlaid masks for person, sheep, and dog represented by the different foreground colours.
 
@@ -23,7 +23,7 @@ For my task, the setup is somewhat simpler as there is only one class to predict
 
 ![An example training pair of image and mask for my model](training_pair.png){width=80%}
 
-### Labelling your dataset
+## Labelling your dataset
 How do we get the image masks I’ve just talked about? [VIA](http://www.robots.ox.ac.uk/~vgg/software/via/) is a great tool for image labelling — it’s open source and runs in a browser from a standalone HTML file.
 
 ![VIA in action](via.gif)
@@ -42,7 +42,7 @@ I then wrote a custom pytorch dataloader, which converts the polygon json into a
 
 In total I labelled 43 images, which I split 75:25 into training and validation sets. I later added an extra 7 images to serve as a test set. This might not seem like much data to be training a large neural network on - but fortunately there are some techniques we can use to get the most out of this small set of images!
 
-### Building the model
+## Building the model
 As this is a prototype, I wanted to see if the approach would achieve decent results without building the whole thing myself from scratch and potentially wasting a lot of effort. With that in mind, I used the awesome [`segmentation-models-pytorch`](https://github.com/qubvel/segmentation_models.pytorch) library. The power of this library hinges on transfer learning, which means we can avoid having to train the entire network from a standing start.
 
 ### U-Net
@@ -90,7 +90,7 @@ model = smp.Unet(
 ).to(DEVICE)
 ```
 
-### Data Augmentation
+## Data Augmentation
 As the training dataset only contains 36 images, overfitting is a serious concern. If we train for multiple epochs over this small dataset, we might worry that our model will start fitting to the noise in this small dataset, leading to poor performance on out-of-sample examples. This problem can be somewhat mitigated by data augmentation. As each training image and mask pair is read into memory to pass to the model, we apply several layers of non-deterministic image processing, as shown below.
 
 ::: {.column-page-inset-right}
@@ -132,7 +132,7 @@ As you can see below, most of the augmentations by themselves only provide a sub
 
 ![Stacked augmentations, to be passed to the model](aug_types.png)
 
-### Training & Evaluation
+## Training & Evaluation
 The most commonly used loss function is pixel wise Cross-Entropy Loss - similar to what is used in general classification tasks. Here, we instead use Dice Loss, which was introduced to address the issue of class imbalance in semantic segmentation:
 
 $$Dice Loss = \frac{2|A ∩ B|}{|A| + |B|}$$
@@ -154,7 +154,7 @@ Training regime:
 
 ![Intersection-over-Union of the model on training and validation sets at each epoch of training](iou_vs_epoch.png)
 
-### Prediction
+## Prediction
 I tested the trained model on 7 held out images from my labelled dataset, and the model achieved a IOU Score = 0.94 for these images, including some with puzzles at odd angles and as a smaller part of the image.
 
 ![](preds.png){width="80%" fig-align="center"}
@@ -165,7 +165,7 @@ I also ran the model over all of the frames in a short video to see the results 
 
 ![](pred_gif.gif){fig-align="center"}
 
-### Final Results — integration into solver tool
+## Final Results — integration into solver tool
 The enhanced version of the code base I discussed in my prior post can be found [here](https://github.com/sam-watts/futoshiki-solver/tree/v2.0). This version of the model shows some slight activation on background features, which is perhaps the sign of some overfitting.
 
 ![](full_run.gif){width="80%" fig-align="center"}
