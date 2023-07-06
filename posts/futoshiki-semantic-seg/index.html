@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:image:width" content="800">
 </head>
 
-<body class="nav-fixed">
+<body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -151,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Building a Custom Semantic Segmentation Model</h1>
@@ -184,9 +184,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#so-what-is-semantic-segmentation" id="toc-so-what-is-semantic-segmentation" class="nav-link active" data-scroll-target="#so-what-is-semantic-segmentation">So what is Semantic Segmentation?</a></li>
+  <li><a href="#labelling-your-dataset" id="toc-labelling-your-dataset" class="nav-link" data-scroll-target="#labelling-your-dataset">Labelling your dataset</a></li>
+  <li><a href="#building-the-model" id="toc-building-the-model" class="nav-link" data-scroll-target="#building-the-model">Building the model</a>
+  <ul class="collapse">
+  <li><a href="#u-net" id="toc-u-net" class="nav-link" data-scroll-target="#u-net">U-Net</a></li>
+  <li><a href="#encoder-efficientnet-b3" id="toc-encoder-efficientnet-b3" class="nav-link" data-scroll-target="#encoder-efficientnet-b3">Encoder — EfficientNet-B3</a></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting it all together</a></li>
+  </ul></li>
+  <li><a href="#data-augmentation" id="toc-data-augmentation" class="nav-link" data-scroll-target="#data-augmentation">Data Augmentation</a></li>
+  <li><a href="#training-evaluation" id="toc-training-evaluation" class="nav-link" data-scroll-target="#training-evaluation">Training &amp; Evaluation</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction">Prediction</a></li>
+  <li><a href="#final-results-integration-into-solver-tool" id="toc-final-results-integration-into-solver-tool" class="nav-link" data-scroll-target="#final-results-integration-into-solver-tool">Final Results — integration into solver tool</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
@@ -201,8 +221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption class="figure-caption margin-caption">An example pixel-level prediction from the semantic segmentation model</figcaption>
 </figure>
 </div>
-<section id="so-what-is-semantic-segmentation" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="so-what-is-semantic-segmentation">So what is Semantic Segmentation?</h3>
+<section id="so-what-is-semantic-segmentation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="so-what-is-semantic-segmentation">So what is Semantic Segmentation?</h2>
 <p>Semantic Segmentation is a step up in complexity versus the more common computer vision tasks such as classification and object detection. The goal is to produce a pixel-level prediction for one or more classes. This prediction is referred to as an image ‘mask’. The example here shows 3 overlaid masks for person, sheep, and dog represented by the different foreground colours.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -218,8 +238,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="labelling-your-dataset" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="labelling-your-dataset">Labelling your dataset</h3>
+<section id="labelling-your-dataset" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="labelling-your-dataset">Labelling your dataset</h2>
 <p>How do we get the image masks I’ve just talked about? <a href="http://www.robots.ox.ac.uk/~vgg/software/via/">VIA</a> is a great tool for image labelling — it’s open source and runs in a browser from a standalone HTML file.</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
@@ -236,10 +256,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I then wrote a custom pytorch dataloader, which converts the polygon json into a single channel image mask. The training image and the target mask are then passed on to the model.</p>
 <p>In total I labelled 43 images, which I split 75:25 into training and validation sets. I later added an extra 7 images to serve as a test set. This might not seem like much data to be training a large neural network on - but fortunately there are some techniques we can use to get the most out of this small set of images!</p>
 </section>
-<section id="building-the-model" class="level3">
-<h3 class="anchored" data-anchor-id="building-the-model">Building the model</h3>
+<section id="building-the-model" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="building-the-model">Building the model</h2>
 <p>As this is a prototype, I wanted to see if the approach would achieve decent results without building the whole thing myself from scratch and potentially wasting a lot of effort. With that in mind, I used the awesome <a href="https://github.com/qubvel/segmentation_models.pytorch"><code>segmentation-models-pytorch</code></a> library. The power of this library hinges on transfer learning, which means we can avoid having to train the entire network from a standing start.</p>
-</section>
 <section id="u-net" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="u-net">U-Net</h3>
 <p>U-Net consists of a coupled encoder and decoder structure, which builds high level abstractions of input images before expanding out these abstractions to provide a pixel-level prediction.</p>
@@ -287,8 +306,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    activation<span class="op">=</span>ACTIVATION,</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>).to(DEVICE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="data-augmentation" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="data-augmentation">Data Augmentation</h3>
+</section>
+<section id="data-augmentation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="data-augmentation">Data Augmentation</h2>
 <p>As the training dataset only contains 36 images, overfitting is a serious concern. If we train for multiple epochs over this small dataset, we might worry that our model will start fitting to the noise in this small dataset, leading to poor performance on out-of-sample examples. This problem can be somewhat mitigated by data augmentation. As each training image and mask pair is read into memory to pass to the model, we apply several layers of non-deterministic image processing, as shown below.</p>
 <div class="column-page-inset-right">
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> albumentations <span class="im">as</span> albu</span>
@@ -332,8 +352,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="training-evaluation" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="training-evaluation">Training &amp; Evaluation</h3>
+<section id="training-evaluation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="training-evaluation">Training &amp; Evaluation</h2>
 <p>The most commonly used loss function is pixel wise Cross-Entropy Loss - similar to what is used in general classification tasks. Here, we instead use Dice Loss, which was introduced to address the issue of class imbalance in semantic segmentation:</p>
 <p><span class="math display">\[Dice Loss = \frac{2|A ∩ B|}{|A| + |B|}\]</span></p>
 <p>In practice, the intersection term of this equation is approximated by calculating the element-wise product of the prediction and target mask matrices:</p>
@@ -362,8 +382,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="prediction" class="level3">
-<h3 class="anchored" data-anchor-id="prediction">Prediction</h3>
+<section id="prediction" class="level2">
+<h2 class="anchored" data-anchor-id="prediction">Prediction</h2>
 <p>I tested the trained model on 7 held out images from my labelled dataset, and the model achieved a IOU Score = 0.94 for these images, including some with puzzles at odd angles and as a smaller part of the image.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -382,8 +402,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="final-results-integration-into-solver-tool" class="level3">
-<h3 class="anchored" data-anchor-id="final-results-integration-into-solver-tool">Final Results — integration into solver tool</h3>
+<section id="final-results-integration-into-solver-tool" class="level2">
+<h2 class="anchored" data-anchor-id="final-results-integration-into-solver-tool">Final Results — integration into solver tool</h2>
 <p>The enhanced version of the code base I discussed in my prior post can be found <a href="https://github.com/sam-watts/futoshiki-solver/tree/v2.0">here</a>. This version of the model shows some slight activation on background features, which is perhaps the sign of some overfitting.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
