@@ -1,0 +1,17 @@
+---
+title: "Notes"
+listing:
+  contents: notes
+  sort: "date desc"
+  type: table
+  fields: [title, date, categories]
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: article
+title-block-banner: true
+comments: false
+image-height: 50%
+backgroundcolor: white
+---
+

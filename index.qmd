@@ -1,5 +1,5 @@
 ---
-title: "Posts"
+title: "Blog"
 listing:
   contents: posts
   sort: "date desc"
@@ -11,6 +11,18 @@ page-layout: article
 title-block-banner: true
 comments: false
 image-height: 50%
+backgroundcolor: white
 ---
 
-
+<style>
+  /* body {
+  background-image: url("samwatts_a_background_pattern_for_a_personal_blog_site_that_wri_fbeb6ebd-2b42-4493-8c81-b8dcac420c78.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+  
+  quarto-margin-sidebar {
+  background-color: #000000
+} */
+</style>

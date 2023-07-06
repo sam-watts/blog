@@ -2,27 +2,25 @@ project:
   type: website
 
 website:
-  title: "Sam Watts - Blog"
+  title: "Sam Watts"
   favicon: favicon.ico
   open-graph: true
   navbar:
-    background: "#008E97"
+    background: "#000000"
     right:
       - about.qmd
+      - index.qmd
+      - notes.qmd
       - icon: github
         href: https://github.com/sam-watts
 
   comments:
     utterances:
       repo: sam-watts/blog
-
-theme:
-  light: flatly
-  dark: darkly
   
 format:
   html:
-    theme: cosmo
+    theme: flatly
     css: styles.css
 
 execute:
