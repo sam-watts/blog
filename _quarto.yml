@@ -25,3 +25,7 @@ format:
 
 execute:
   freeze: auto
+
+toc: true
+toc-location: left
+cap-location: margin
