@@ -378,13 +378,12 @@ This probably also explains why pytorch ended up with its own initialisation str
 <section id="batch-normalization" class="level1">
 <h1>Batch Normalization</h1>
 <p>This methodology was proposed in 2015 to address issues with the stability of training deeper models.</p>
-<p>In effect:</p>
+<p>In effect the idea is to calculate the mean and standard deviation of all inputs across the batch, and use these to center and scale the inputs to unit normal.</p>
+<p>An additional two parameters <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\beta\)</span> are learned as part of the optimisation process, and they restore the representation power of the network after the centering and scaling</p>
 <p><span class="math display">\[ \mu = \frac{\sum_{i=1}^{n}x_i}{n} \]</span></p>
 <p><span class="math display">\[ \sigma = \sqrt\frac{\sum_{i=1}^{n} (x_i - \mu)^2}{n}\]</span></p>
 <p><span class="math display">\[ x_{scaled} = \frac{x_i - \mu}{\sigma + \epsilon} \]</span> (a very small epsilon value is used to avoid divide by zero issues)</p>
 <p><span class="math display">\[ y_{out} = \gamma x_{scaled} + \beta\]</span></p>
-<p><span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\beta\)</span> are parameters learned as part of the optimisation process, and they restore the representation power of the network after the centering and scaling</p>
-<p>This is done vector-wise, meaning that the mean and standard deviation are calculated for all weights across a batch.</p>
 <p>One problem with this approach is that it couples together all samples within a batch when it comes to backpropogation. It can also be the source of painful bugs when used in the wild.</p>
 <p>Since then, numerous other methods have been proposed to try and address these issues, eg. Layer Normalization</p>
 
