@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Sam Watts - Blog</title>
+<title>Sam Watts - Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,9 +72,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -96,8 +96,7 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Sam Watts - Blog">
-<meta property="og:image" content="https://github.com/sam-watts/blog/posts/google-timeline-emissions/Why-for_the_climate-426x426.jpg">
+<meta property="og:title" content="Sam Watts - Notes">
 <meta property="og:site-name" content="Sam Watts">
 </head>
 
@@ -123,11 +122,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./notes.html" rel="" target="">
+    <a class="nav-link active" href="./notes.html" rel="" target="" aria-current="page">
  <span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item compact">
@@ -146,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Blog</h1>
+      <h1 class="title">Notes</h1>
                       </div>
   </div>
     
@@ -164,239 +163,48 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="climate">climate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="computer vision">computer vision <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ml">ml <span class="quarto-category-count">(3)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(3)</span></div><div class="category" data-category="recsys">recsys <span class="quarto-category-count">(1)</span></div><div class="category" data-category="talk">talk <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Neural Networks: Zero to Hero">Neural Networks: Zero to Hero <span class="quarto-category-count">(1)</span></div><div class="category" data-category="WIP">WIP <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<style>
-  /* body {
-  background-image: url("samwatts_a_background_pattern_for_a_personal_blog_site_that_wri_fbeb6ebd-2b42-4493-8c81-b8dcac420c78.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  opacity: 1;
-}
-  
-  quarto-margin-sidebar {
-  background-color: #000000
-} */
-</style>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="climate" data-listing-date-sort="1679097600000" data-listing-file-modified-sort="1688655971857" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="thumbnail">
-<p><a href="./posts/google-timeline-emissions/index.html"> <img src="./posts/google-timeline-emissions/Why-for_the_climate-426x426.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/google-timeline-emissions/index.html">
-<h3 class="no-anchor listing-title">
-Flight Free
-</h3>
-<div class="listing-subtitle">
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
 
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('climate'); return false;">
-climate
-</div>
-</div>
-<a href="./posts/google-timeline-emissions/index.html">
-<div class="listing-description">
-<p>Quantifying personal CO2 emissions with Google Timeline and other thoughts</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/google-timeline-emissions/index.html">
-<div class="listing-date">
-Mar 18, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="ml,talk" data-listing-date-sort="1669766400000" data-listing-file-modified-sort="1688655971873" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/tgtg-meetup-talk/index.html"> <img src="./posts/tgtg-meetup-talk/metaflow_logo.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/tgtg-meetup-talk/index.html">
-<h3 class="no-anchor listing-title">
-Recommender Systems with Metaflow
-</h3>
-<div class="listing-subtitle">
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+Title
+</th>
+<th>
+Date
+</th>
+<th>
+Categories
+</th>
+</tr>
+</thead>
+<tbody class="list">
+<tr data-index="0" data-categories="Neural Networks: Zero to Hero,WIP" data-listing-date-sort="1688601600000" data-listing-file-modified-sort="1688655971681" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-title-sort="Building makemore Part 3: Activations &amp; Gradients, BatchNorm" data-listing-filename-sort="3.ipynb">
+<td>
+<a href="./notes/karpathy-zero-to-hero/3.html" class="title listing-title">Building makemore Part 3: Activations &amp; Gradients, BatchNorm</a>
+</td>
+<td>
+<span class="listing-date">Jul 6, 2023</span>
+</td>
+<td>
+<span class="listing-categories">Neural Networks: Zero to Hero,WIP</span>
+</td>
+</tr>
+</tbody>
 
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('ml'); return false;">
-ml
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('talk'); return false;">
-talk
-</div>
-</div>
-<a href="./posts/tgtg-meetup-talk/index.html">
-<div class="listing-description">
-<p>A talk I gave with a colleague whilst working at Too Good To Go about the benefits of effective ML infrastructure</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/tgtg-meetup-talk/index.html">
-<div class="listing-date">
-Nov 30, 2022
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="ml,recsys" data-listing-date-sort="1665360000000" data-listing-file-modified-sort="1688655971861" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
-<div class="thumbnail">
-<p><a href="./posts/recsys-2022-highlights/index.html"> <img src="./posts/recsys-2022-highlights/Recsys-OG.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/recsys-2022-highlights/index.html">
-<h3 class="no-anchor listing-title">
-RecSys 2022 - My Top 5 Papers
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('ml'); return false;">
-ml
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('recsys'); return false;">
-recsys
-</div>
-</div>
-<a href="./posts/recsys-2022-highlights/index.html">
-<div class="listing-description">
-<p>Highlights from the conference</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/recsys-2022-highlights/index.html">
-<div class="listing-date">
-Oct 10, 2022
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="ml,python" data-listing-date-sort="1627689600000" data-listing-file-modified-sort="1688655971689" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="thumbnail">
-<p><a href="./posts/dockerized-debugging-ml/index.html"> <img src="./posts/dockerized-debugging-ml/Moby-logo.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/dockerized-debugging-ml/index.html">
-<h3 class="no-anchor listing-title">
-Debugging for Dockerized ML Applications in Python
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('ml'); return false;">
-ml
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
-python
-</div>
-</div>
-<a href="./posts/dockerized-debugging-ml/index.html">
-<div class="listing-description">
-<p>Using VScode and debugpy to make debugging a breeze</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/dockerized-debugging-ml/index.html">
-<div class="listing-date">
-Jul 31, 2021
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="python,computer vision" data-listing-date-sort="1605916800000" data-listing-file-modified-sort="1688655971761" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
-<div class="thumbnail">
-<p><a href="./posts/futoshiki-semantic-seg/index.html"> <img src="./posts/futoshiki-semantic-seg/front.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/futoshiki-semantic-seg/index.html">
-<h3 class="no-anchor listing-title">
-Building a Custom Semantic Segmentation Model
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
-python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('computer vision'); return false;">
-computer vision
-</div>
-</div>
-<a href="./posts/futoshiki-semantic-seg/index.html">
-<div class="listing-description">
-<p>Using your own data to create a robust computer vision model</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/futoshiki-semantic-seg/index.html">
-<div class="listing-date">
-Nov 21, 2020
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="python,computer vision" data-listing-date-sort="1601251200000" data-listing-file-modified-sort="1688655971869" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
-<div class="thumbnail">
-<p><a href="./posts/solving-futoshiki-puzzles/index.html"> <img src="./posts/solving-futoshiki-puzzles/puzzle_grid.jpeg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/solving-futoshiki-puzzles/index.html">
-<h3 class="no-anchor listing-title">
-Solving Futoshiki Puzzles in Python
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
-python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('computer vision'); return false;">
-computer vision
-</div>
-</div>
-<a href="./posts/solving-futoshiki-puzzles/index.html">
-<div class="listing-description">
-<p>Is it possible to automate solving a Futoshiki puzzle from a webcam image?</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/solving-futoshiki-puzzles/index.html">
-<div class="listing-date">
-Sep 28, 2020
-</div>
-</a>
-</div>
-</div>
-</div>
+</table>
 <div class="listing-no-matching d-none">
 No matching items
 </div>

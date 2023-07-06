@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-07-06">
+
+<title>Sam Watts - Building makemore Part 3: Activations &amp; Gradients, BatchNorm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Sam Watts - Building makemore Part 3: Activations &amp; Gradients, BatchNorm">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://github.com/sam-watts/blog/notes/karpathy-zero-to-hero/3_files/figure-html/cell-3-output-2.png">
+<meta property="og:site-name" content="Sam Watts">
+<meta property="og:image:height" content="433">
+<meta property="og:image:width" content="1610">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Sam Watts</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../notes.html" rel="" target="">
+ <span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sam-watts" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#parameter-initialization" id="toc-parameter-initialization" class="nav-link active" data-scroll-target="#parameter-initialization">Parameter Initialization</a>
+  <ul class="collapse">
+  <li><a href="#final-layer-bias-initilization" id="toc-final-layer-bias-initilization" class="nav-link" data-scroll-target="#final-layer-bias-initilization">1. Final Layer Bias Initilization</a></li>
+  <li><a href="#weight-initialization" id="toc-weight-initialization" class="nav-link" data-scroll-target="#weight-initialization">2. Weight Initialization</a>
+  <ul class="collapse">
+  <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example">Worked example</a></li>
+  </ul></li>
+  <li><a href="#bias-initialization" id="toc-bias-initialization" class="nav-link" data-scroll-target="#bias-initialization">Bias Initialization</a></li>
+  </ul></li>
+  <li><a href="#batch-normalization" id="toc-batch-normalization" class="nav-link" data-scroll-target="#batch-normalization">Batch Normalization</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Building makemore Part 3: Activations &amp; Gradients, BatchNorm</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Neural Networks: Zero to Hero</div>
+    <div class="quarto-category">WIP</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 6, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Course Page: <a href="https://karpathy.ai/zero-to-hero.html" class="uri">https://karpathy.ai/zero-to-hero.html</a></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/P6sfmUTpUmc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="parameter-initialization" class="level1">
+<h1>Parameter Initialization</h1>
+<p>Poor initialization of model weights can be problematic in at least two different cases:</p>
+<section id="final-layer-bias-initilization" class="level2">
+<h2 class="anchored" data-anchor-id="final-layer-bias-initilization">1. Final Layer Bias Initilization</h2>
+<p>It can be common to see a “hockey stick” plot when analyzing the loss plots of a neural network for the first few iterations of training. This happens when network is first learning to scale the logits into the same range as the labels.</p>
+<p>To mitigate this, the bias of the final layer can be set based on the type of ML task, and the balance of the dataset used. For the example of Makemore, Andrej sets the bias to zero to correspond to a uniform distribution. He could have also investigated the distribution of letters in the dataset and set the bias according to that - this is kind of like Empirical Bayes!</p>
+<p>For other cases, Andrej provides advice in his <a href="https://karpathy.github.io/2019/04/25/recipe/#2-set-up-the-end-to-end-trainingevaluation-skeleton--get-dumb-baselines">recipe for training neural nets</a>:</p>
+<blockquote class="blockquote">
+<ul>
+<li><strong>init well.</strong> Initialize the final layer weights correctly. E.g. if you are regressing some values that have a mean of 50 then initialize the final bias to 50. If you have an imbalanced dataset of a ratio 1:10 of positives:negatives, set the bias on your logits such that your network predicts probability of 0.1 at initialization. Setting these correctly will speed up convergence and eliminate “hockey stick” loss curves where in the first few iteration your network is basically just learning the bias.</li>
+</ul>
+</blockquote>
+</section>
+<section id="weight-initialization" class="level2">
+<h2 class="anchored" data-anchor-id="weight-initialization">2. Weight Initialization</h2>
+<p>Large values in matrices in pre-activation states can lead to strange behaviour when passed through activation functions. For example, activation functions that have asymptotic areas (tanh, sigmoid) can “saturate”, leading to a high number of outputs which are either 0 or 1. This can cause more problems in deep networks. Ideally we want activations in the network to stay within the unit Gaussian range - mean of 0, std of 1</p>
+<p>We can fix this be initializing weights intelligently. In theory, this can be done manually by scaling down randomly initialized weights, and inspecting the effects on the distribution of activations. However this approach is not scalable to larger networks.</p>
+<p>He (AKA Kaiming) Initialization is a more principled way of doing this. It is based on a mathematical analysis of the effects on the statistical changes made by activation functions.</p>
+<p>This is functionally the same as what Andrej shows in the lecture - dividing the unit gaussian weights by <span class="math inline">\(gain * \sqrt{n_l}\)</span>, where <span class="math inline">\(n_l\)</span> is the “fan-in”, the number of inputs to the layer, and <span class="math inline">\(gain\)</span> is an activation specific constant. These constants are defined <a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.calculate_gain">in pytorch too</a>:</p>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>nonlinearity</th>
+<th>gain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear / Identity</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Conv{1,2,3}D</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Sigmoid</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Tanh</td>
+<td><span class="math inline">\(\frac{5}{3}\)</span>​</td>
+</tr>
+<tr class="odd">
+<td>ReLU</td>
+<td><span class="math inline">\(\sqrt{2}\)</span>​</td>
+</tr>
+<tr class="even">
+<td>Leaky Relu</td>
+<td><span class="math inline">\(\sqrt{\frac{2}{1 + \text{negative\_slope}^2}}\)</span>​​</td>
+</tr>
+<tr class="odd">
+<td>SELU</td>
+<td><span class="math inline">\(\frac{3}{4}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The paper first describing this: <a href="https://arxiv.org/abs/1502.01852">Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification - He, K. et al.&nbsp;(2015)</a></p>
+<section id="worked-example" class="level3">
+<h3 class="anchored" data-anchor-id="worked-example">Worked example</h3>
+<p>Lets imagine some neuron inputs <code>x</code> and neuron weights <code>w</code>. We can calculate the matrix product <code>y</code> before passing the resulting values through and activation function RELU to get some activations. When we compare the standard deviation in <code>h</code> to <code>x</code> we can see there has been an increase.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1000</span>, <span class="dv">20</span>) <span class="co"># inputs</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.randn(<span class="dv">20</span>, <span class="dv">200</span>) <span class="co"># neuron weights</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">@</span> w</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> torch.relu(y)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.std(), h.std())</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">5</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.hist(x.view(<span class="op">-</span><span class="dv">1</span>), density<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.hist(h.view(<span class="op">-</span><span class="dv">1</span>), density<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor(0.9962) tensor(2.5542)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p><code>torch.randn</code> draws values from a unit normal distribution, <span class="math inline">\(\mu=0, \sigma=1\)</span> - so we can change the standard deviation by scaling it by a factor. For RELU, our Kaiming initialization should have <span class="math inline">\(\sigma = \sqrt{\frac{2}{n_l}}\)</span>, where <span class="math inline">\(n_l\)</span> is the “fan-in” - the number of inputs to the neuron</p>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.randn(<span class="dv">20</span>, <span class="dv">200</span>) <span class="op">*</span> (<span class="dv">2</span> <span class="op">/</span> <span class="dv">20</span>)<span class="op">**</span><span class="fl">0.5</span> <span class="co"># init w with He Initialization</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">@</span> w <span class="co"># x is fixed from above</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> torch.relu(y)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.std(), h.std())</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">5</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.hist(x.view(<span class="op">-</span><span class="dv">1</span>), density<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.hist(h.view(<span class="op">-</span><span class="dv">1</span>), density<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor(0.9962) tensor(0.8292)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We can see that this has reduced the standard deviation of the activations, closer to the range of unit normal (although obviously the output of RELU is not normally distributed)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="NOTE: Default parameter initialization in `torch.nn.Linear`">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+NOTE: Default parameter initialization in <code>torch.nn.Linear</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When taking a look at the source code of <code>nn.Linear</code>, it might seem like they are using the Kaiming init:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reset_parameters(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Setting a=sqrt(5) in kaiming_uniform is the same as initializing with</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># uniform(-1/sqrt(in_features), 1/sqrt(in_features)). For details, see</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># https://github.com/pytorch/pytorch/issues/57109</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        init.kaiming_uniform_(<span class="va">self</span>.weight, a<span class="op">=</span>math.sqrt(<span class="dv">5</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.bias <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            fan_in, _ <span class="op">=</span> init._calculate_fan_in_and_fan_out(<span class="va">self</span>.weight)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            bound <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> math.sqrt(fan_in) <span class="cf">if</span> fan_in <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            init.uniform_(<span class="va">self</span>.bias, <span class="op">-</span>bound, bound)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However from the comment it becomes clear that actually they are using the <code>nn.init.kaiming_uniform_</code> function as a hack to achieve values from the uniform distribution <span class="math inline">\(U(-1/\sqrt(in\_features), 1/\sqrt(in\_features))\)</span></p>
+<p>To me it seems strange that they are not using an init defined in <code>nn.init</code> for this…</p>
+<p>Delving <a href="https://discuss.pytorch.org/t/how-are-layer-weights-and-biases-initialized-by-default/13073/33">into the pytorch forums</a>, it seems that this default init scheme is non standard:</p>
+<blockquote class="blockquote">
+<div class="cooked">
+<p>
+<a href="https://discuss.pytorch.org/t/whats-the-default-initialization-methods-for-layers/3157/17">One answer in this older thread</a> suggests that the initialisation resembles what is referred to “LeCun Initialisation”. This comment is probably long overdue, but pytorch does not implement LeCun <strong>or</strong> He/Kaiming initialisation for the <code>Linear</code> module.
+</p>
+<p>
+If we go through the code (v1.5.0) of <code>Linear.reset_parameters</code>, the first line initialises the weight matrix:<br> <code>init.kaiming_uniform_(self.weight, a=math.sqrt(5))</code>. If we take a look at how <code>kaiming_uniform</code> is implemented, we find that this line is equivalent to
+</p>
+<pre><code class="hljs language-lua">fan = tensor.size(<span class="hljs-number">1</span>)  # fan-<span class="hljs-keyword">in</span> <span class="hljs-keyword">for</span> linear, as computed by _calculate_correct_fan
+gain = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sqrt</span>(<span class="hljs-number">2.0</span> / (<span class="hljs-number">1</span> + a ** <span class="hljs-number">2</span>))  # gain, as computed by calculate_gain
+std = gain / <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sqrt</span>(fan)
+bound = <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sqrt</span>(<span class="hljs-number">3.0</span>) * std
+with torch.no_grad():
+<span class="hljs-keyword">return</span> tensor.uniform_(-bound, bound)
+</code></pre>
+<p>
+Since <code>a = math.sqrt(5)</code> the weights are initialised with <code>std = 1 / math.sqrt(3.0 * fan_in)</code>. For reference, LeCun initialisation would be <code>1 / math.sqrt(fan_in)</code> and He initialisation uses <code>math.sqrt(2 / fan_in)</code>.
+</p>
+<p>
+The bias initialisation in <code>Linear.reset_parameters</code> reveals another problem. Although biases are normally initialised with zeros (for the sake of simplicity), the idea is probably to initialise the biases with <code>std = math.sqrt(1 / fan_in)</code> (cf.&nbsp;LeCun init). By using this value for the boundaries of the uniform distribution, the resulting distribution has std <code>math.sqrt(1 / 3.0 * fan_in)</code>, which happens to be the same as the standard deviation for the weights.
+</p>
+<p>
+A more reasonable default for me would be to use LeCun initialisation (since this has been the go-to standard since 1998). I could also understand Kaiming initialisation as the default, because everyone is using ReLU activation functions everywhere anyway (although I have a feeling that this is not necessarily the case for people working with fully connected networks). Some time ago, I submitted a <a href="https://github.com/pytorch/pytorch/pull/14034" rel="nofollow noopener">pull request</a> to adopt LeCun initialisation as the default, but there seems to be little incentive to actually make changes due to backward compatibility.
+</p>
+<p>
+This probably also explains why pytorch ended up with its own initialisation strategy for fully connected networks. Someone must have forgotten about the fact that a uniform distribution with bounds <code>-b, b</code> has a standard deviation of <code>b / math.sqrt(3)</code> instead of just <code>b</code>. Due to backwards compatibility this got stuck and no-one is willing to make the change to the more widely accepted and standard initialisation.
+</p>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="bias-initialization" class="level2">
+<h2 class="anchored" data-anchor-id="bias-initialization">Bias Initialization</h2>
+<p>For biases not in the final layer, both Kaiming Initialization and other regimes set the bias to 0</p>
+</section>
+</section>
+<section id="batch-normalization" class="level1">
+<h1>Batch Normalization</h1>
+<p>This methodology was proposed in 2015 to address issues with the stability of training deeper models.</p>
+<p>In effect:</p>
+<p><span class="math display">\[ \mu = \frac{\sum_{i=1}^{n}x_i}{n} \]</span></p>
+<p><span class="math display">\[ \sigma = \sqrt\frac{\sum_{i=1}^{n} (x_i - \mu)^2}{n}\]</span></p>
+<p><span class="math display">\[ x_{scaled} = \frac{x_i - \mu}{\sigma + \epsilon} \]</span> (a very small epsilon value is used to avoid divide by zero issues)</p>
+<p><span class="math display">\[ y_{out} = \gamma x_{scaled} + \beta\]</span></p>
+<p><span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\beta\)</span> are parameters learned as part of the optimisation process, and they restore the representation power of the network after the centering and scaling</p>
+<p>This is done vector-wise, meaning that the mean and standard deviation are calculated for all weights across a batch.</p>
+<p>One problem with this approach is that it couples together all samples within a batch when it comes to backpropogation. It can also be the source of painful bugs when used in the wild.</p>
+<p>Since then, numerous other methods have been proposed to try and address these issues, eg. Layer Normalization</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="sam-watts/blog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

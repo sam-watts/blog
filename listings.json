@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/karpathy-zero-to-hero/3.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/google-timeline-emissions/index.html",
