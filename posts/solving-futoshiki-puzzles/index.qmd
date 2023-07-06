@@ -19,7 +19,7 @@ I’ve decided to start writing up some of the coding I do in my spare time, so 
 
 The most basic way I could think of doing this was to use a laptop webcam, allowing the captured image to be fed straight through to the rest of the algorithm locally. The function below opens up a capture window using OpenCV, showing your current webcam display, with a grid to guide capture. This allows us to crop the captured image with the grid, making life a whole lot easier down the line.
 
-::: {.column-body-outset-right}
+::: {.column-page-inset-right}
 
 ```python
 def capture_image(save_img: str=None) -> Union[np.ndarray, bool]:
