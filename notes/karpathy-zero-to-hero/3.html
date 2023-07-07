@@ -166,10 +166,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#bias-initialization" id="toc-bias-initialization" class="nav-link" data-scroll-target="#bias-initialization">Bias Initialization</a></li>
   </ul></li>
-  <li><a href="#batch-normalization" id="toc-batch-normalization" class="nav-link" data-scroll-target="#batch-normalization">Batch Normalization</a>
-  <ul class="collapse">
+  <li><a href="#batch-normalization" id="toc-batch-normalization" class="nav-link" data-scroll-target="#batch-normalization">Batch Normalization</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
-  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -393,8 +391,9 @@ This probably also explains why pytorch ended up with its own initialisation str
 <p>One problem with this approach is that it couples together all samples within a batch when it comes to backpropagation. It can also be the source of painful bugs when used in the wild.</p>
 <p>Since then, numerous other methods have been proposed to try and address these issues, eg. Layer Normalization</p>
 <p><a href="https://arxiv.org/abs/1502.03167">Ioffe, Sergey, and Christian Szegedy. “Batch normalization: Accelerating deep network training by reducing internal covariate shift.” International conference on machine learning. pmlr, 2015.</a></p>
-<section id="exercises" class="level3">
-<h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
+</section>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
 <ul>
 <li>E01: I did not get around to seeing what happens when you initialize all weights and biases to zero. Try this and train the neural net. You might think either that 1) the network trains just fine or 2) the network doesn’t train at all, but actually it is 3) the network trains but only partially, and achieves a pretty bad final performance. Inspect the gradients and activations to figure out what is happening and why the network is only partially training, and what part is being trained exactly.</li>
 </ul>
@@ -1005,7 +1004,6 @@ zajelveunen.
 <p>We get the same output! 🔥</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
