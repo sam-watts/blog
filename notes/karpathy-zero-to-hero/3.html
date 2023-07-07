@@ -166,7 +166,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#bias-initialization" id="toc-bias-initialization" class="nav-link" data-scroll-target="#bias-initialization">Bias Initialization</a></li>
   </ul></li>
-  <li><a href="#batch-normalization" id="toc-batch-normalization" class="nav-link" data-scroll-target="#batch-normalization">Batch Normalization</a></li>
+  <li><a href="#batch-normalization" id="toc-batch-normalization" class="nav-link" data-scroll-target="#batch-normalization">Batch Normalization</a>
+  <ul class="collapse">
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -224,8 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="weight-initialization">2. Weight Initialization</h2>
 <p>Large values in matrices in pre-activation states can lead to strange behaviour when passed through activation functions. For example, activation functions that have asymptotic areas (tanh, sigmoid) can “saturate”, leading to a high number of outputs which are either 0 or 1. This can cause more problems in deep networks. Ideally we want activations in the network to stay within the unit Gaussian range - mean of 0, std of 1</p>
 <p>We can fix this be initializing weights intelligently. In theory, this can be done manually by scaling down randomly initialized weights, and inspecting the effects on the distribution of activations. However this approach is not scalable to larger networks.</p>
-<p>He (AKA Kaiming) Initialization is a more principled way of doing this. It is based on a mathematical analysis of the effects on the statistical changes made by activation functions.</p>
-<p>This is functionally the same as what Andrej shows in the lecture - dividing the unit gaussian weights by <span class="math inline">\(gain * \sqrt{n_l}\)</span>, where <span class="math inline">\(n_l\)</span> is the “fan-in”, the number of inputs to the layer, and <span class="math inline">\(gain\)</span> is an activation specific constant. These constants are defined <a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.calculate_gain">in pytorch too</a>:</p>
+<p>Kaiming (AKA He) Initialization is a more principled way of doing this. It is based on a mathematical analysis of the effects on the statistical changes made by activation functions.</p>
+<p>This is functionally the same as what Andrej shows in the lecture - dividing the unit normal weights by <span class="math inline">\(gain * \sqrt{n_l}\)</span>, where <span class="math inline">\(n_l\)</span> is the “fan-in”, the number of inputs to the layer, and <span class="math inline">\(gain\)</span> is an activation specific constant. These constants are defined <a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.calculate_gain">in pytorch too</a>:</p>
 <table class="table">
 <colgroup>
 <col style="width: 18%">
@@ -271,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The paper first describing this: <a href="https://arxiv.org/abs/1502.01852">Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification - He, K. et al.&nbsp;(2015)</a></p>
 <section id="worked-example" class="level3">
 <h3 class="anchored" data-anchor-id="worked-example">Worked example</h3>
-<p>Lets imagine some neuron inputs <code>x</code> and neuron weights <code>w</code>. We can calculate the matrix product <code>y</code> before passing the resulting values through and activation function RELU to get some activations. When we compare the standard deviation in <code>h</code> to <code>x</code> we can see there has been an increase.</p>
+<p>Let’s imagine some neuron inputs <code>x</code> and neuron weights <code>w</code>. We can calculate the matrix product <code>y</code> before passing the resulting values through an activation function RELU to get some activations. When we compare the standard deviation in <code>h</code> to <code>x</code> we can see there has been an increase.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">1000</span>, <span class="dv">20</span>) <span class="co"># inputs</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.randn(<span class="dv">20</span>, <span class="dv">200</span>) <span class="co"># neuron weights</span></span>
@@ -387,10 +390,622 @@ This probably also explains why pytorch ended up with its own initialisation str
 <p><span class="math display">\[ \sigma = \sqrt\frac{\sum_{i=1}^{n} (x_i - \mu)^2}{n}\]</span></p>
 <p><span class="math display">\[ x_{scaled} = \frac{x_i - \mu}{\sigma + \epsilon} \]</span> (a very small epsilon value is used to avoid divide by zero issues)</p>
 <p><span class="math display">\[ y_{out} = \gamma x_{scaled} + \beta\]</span></p>
-<p>One problem with this approach is that it couples together all samples within a batch when it comes to backpropogation. It can also be the source of painful bugs when used in the wild.</p>
+<p>One problem with this approach is that it couples together all samples within a batch when it comes to backpropagation. It can also be the source of painful bugs when used in the wild.</p>
 <p>Since then, numerous other methods have been proposed to try and address these issues, eg. Layer Normalization</p>
+<p><a href="https://arxiv.org/abs/1502.03167">Ioffe, Sergey, and Christian Szegedy. “Batch normalization: Accelerating deep network training by reducing internal covariate shift.” International conference on machine learning. pmlr, 2015.</a></p>
+<section id="exercises" class="level3">
+<h3 class="anchored" data-anchor-id="exercises">Exercises</h3>
+<ul>
+<li>E01: I did not get around to seeing what happens when you initialize all weights and biases to zero. Try this and train the neural net. You might think either that 1) the network trains just fine or 2) the network doesn’t train at all, but actually it is 3) the network trains but only partially, and achieves a pretty bad final performance. Inspect the gradients and activations to figure out what is happening and why the network is only partially training, and what part is being trained exactly.</li>
+</ul>
+<p>When all weights and biases are set to zero, we can empirically see that there is not much going on when we train the model. In fact, the only parameters that seem to be changing are the final layer bias. We can reason about this by thinking about the forward and backward passes when all parameters are initialized to 0.</p>
+<p><strong>Forward pass</strong></p>
+<p><span class="math inline">\(y = Wx + b \rightarrow 0 * x + 0 = 0\)</span></p>
+<p><span class="math inline">\(tanh(y) = tanh(0) = 0\)</span></p>
+<p>Based on this, we know that the activation produced by each neuron will be 0. This also means that all neurons inputs (except for the first layer) will also be zero.</p>
+<p><strong>Backward Pass</strong></p>
+<p>Thinking about the backward pass, we can think about what the local derivatives are for the final layer expression, to discover what is going on with the gradients.</p>
+<p><span class="math inline">\(y = Wx + b\)</span></p>
+<p><span class="math inline">\(\frac{\partial y}{\partial W} = x\)</span></p>
+<p><span class="math inline">\(\frac{\partial y}{\partial b} = 1\)</span></p>
+<p>Using the chain rule, we will be multiplying these local gradients by the global gradients to get the gradient to update with. The kicker here is that <span class="math inline">\(\frac{\partial y}{\partial W} = x = 0\)</span>, as <span class="math inline">\(x\)</span> is the output of our previous layer, which we have shown is <span class="math inline">\(tanh(0) = 0\)</span>. This parameter will not be updated from zero. This also means that no gradient will flow through to the earlier layers in the network!</p>
+<p>Additionally, as the local gradient wrt. the final layer bias = 1, this means that this parameter will be updated from 0 as training progresses.</p>
+<div class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt <span class="co"># for making figures</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># read in all the words</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> <span class="bu">open</span>(<span class="st">'names.txt'</span>, <span class="st">'r'</span>).read().splitlines()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>words[:<span class="dv">8</span>]</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(words)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># build the vocabulary of characters and mappings to/from integers</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>chars <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(<span class="bu">set</span>(<span class="st">''</span>.join(words))))</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>stoi <span class="op">=</span> {s:i<span class="op">+</span><span class="dv">1</span> <span class="cf">for</span> i,s <span class="kw">in</span> <span class="bu">enumerate</span>(chars)}</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>stoi[<span class="st">'.'</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>itos <span class="op">=</span> {i:s <span class="cf">for</span> s,i <span class="kw">in</span> stoi.items()}</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>vocab_size <span class="op">=</span> <span class="bu">len</span>(itos)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(itos)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(vocab_size)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># build the dataset</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>block_size <span class="op">=</span> <span class="dv">3</span> <span class="co"># context length: how many characters do we take to predict the next one?</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_dataset(words):  </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  X, Y <span class="op">=</span> [], []</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> w <span class="kw">in</span> words:</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    context <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> block_size</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ch <span class="kw">in</span> w <span class="op">+</span> <span class="st">'.'</span>:</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>      ix <span class="op">=</span> stoi[ch]</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>      X.append(context)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>      Y.append(ix)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>      context <span class="op">=</span> context[<span class="dv">1</span>:] <span class="op">+</span> [ix] <span class="co"># crop and append</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  X <span class="op">=</span> torch.tensor(X)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  Y <span class="op">=</span> torch.tensor(Y)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(X.shape, Y.shape)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> X, Y</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">42</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>random.shuffle(words)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>n1 <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.8</span><span class="op">*</span><span class="bu">len</span>(words))</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>n2 <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.9</span><span class="op">*</span><span class="bu">len</span>(words))</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>Xtr,  Ytr  <span class="op">=</span> build_dataset(words[:n1])     <span class="co"># 80%</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>Xdev, Ydev <span class="op">=</span> build_dataset(words[n1:n2])   <span class="co"># 10%</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>Xte,  Yte  <span class="op">=</span> build_dataset(words[n2:])     <span class="co"># 10%</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: 'i', 10: 'j', 11: 'k', 12: 'l', 13: 'm', 14: 'n', 15: 'o', 16: 'p', 17: 'q', 18: 'r', 19: 's', 20: 't', 21: 'u', 22: 'v', 23: 'w', 24: 'x', 25: 'y', 26: 'z', 0: '.'}
+27
+torch.Size([182625, 3]) torch.Size([182625])
+torch.Size([22655, 3]) torch.Size([22655])
+torch.Size([22866, 3]) torch.Size([22866])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="372">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's train a deeper network</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The classes we create here are the same API as nn.Module in PyTorch</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Linear:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, fan_in, fan_out, bias<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.weight <span class="op">=</span> torch.randn((fan_in, fan_out), generator<span class="op">=</span>g) <span class="op">/</span> fan_in<span class="op">**</span><span class="fl">0.5</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.bias <span class="op">=</span> torch.zeros(fan_out) <span class="cf">if</span> bias <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, x):</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.out <span class="op">=</span> x <span class="op">@</span> <span class="va">self</span>.weight</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.bias <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.out <span class="op">+=</span> <span class="va">self</span>.bias</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.out</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> parameters(<span class="va">self</span>):</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="va">self</span>.weight] <span class="op">+</span> ([] <span class="cf">if</span> <span class="va">self</span>.bias <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> [<span class="va">self</span>.bias])</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BatchNorm1d:</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, dim, eps<span class="op">=</span><span class="fl">1e-5</span>, momentum<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.eps <span class="op">=</span> eps</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.momentum <span class="op">=</span> momentum</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.training <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># parameters (trained with backprop)</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.gamma <span class="op">=</span> torch.ones(dim)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.beta <span class="op">=</span> torch.zeros(dim)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># buffers (trained with a running 'momentum update')</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.running_mean <span class="op">=</span> torch.zeros(dim)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.running_var <span class="op">=</span> torch.ones(dim)</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, x):</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calculate the forward pass</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.training:</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>      xmean <span class="op">=</span> x.mean(<span class="dv">0</span>, keepdim<span class="op">=</span><span class="va">True</span>) <span class="co"># batch mean</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>      xvar <span class="op">=</span> x.var(<span class="dv">0</span>, keepdim<span class="op">=</span><span class="va">True</span>) <span class="co"># batch variance</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>      xmean <span class="op">=</span> <span class="va">self</span>.running_mean</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>      xvar <span class="op">=</span> <span class="va">self</span>.running_var</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    xhat <span class="op">=</span> (x <span class="op">-</span> xmean) <span class="op">/</span> torch.sqrt(xvar <span class="op">+</span> <span class="va">self</span>.eps) <span class="co"># normalize to unit variance</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.out <span class="op">=</span> <span class="va">self</span>.gamma <span class="op">*</span> xhat <span class="op">+</span> <span class="va">self</span>.beta</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the buffers</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.training:</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>      <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.running_mean <span class="op">=</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.momentum) <span class="op">*</span> <span class="va">self</span>.running_mean <span class="op">+</span> <span class="va">self</span>.momentum <span class="op">*</span> xmean</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.running_var <span class="op">=</span> (<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.momentum) <span class="op">*</span> <span class="va">self</span>.running_var <span class="op">+</span> <span class="va">self</span>.momentum <span class="op">*</span> xvar</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.out</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> parameters(<span class="va">self</span>):</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="va">self</span>.gamma, <span class="va">self</span>.beta]</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Tanh:</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, x):</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.out <span class="op">=</span> torch.tanh(x)</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.out</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> parameters(<span class="va">self</span>):</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> []</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>n_embd <span class="op">=</span> <span class="dv">10</span> <span class="co"># the dimensionality of the character embedding vectors</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>n_hidden <span class="op">=</span> <span class="dv">100</span> <span class="co"># the number of neurons in the hidden layer of the MLP</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> torch.Generator().manual_seed(<span class="dv">2147483647</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> torch.randn((vocab_size, n_embd),            generator<span class="op">=</span>g)</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="co"># layers = [</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="co">#   Linear(n_embd * block_size, n_hidden, bias=False), BatchNorm1d(n_hidden), Tanh(),</span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co">#   Linear(           n_hidden, n_hidden, bias=False), BatchNorm1d(n_hidden), Tanh(),</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co">#   Linear(           n_hidden, n_hidden, bias=False), BatchNorm1d(n_hidden), Tanh(),</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="co">#   Linear(           n_hidden, n_hidden, bias=False), BatchNorm1d(n_hidden), Tanh(),</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co">#   Linear(           n_hidden, n_hidden, bias=False), BatchNorm1d(n_hidden), Tanh(),</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#   Linear(           n_hidden, vocab_size, bias=False), BatchNorm1d(vocab_size),</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="co"># ]</span></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>layers <span class="op">=</span> [</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>  Linear(n_embd <span class="op">*</span> block_size, n_hidden), Tanh(),</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden), Tanh(),</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden), Tanh(),</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden), Tanh(),</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden), Tanh(),</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, vocab_size),</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>  <span class="co"># last layer: make less confident</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>  layers[<span class="op">-</span><span class="dv">1</span>].bias <span class="op">*=</span> <span class="dv">0</span> <span class="co">#0.1</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>  layers[<span class="op">-</span><span class="dv">1</span>].weight <span class="op">*=</span> <span class="dv">0</span> <span class="co">#0.1</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>  <span class="co"># all other layers: apply gain</span></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> layers[:<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(layer, Linear):</span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>      layer.weight <span class="op">*=</span> <span class="dv">0</span> <span class="co">#1.0 #5/3</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> [C] <span class="op">+</span> [p <span class="cf">for</span> layer <span class="kw">in</span> layers <span class="cf">for</span> p <span class="kw">in</span> layer.parameters()]</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(p.nelement() <span class="cf">for</span> p <span class="kw">in</span> parameters)) <span class="co"># number of parameters in total</span></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> parameters:</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>  p.requires_grad <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>46497</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="373">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same optimization as last time</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>max_steps <span class="op">=</span> <span class="dv">200000</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>lossi <span class="op">=</span> []</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ud <span class="op">=</span> []</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>wdist <span class="op">=</span> []</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(max_steps):</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># minibatch construct</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  ix <span class="op">=</span> torch.randint(<span class="dv">0</span>, Xtr.shape[<span class="dv">0</span>], (batch_size,), generator<span class="op">=</span>g)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  Xb, Yb <span class="op">=</span> Xtr[ix], Ytr[ix] <span class="co"># batch X,Y</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># forward pass</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  emb <span class="op">=</span> C[Xb] <span class="co"># embed the characters into vectors</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> emb.view(emb.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>) <span class="co"># concatenate the vectors</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> layer(x)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  loss <span class="op">=</span> F.cross_entropy(x, Yb) <span class="co"># loss function</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># backward pass</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    layer.out.retain_grad() <span class="co"># AFTER_DEBUG: would take out retain_graph</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> p <span class="kw">in</span> parameters:</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    p.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  loss.backward()</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># update</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  lr <span class="op">=</span> <span class="fl">0.1</span> <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">150000</span> <span class="cf">else</span> <span class="fl">0.01</span> <span class="co"># step learning rate decay</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> p <span class="kw">in</span> parameters:</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    p.data <span class="op">+=</span> <span class="op">-</span>lr <span class="op">*</span> p.grad</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># track stats</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> i <span class="op">%</span> <span class="dv">10000</span> <span class="op">==</span> <span class="dv">0</span>: <span class="co"># print every once in a while</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>i<span class="sc">:7d}</span><span class="ss">/</span><span class="sc">{</span>max_steps<span class="sc">:7d}</span><span class="ss">: </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  lossi.append(loss.log10().item())</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    ud.append([((lr<span class="op">*</span>p.grad).std() <span class="op">/</span> p.data.std()).log10().item() <span class="cf">for</span> p <span class="kw">in</span> parameters])</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># wdist.append([for l in layers])</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> i <span class="op">&gt;=</span> <span class="dv">1000</span>:</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span> <span class="co"># AFTER_DEBUG: would take out obviously to run full optimization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      0/ 200000: 3.2958</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="374">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize histograms</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>)) <span class="co"># width and height of the plot</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>legends <span class="op">=</span> []</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, layer <span class="kw">in</span> <span class="bu">enumerate</span>(layers[:<span class="op">-</span><span class="dv">1</span>]): <span class="co"># note: exclude the output layer</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">isinstance</span>(layer, Tanh):</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> layer.out</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'layer </span><span class="sc">%d</span><span class="st"> (</span><span class="sc">%10s</span><span class="st">): mean </span><span class="sc">%+.2f</span><span class="st">, std </span><span class="sc">%.2f</span><span class="st">, saturated: </span><span class="sc">%.2f%%</span><span class="st">'</span> <span class="op">%</span> (i, layer.__class__.<span class="va">__name__</span>, t.mean(), t.std(), (t.<span class="bu">abs</span>() <span class="op">&gt;</span> <span class="fl">0.97</span>).<span class="bu">float</span>().mean()<span class="op">*</span><span class="dv">100</span>))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    hy, hx <span class="op">=</span> torch.histogram(t, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(hx[:<span class="op">-</span><span class="dv">1</span>].detach(), hy.detach())</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    legends.append(<span class="ss">f'layer </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>layer<span class="sc">.</span>__class__<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>plt.legend(legends)<span class="op">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'activation distribution'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>layer 1 (      Tanh): mean +0.00, std 0.00, saturated: 0.00%
+layer 3 (      Tanh): mean +0.00, std 0.00, saturated: 0.00%
+layer 5 (      Tanh): mean +0.00, std 0.00, saturated: 0.00%
+layer 7 (      Tanh): mean +0.00, std 0.00, saturated: 0.00%
+layer 9 (      Tanh): mean +0.00, std 0.00, saturated: 0.00%</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="375">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize histograms</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>)) <span class="co"># width and height of the plot</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>legends <span class="op">=</span> []</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, layer <span class="kw">in</span> <span class="bu">enumerate</span>(layers): <span class="co"># note: exclude the output layer</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">isinstance</span>(layer, Linear):</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> layer.weight</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'layer </span><span class="sc">%d</span><span class="st"> (</span><span class="sc">%10s</span><span class="st">): mean </span><span class="sc">%+.2f</span><span class="st">, std </span><span class="sc">%.2f</span><span class="st">'</span> <span class="op">%</span> (i, layer.__class__.<span class="va">__name__</span>, t.mean(), t.std()))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    hy, hx <span class="op">=</span> torch.histogram(t, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(hx[:<span class="op">-</span><span class="dv">1</span>].detach(), hy.detach())</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    legends.append(<span class="ss">f'layer </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>layer<span class="sc">.</span>__class__<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.legend(legends)<span class="op">;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'weights distribution'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>layer 0 (    Linear): mean +0.00, std 0.00
+layer 2 (    Linear): mean +0.00, std 0.00
+layer 4 (    Linear): mean +0.00, std 0.00
+layer 6 (    Linear): mean +0.00, std 0.00
+layer 8 (    Linear): mean +0.00, std 0.00
+layer 10 (    Linear): mean +0.00, std 0.00</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="376">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize histograms</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>)) <span class="co"># width and height of the plot</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>legends <span class="op">=</span> []</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, layer <span class="kw">in</span> <span class="bu">enumerate</span>(layers): </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">isinstance</span>(layer, Linear):</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> layer.bias</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'layer </span><span class="sc">%d</span><span class="st"> (</span><span class="sc">%10s</span><span class="st">): mean </span><span class="sc">%+.2f</span><span class="st">, std </span><span class="sc">%.2f</span><span class="st">'</span> <span class="op">%</span> (i, layer.__class__.<span class="va">__name__</span>, t.mean(), t.std()))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    hy, hx <span class="op">=</span> torch.histogram(t, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(hx[:<span class="op">-</span><span class="dv">1</span>].detach(), hy.detach())</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    legends.append(<span class="ss">f'layer </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>layer<span class="sc">.</span>__class__<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.legend(legends)<span class="op">;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'bias distribution'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>layer 0 (    Linear): mean +0.00, std 0.00
+layer 2 (    Linear): mean +0.00, std 0.00
+layer 4 (    Linear): mean +0.00, std 0.00
+layer 6 (    Linear): mean +0.00, std 0.00
+layer 8 (    Linear): mean +0.00, std 0.00
+layer 10 (    Linear): mean -0.00, std 0.92</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="378">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can see that this is the only parameter with non-zero values</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>layers[<span class="op">-</span><span class="dv">1</span>].bias</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="378">
+<pre><code>tensor([ 1.7014,  1.8266, -0.6536, -0.4635, -0.0927,  1.2793, -1.0680, -0.8004,
+         0.2551,  1.1532, -0.5707, -0.1923,  0.9347,  0.0426,  1.1609,  0.3314,
+        -1.0667, -1.2702,  0.8630,  0.2851, -0.0058, -0.5609, -0.6508, -1.0721,
+        -1.1268,  0.5090, -0.7480], requires_grad=True)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="379">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize histograms</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>)) <span class="co"># width and height of the plot</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>legends <span class="op">=</span> []</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, layer <span class="kw">in</span> <span class="bu">enumerate</span>(layers[:<span class="op">-</span><span class="dv">1</span>]): <span class="co"># note: exclude the output layer</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">isinstance</span>(layer, Tanh):</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> layer.out.grad</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'layer </span><span class="sc">%d</span><span class="st"> (</span><span class="sc">%10s</span><span class="st">): mean </span><span class="sc">%+f</span><span class="st">, std </span><span class="sc">%e</span><span class="st">'</span> <span class="op">%</span> (i, layer.__class__.<span class="va">__name__</span>, t.mean(), t.std()))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    hy, hx <span class="op">=</span> torch.histogram(t, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(hx[:<span class="op">-</span><span class="dv">1</span>].detach(), hy.detach())<span class="op">;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    legends.append(<span class="ss">f'layer </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>layer<span class="sc">.</span>__class__<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">) '</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plt.legend(legends)<span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'gradient distribution'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>layer 1 (      Tanh): mean +0.000000, std 0.000000e+00
+layer 3 (      Tanh): mean +0.000000, std 0.000000e+00
+layer 5 (      Tanh): mean +0.000000, std 0.000000e+00
+layer 7 (      Tanh): mean +0.000000, std 0.000000e+00
+layer 9 (      Tanh): mean +0.000000, std 0.000000e+00</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="380">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize histograms</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>)) <span class="co"># width and height of the plot</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>legends <span class="op">=</span> []</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i,p <span class="kw">in</span> <span class="bu">enumerate</span>(parameters):</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  t <span class="op">=</span> p.grad</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> p.ndim <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'weight </span><span class="sc">%10s</span><span class="st"> | mean </span><span class="sc">%+f</span><span class="st"> | std </span><span class="sc">%e</span><span class="st"> | grad:data ratio </span><span class="sc">%e</span><span class="st">'</span> <span class="op">%</span> (<span class="bu">tuple</span>(p.shape), t.mean(), t.std(), t.std() <span class="op">/</span> p.std()))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    hy, hx <span class="op">=</span> torch.histogram(t, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(hx[:<span class="op">-</span><span class="dv">1</span>].detach(), hy.detach())</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    legends.append(<span class="ss">f'</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span><span class="bu">tuple</span>(p.shape)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.legend(legends)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'weights gradient distribution'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>weight   (27, 10) | mean +0.000000 | std 0.000000e+00 | grad:data ratio 0.000000e+00
+weight  (30, 100) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan
+weight (100, 100) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan
+weight (100, 100) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan
+weight (100, 100) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan
+weight (100, 100) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan
+weight  (100, 27) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="381">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>legends <span class="op">=</span> []</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i,p <span class="kw">in</span> <span class="bu">enumerate</span>(parameters):</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  plt.plot([ud[j][i] <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ud))])</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  legends.append(<span class="st">'param </span><span class="sc">%d</span><span class="st">'</span> <span class="op">%</span> i)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="bu">len</span>(ud)], [<span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="dv">3</span>], <span class="st">'k'</span>) <span class="co"># these ratios should be ~1e-3, indicate on plot</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.legend(legends)<span class="op">;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ratio of stdev of weight updates to weight values, log10 scale'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We can also see that this bias is merely adopting the frequency distribution of letters in the dataset 🤯</p>
+<div class="cell" data-execution_count="392">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> string <span class="im">import</span> ascii_lowercase</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> []</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>context <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> block_size</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>emb <span class="op">=</span> C[torch.tensor([context])] <span class="co"># (1,block_size,n_embd)</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> emb.view(emb.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>) <span class="co"># concatenate the vectors</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> layer(x)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> x</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> F.softmax(logits, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>letters_int <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(probs.shape[<span class="dv">1</span>]))</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>plt.bar(letters_int, probs.tolist()[<span class="dv">0</span>])<span class="op">;</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(letters_int)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="st">"."</span>] <span class="op">+</span> <span class="bu">list</span>(ascii_lowercase))</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"probabilities from the model from an input of '...'"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="391">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>words_ending <span class="op">=</span> [word <span class="op">+</span> <span class="st">"."</span> <span class="cf">for</span> word <span class="kw">in</span> words]</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> Counter(<span class="st">""</span>.join(words_ending)) </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>normed_counts <span class="op">=</span> <span class="bu">sorted</span>([(k, v <span class="op">/</span> <span class="bu">len</span>(<span class="st">""</span>.join(words_ending))) <span class="cf">for</span> k, v <span class="kw">in</span> counts.items()])</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.bar(letters_int, [y <span class="cf">for</span> x, y <span class="kw">in</span> normed_counts])<span class="op">;</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(letters_int)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="st">"."</span>] <span class="op">+</span> <span class="bu">list</span>(ascii_lowercase))<span class="op">;</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"actual frequency of letters in the training data"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The model also produces rubbish!</p>
+<div class="cell" data-execution_count="103">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample from the model</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> torch.Generator().manual_seed(<span class="dv">2147483647</span> <span class="op">+</span> <span class="dv">10</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> []</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    context <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> block_size <span class="co"># initialize with all ...</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># forward pass the neural net</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>      emb <span class="op">=</span> C[torch.tensor([context])] <span class="co"># (1,block_size,n_embd)</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>      x <span class="op">=</span> emb.view(emb.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>) <span class="co"># concatenate the vectors</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> layer(x)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>      logits <span class="op">=</span> x</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>      probs <span class="op">=</span> F.softmax(logits, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>      <span class="co"># sample from the distribution</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>      ix <span class="op">=</span> torch.multinomial(probs, num_samples<span class="op">=</span><span class="dv">1</span>, generator<span class="op">=</span>g).item()</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># shift the context window and track the samples</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>      context <span class="op">=</span> context[<span class="dv">1</span>:] <span class="op">+</span> [ix]</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>      out.append(ix)</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if we sample the special '.' token, break</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> ix <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">''</span>.join(itos[i] <span class="cf">for</span> i <span class="kw">in</span> out)) <span class="co"># decode and print the generated word</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ernaaimyazhseelmnd.
+ryal.
+.
+etmrsjejdrleg.
+adeeedieliihemy.
+oealeieiseananarneltzimhlkaa.
+n.
+sadbvrgahimies.
+.
+n.
+ir.
+eelklxnteuofnu.
+amnedar.
+yidle.
+ehs.
+laajhysknyaa.
+hya.
+nalyaisun.
+zajelveunen.
+.</code></pre>
+</div>
+</div>
+<ul>
+<li>E02: BatchNorm, unlike other normalization layers like LayerNorm/GroupNorm etc. has the big advantage that after training, the batchnorm gamma/beta can be “folded into” the weights of the preceeding Linear layers, effectively erasing the need to forward it at test time. Set up a small 3-layer MLP with batchnorms, train the network, then “fold” the batchnorm gamma/beta into the preceeding Linear layer’s W,b by creating a new W2, b2 and erasing the batch norm. Verify that this gives the same forward pass during inference. i.e.&nbsp;we see that the batchnorm is there just for stabilizing the training, and can be thrown out after training is done! pretty cool.</li>
+</ul>
+<p>First we can train the network with BatchNorm and run inference with it</p>
+<div class="cell" data-execution_count="364">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>n_embd <span class="op">=</span> <span class="dv">10</span> <span class="co"># the dimensionality of the character embedding vectors</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>n_hidden <span class="op">=</span> <span class="dv">100</span> <span class="co"># the number of neurons in the hidden layer of the MLP</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> torch.Generator().manual_seed(<span class="dv">2147483647</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> torch.randn((vocab_size, n_embd),            generator<span class="op">=</span>g)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>layers <span class="op">=</span> [</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  Linear(n_embd <span class="op">*</span> block_size, n_hidden, bias<span class="op">=</span><span class="va">False</span>), BatchNorm1d(n_hidden), Tanh(),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden, bias<span class="op">=</span><span class="va">False</span>), BatchNorm1d(n_hidden), Tanh(),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden, bias<span class="op">=</span><span class="va">False</span>), BatchNorm1d(n_hidden), Tanh(),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden, bias<span class="op">=</span><span class="va">False</span>), BatchNorm1d(n_hidden), Tanh(),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, n_hidden, bias<span class="op">=</span><span class="va">False</span>), BatchNorm1d(n_hidden), Tanh(),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  Linear(           n_hidden, vocab_size, bias<span class="op">=</span><span class="va">False</span>), BatchNorm1d(vocab_size),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># last layer: make less confident</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  layers[<span class="op">-</span><span class="dv">1</span>].gamma <span class="op">*=</span> <span class="fl">0.1</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># all other layers: apply gain</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> layers[:<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(layer, Linear):</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>      layer.weight <span class="op">*=</span> <span class="fl">1.0</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">=</span> [C] <span class="op">+</span> [p <span class="cf">for</span> layer <span class="kw">in</span> layers <span class="cf">for</span> p <span class="kw">in</span> layer.parameters()]</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> parameters:</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>  p.requires_grad <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="365">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># same optimization as last time</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>max_steps <span class="op">=</span> <span class="dv">200000</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">32</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(max_steps):</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># minibatch construct</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  ix <span class="op">=</span> torch.randint(<span class="dv">0</span>, Xtr.shape[<span class="dv">0</span>], (batch_size,), generator<span class="op">=</span>g)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  Xb, Yb <span class="op">=</span> Xtr[ix], Ytr[ix] <span class="co"># batch X,Y</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># forward pass</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  emb <span class="op">=</span> C[Xb] <span class="co"># embed the characters into vectors</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> emb.view(emb.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>) <span class="co"># concatenate the vectors</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> layer(x)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  loss <span class="op">=</span> F.cross_entropy(x, Yb) <span class="co"># loss function</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># backward pass</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>    layer.out.retain_grad() <span class="co"># AFTER_DEBUG: would take out retain_graph</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> p <span class="kw">in</span> parameters:</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    p.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>  loss.backward()</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># update</span></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>  lr <span class="op">=</span> <span class="fl">0.1</span> <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">150000</span> <span class="cf">else</span> <span class="fl">0.01</span> <span class="co"># step learning rate decay</span></span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> p <span class="kw">in</span> parameters:</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>    p.data <span class="op">+=</span> <span class="op">-</span>lr <span class="op">*</span> p.grad</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> i <span class="op">&gt;=</span> <span class="dv">1000</span>:</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span> <span class="co"># AFTER_DEBUG: would take out obviously to run full optimization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="366">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setting the batchnorm layers to inference mode is key! Otherwise we </span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># overwrite the running mean and variance</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  layer.training <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># sample from the model</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> torch.Generator().manual_seed(<span class="dv">2147483647</span> <span class="op">+</span> <span class="dv">10</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>):</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> []</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    context <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> block_size <span class="co"># initialize with all ...</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>      <span class="co"># forward pass the neural net</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>      emb <span class="op">=</span> C[torch.tensor([context])] <span class="co"># (1,block_size,n_embd)</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>      x <span class="op">=</span> emb.view(emb.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>) <span class="co"># concatenate the vectors</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> layer(x)</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>      logits <span class="op">=</span> x</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>      probs <span class="op">=</span> F.softmax(logits, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># sample from the distribution</span></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>      ix <span class="op">=</span> torch.multinomial(probs, num_samples<span class="op">=</span><span class="dv">1</span>, generator<span class="op">=</span>g).item()</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>      <span class="co"># shift the context window and track the samples</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>      context <span class="op">=</span> context[<span class="dv">1</span>:] <span class="op">+</span> [ix]</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>      out.append(ix)</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if we sample the special '.' token, break</span></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> ix <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">''</span>.join(itos[i] <span class="cf">for</span> i <span class="kw">in</span> out)) <span class="co"># decode and print the generated word</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mria.</code></pre>
+</div>
+</div>
+<p>We can do some algebra to work out how to combine Linear and Batchnorm layers:</p>
+<p><span class="math inline">\(y = Wx + b\)</span></p>
+<p><span class="math inline">\(y_{scaled} = \frac{y - \mu}{\sqrt{var + \epsilon}}\)</span></p>
+<p><span class="math inline">\(a = \gamma y_{scaled} + \beta\)</span></p>
+<p><span class="math inline">\(\therefore a = \gamma (\frac{Wx + b - \mu}{\sqrt{var + \epsilon}}) + \beta\)</span></p>
+<p><span class="math inline">\(\therefore W_{new} = \frac{\gamma W}{\sqrt{var + \epsilon}}, b_{new} = \gamma (\frac{b - \mu}{\sqrt{var + \epsilon}}) + \beta\)</span></p>
+<div class="cell" data-execution_count="367">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># now we combine each batchnorm layer with its prior linear layer</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, layer <span class="kw">in</span> <span class="bu">enumerate</span>(layers):</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">+</span> <span class="dv">1</span> <span class="op">==</span> <span class="bu">len</span>(layers):</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># skip last iteration</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(layer, Linear):</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>        bn <span class="op">=</span> layers[i <span class="op">+</span> <span class="dv">1</span>]</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        w <span class="op">=</span> layer.weight</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        b <span class="op">=</span> layer.bias <span class="cf">if</span> layer.bias <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        layer.weight <span class="op">=</span> bn.gamma <span class="op">*</span> w <span class="op">/</span> torch.sqrt(bn.running_var <span class="op">+</span> bn.eps)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>        layer.bias <span class="op">=</span> bn.gamma <span class="op">*</span> (b <span class="op">-</span> bn.running_mean) <span class="op">/</span> torch.sqrt(bn.running_var <span class="op">+</span> bn.eps) <span class="op">+</span> bn.beta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="368">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the BatchNorm layers</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>layers <span class="op">=</span> [layer <span class="cf">for</span> layer <span class="kw">in</span> layers <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(layer, BatchNorm1d)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="369">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample from the model</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> torch.Generator().manual_seed(<span class="dv">2147483647</span> <span class="op">+</span> <span class="dv">10</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>):</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> []</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    context <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> block_size <span class="co"># initialize with all ...</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># forward pass the neural net</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>      emb <span class="op">=</span> C[torch.tensor([context])] <span class="co"># (1,block_size,n_embd)</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>      x <span class="op">=</span> emb.view(emb.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>) <span class="co"># concatenate the vectors</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> layer <span class="kw">in</span> layers:</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> layer(x)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>      logits <span class="op">=</span> x</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>      probs <span class="op">=</span> F.softmax(logits, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>      <span class="co"># sample from the distribution</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>      ix <span class="op">=</span> torch.multinomial(probs, num_samples<span class="op">=</span><span class="dv">1</span>, generator<span class="op">=</span>g).item()</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># shift the context window and track the samples</span></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>      context <span class="op">=</span> context[<span class="dv">1</span>:] <span class="op">+</span> [ix]</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>      out.append(ix)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># if we sample the special '.' token, break</span></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> ix <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">''</span>.join(itos[i] <span class="cf">for</span> i <span class="kw">in</span> out)) <span class="co"># decode and print the generated word</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mria.</code></pre>
+</div>
+</div>
+<p>We get the same output! 🔥</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
