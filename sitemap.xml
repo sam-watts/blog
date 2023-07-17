@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/sam-watts/blog/about.html</loc>
-    <lastmod>2023-07-07T17:53:24.437Z</lastmod>
+    <lastmod>2023-07-17T13:02:06.261Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/tgtg-meetup-talk/index.html</loc>
-    <lastmod>2023-07-07T17:53:23.413Z</lastmod>
+    <lastmod>2023-07-17T13:02:05.233Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/dockerized-debugging-ml/index.html</loc>
-    <lastmod>2023-07-07T17:53:21.245Z</lastmod>
+    <lastmod>2023-07-17T13:02:03.137Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/google-timeline-emissions/index.html</loc>
-    <lastmod>2023-07-07T17:53:19.861Z</lastmod>
+    <lastmod>2023-07-17T13:02:01.785Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/notes.html</loc>
-    <lastmod>2023-07-07T17:53:16.793Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/sam-watts/blog/index.html</loc>
-    <lastmod>2023-07-07T17:53:13.156Z</lastmod>
+    <lastmod>2023-07-17T13:01:58.745Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/notes/karpathy-zero-to-hero/3.html</loc>
-    <lastmod>2023-07-07T17:53:14.953Z</lastmod>
+    <lastmod>2023-07-17T13:01:56.605Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/sam-watts/blog/index.html</loc>
+    <lastmod>2023-07-17T13:01:53.805Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/sam-watts/blog/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html</loc>
+    <lastmod>2023-07-17T13:01:57.905Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/solving-futoshiki-puzzles/index.html</loc>
-    <lastmod>2023-07-07T17:53:20.689Z</lastmod>
+    <lastmod>2023-07-17T13:02:02.585Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/futoshiki-semantic-seg/index.html</loc>
-    <lastmod>2023-07-07T17:53:22.005Z</lastmod>
+    <lastmod>2023-07-17T13:02:03.865Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/sam-watts/blog/posts/recsys-2022-highlights/index.html</loc>
-    <lastmod>2023-07-07T17:53:24.073Z</lastmod>
+    <lastmod>2023-07-17T13:02:05.917Z</lastmod>
   </url>
 </urlset>
