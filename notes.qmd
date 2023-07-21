@@ -5,7 +5,7 @@ listing:
   sort: "date desc"
   type: table
   fields: [title, date, categories]
-  categories: true
+  categories: numbered
   sort-ui: false
   filter-ui: false
 page-layout: article
