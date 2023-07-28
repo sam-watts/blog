@@ -135,7 +135,7 @@ As you can see below, most of the augmentations by themselves only provide a sub
 ## Training & Evaluation
 The most commonly used loss function is pixel wise Cross-Entropy Loss - similar to what is used in general classification tasks. Here, we instead use Dice Loss, which was introduced to address the issue of class imbalance in semantic segmentation:
 
-$$Dice Loss = \frac{2|A ∩ B|}{|A| + |B|}$$
+$Dice Loss = 1 - \frac{2|A ∩ B|}{|A| + |B|}$
 
 In practice, the intersection term of this equation is approximated by calculating the element-wise product of the prediction and target mask matrices:
 
