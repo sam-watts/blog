@@ -1,1 +1,1 @@
-Sitemap: https://github.com/sam-watts/blog/sitemap.xml
+Sitemap: https://sam-watts.github.io/blog/sitemap.xml

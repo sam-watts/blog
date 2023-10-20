@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.429">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -82,7 +82,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -103,8 +109,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Sam Watts - Building a Custom Semantic Segmentation Model">
 <meta property="og:description" content="Using your own data to create a robust computer vision model">
-<meta property="og:image" content="https://github.com/sam-watts/blog/posts/futoshiki-semantic-seg/front.png">
-<meta property="og:site-name" content="Sam Watts">
+<meta property="og:image" content="https://sam-watts.github.io/blog/posts/futoshiki-semantic-seg/front.png">
+<meta property="og:site_name" content="Sam Watts">
 <meta property="og:image:height" content="800">
 <meta property="og:image:width" content="800">
 </head>
@@ -115,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Sam Watts</span>
     </a>
@@ -127,26 +133,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html" rel="" target="">
- <span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../notes.html" rel="" target="">
- <span class="menu-text">Notes</span></a>
+    <a class="nav-link" href="../../notes.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/sam-watts" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/sam-watts"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -214,11 +220,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+
 <p>Following on from my <a href="../../posts/solving-futoshiki-puzzles/index.html">previous post on solving futoshiki puzzles</a>, I wanted to see how feasible it would be to reliably detect and segment a futoshiki puzzle grid from an image without using a clunky capture grid. It works surprisingly well even when trained on a tiny dataset!</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="front.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption margin-caption">An example pixel-level prediction from the semantic segmentation model</figcaption>
+<figcaption class="margin-caption">An example pixel-level prediction from the semantic segmentation model</figcaption>
 </figure>
 </div>
 <section id="so-what-is-semantic-segmentation" class="level2 page-columns page-full">
@@ -227,14 +234,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="deepmind_img.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption margin-caption">From Deepmind’s course on Deep Learning <a href="https://www.youtube.com/watch?v=_aUq7lmMfxo&amp;list=PLqYmG7hTraZCDxZ44o4p3N5Anz3lLRVZF&amp;index=4" class="uri">https://www.youtube.com/watch?v=_aUq7lmMfxo&amp;list=PLqYmG7hTraZCDxZ44o4p3N5Anz3lLRVZF&amp;index=4</a></figcaption>
+<figcaption class="margin-caption">From Deepmind’s course on Deep Learning <a href="https://www.youtube.com/watch?v=_aUq7lmMfxo&amp;list=PLqYmG7hTraZCDxZ44o4p3N5Anz3lLRVZF&amp;index=4" class="uri">https://www.youtube.com/watch?v=_aUq7lmMfxo&amp;list=PLqYmG7hTraZCDxZ44o4p3N5Anz3lLRVZF&amp;index=4</a></figcaption>
 </figure>
 </div>
 <p>For my task, the setup is somewhat simpler as there is only one class to predict - the puzzle grid. To train the model, we need pairs of images and masks. The images we are using are full colour, so as an array will have the shape (H, W, 3). The masks on the other hand only have a single value per pixel (1 or 0), so will have shape (H, W, 1).</p>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="training_pair.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption margin-caption">An example training pair of image and mask for my model</figcaption>
+<figcaption class="margin-caption">An example training pair of image and mask for my model</figcaption>
 </figure>
 </div>
 </section>
@@ -244,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="via.gif" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">VIA in action</figcaption>
+<figcaption class="margin-caption">VIA in action</figcaption>
 </figure>
 </div>
 <p>VIA lets you export labels for multiple images as a csv, with the coordinates of each polygon in json format:</p>
@@ -265,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="unet.webp" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Original U-Net architecture <a href="https://arxiv.org/abs/1505.04597" class="uri">https://arxiv.org/abs/1505.04597</a></figcaption>
+<figcaption class="margin-caption">Original U-Net architecture <a href="https://arxiv.org/abs/1505.04597" class="uri">https://arxiv.org/abs/1505.04597</a></figcaption>
 </figure>
 </div>
 <p>The grey arrows signify residual connections between the encoder and decoder pathways. This means that at every upwards step of the decoder, the encoder matrices of the same dimensions are concatenated together with the decoder matrices. The benefits of this are twofold:</p>
@@ -282,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="efficient_net.webp" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">EffiecientNet Accuracy vs.&nbsp;Size of model <a href="https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html" class="uri">https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html</a></figcaption>
+<figcaption class="margin-caption">EffiecientNet Accuracy vs.&nbsp;Size of model <a href="https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html" class="uri">https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html</a></figcaption>
 </figure>
 </div>
 <p>As a trade off between size and performance, I chose the B3 variant to use in my model.</p>
@@ -342,13 +349,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="augs.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Each augmentation used in isolation</figcaption>
+<figcaption class="margin-caption">Each augmentation used in isolation</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="aug_types.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Stacked augmentations, to be passed to the model</figcaption>
+<figcaption class="margin-caption">Stacked augmentations, to be passed to the model</figcaption>
 </figure>
 </div>
 </section>
@@ -360,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="dice_loss.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">image from <a href="https://www.jeremyjordan.me/semantic-segmentation/" class="uri">https://www.jeremyjordan.me/semantic-segmentation/</a></figcaption>
+<figcaption class="margin-caption">image from <a href="https://www.jeremyjordan.me/semantic-segmentation/" class="uri">https://www.jeremyjordan.me/semantic-segmentation/</a></figcaption>
 </figure>
 </div>
 <p>We also use Intersection-over-Union (IoU) as a scoring metric. This essentially looks at the overlapping over total area of both predicted and ground truth masks, which is a similar concept to Dice Loss.</p>
@@ -372,44 +379,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="dice_loss_vs_epoch.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Dice loss of the model on training and validation sets at each epoch of training</figcaption>
+<figcaption class="margin-caption">Dice loss of the model on training and validation sets at each epoch of training</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="iou_vs_epoch.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">Intersection-over-Union of the model on training and validation sets at each epoch of training</figcaption>
+<figcaption class="margin-caption">Intersection-over-Union of the model on training and validation sets at each epoch of training</figcaption>
 </figure>
 </div>
 </section>
 <section id="prediction" class="level2">
 <h2 class="anchored" data-anchor-id="prediction">Prediction</h2>
 <p>I tested the trained model on 7 held out images from my labelled dataset, and the model achieved a IOU Score = 0.94 for these images, including some with puzzles at odd angles and as a smaller part of the image.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="preds.png" class="img-fluid figure-img" style="width:80.0%"></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="preds2.png" class="img-fluid figure-img" style="width:80.0%"></p>
-</figure>
-</div>
+<p><img src="preds.png" class="img-fluid quarto-figure-center" style="width:80.0%"></p>
+<p><img src="preds2.png" class="img-fluid quarto-figure-center" style="width:80.0%"></p>
 <p>I also ran the model over all of the frames in a short video to see the results more visually, which was also pretty good - it also deals well with an object covering the puzzle!</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="pred_gif.gif" class="img-fluid figure-img"></p>
-</figure>
-</div>
+<p><img src="pred_gif.gif" class="img-fluid quarto-figure-center"></p>
 </section>
 <section id="final-results-integration-into-solver-tool" class="level2">
 <h2 class="anchored" data-anchor-id="final-results-integration-into-solver-tool">Final Results — integration into solver tool</h2>
 <p>The enhanced version of the code base I discussed in my prior post can be found <a href="https://github.com/sam-watts/futoshiki-solver/tree/v2.0">here</a>. This version of the model shows some slight activation on background features, which is perhaps the sign of some overfitting.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="full_run.gif" class="img-fluid figure-img" style="width:80.0%"></p>
-</figure>
-</div>
+<p><img src="full_run.gif" class="img-fluid quarto-figure-center" style="width:80.0%"></p>
 <p>To conclude, this approach showed some pretty impressive results, especially given the tiny amount of training data that was used!</p>
 
 
@@ -495,10 +486,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -508,8 +498,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -522,6 +521,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -565,6 +686,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -590,6 +712,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -652,6 +800,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="sam-watts/blog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 
