@@ -1,12 +1,5 @@
 [
   {
-    "listing": "/notes.html",
-    "items": [
-      "/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html",
-      "/notes/karpathy-zero-to-hero/3.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
       "/posts/google-timeline-emissions/index.html",
@@ -15,6 +8,13 @@
       "/posts/dockerized-debugging-ml/index.html",
       "/posts/futoshiki-semantic-seg/index.html",
       "/posts/solving-futoshiki-puzzles/index.html"
+    ]
+  },
+  {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html",
+      "/notes/karpathy-zero-to-hero/3.html"
     ]
   }
 ]
