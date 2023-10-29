@@ -13,8 +13,12 @@
   {
     "listing": "/notes.html",
     "items": [
+      "/notes/karpathy-zero-to-hero/makemore_part4_backprop.html",
+      "/notes/karpathy-zero-to-hero/makemore_2_mlp.html",
+      "/notes/karpathy-zero-to-hero/makemore_1_bigrams.html",
+      "/notes/karpathy-zero-to-hero/makemore_5_wavenet.html",
       "/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html",
-      "/notes/karpathy-zero-to-hero/3.html"
+      "/notes/karpathy-zero-to-hero/makemore_3_act_init_bn.html"
     ]
   }
 ]

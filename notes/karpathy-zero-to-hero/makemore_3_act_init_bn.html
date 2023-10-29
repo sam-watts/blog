@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>tensor(0.9962) tensor(2.5542)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p><code>torch.randn</code> draws values from a unit normal distribution, <span class="math inline">\(\mu=0, \sigma=1\)</span> - so we can change the standard deviation by scaling it by a factor. For RELU, our Kaiming initialization should have <span class="math inline">\(\sigma = \sqrt{\frac{2}{n_l}}\)</span>, where <span class="math inline">\(n_l\)</span> is the “fan-in” - the number of inputs to the neuron</p>
@@ -316,7 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>tensor(0.9962) tensor(0.8292)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We can see that this has reduced the standard deviation of the activations, closer to the range of unit normal (although obviously the output of RELU is not normally distributed)</p>
@@ -634,7 +634,7 @@ layer 7 (      Tanh): mean +0.00, std 0.00, saturated: 0.00%
 layer 9 (      Tanh): mean +0.00, std 0.00, saturated: 0.00%</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div id="cell-18" class="cell" data-execution_count="375">
@@ -659,7 +659,7 @@ layer 8 (    Linear): mean +0.00, std 0.00
 layer 10 (    Linear): mean +0.00, std 0.00</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div id="cell-19" class="cell" data-execution_count="376">
@@ -684,7 +684,7 @@ layer 8 (    Linear): mean +0.00, std 0.00
 layer 10 (    Linear): mean -0.00, std 0.92</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div id="cell-20" class="cell" data-execution_count="378">
@@ -718,7 +718,7 @@ layer 7 (      Tanh): mean +0.000000, std 0.000000e+00
 layer 9 (      Tanh): mean +0.000000, std 0.000000e+00</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div id="cell-22" class="cell" data-execution_count="380">
@@ -744,7 +744,7 @@ weight (100, 100) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan
 weight  (100, 27) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div id="cell-23" class="cell" data-execution_count="381">
@@ -757,7 +757,7 @@ weight  (100, 27) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan</cod
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.legend(legends)<span class="op">;</span></span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ratio of stdev of weight updates to weight values, log10 scale'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We can also see that this bias is merely adopting the frequency distribution of letters in the dataset 🤯</p>
@@ -782,7 +782,7 @@ weight  (100, 27) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan</cod
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="st">"."</span>] <span class="op">+</span> <span class="bu">list</span>(ascii_lowercase))</span>
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"probabilities from the model from an input of '...'"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div id="cell-26" class="cell" data-execution_count="391">
@@ -798,7 +798,7 @@ weight  (100, 27) | mean +0.000000 | std 0.000000e+00 | grad:data ratio nan</cod
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="st">"."</span>] <span class="op">+</span> <span class="bu">list</span>(ascii_lowercase))<span class="op">;</span></span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"actual frequency of letters in the training data"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="3_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+<p><img src="makemore_3_act_init_bn_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>The model also produces rubbish!</p>

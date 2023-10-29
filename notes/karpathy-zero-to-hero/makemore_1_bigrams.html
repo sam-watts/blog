@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.429">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sam Watts - Exercises</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Sam Watts - Exercises">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Sam Watts">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Sam Watts</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../notes.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sam-watts"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercises</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-1" class="cell" data-execution_count="334">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-2" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../names.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> f.read().splitlines()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-3" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(<span class="bu">set</span>(<span class="st">""</span>.join(names))))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>letters.append(<span class="st">"."</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ltoi <span class="op">=</span> {l:i <span class="cf">for</span> i, l <span class="kw">in</span> <span class="bu">enumerate</span>(letters)}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>itol <span class="op">=</span> {i:l <span class="cf">for</span> l, i <span class="kw">in</span> ltoi.items()}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="145">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bigrams</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>xs_bigram, ys_bigram <span class="op">=</span> [], []</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> names:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="st">"."</span> <span class="op">+</span> n <span class="op">+</span> <span class="st">"."</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> first, second <span class="kw">in</span> <span class="bu">zip</span>(n, n[<span class="dv">1</span>:]):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        xs_bigram.append(ltoi[first])</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        ys_bigram.append(ltoi[second])</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>xs_bigram <span class="op">=</span> torch.tensor(xs_bigram)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ys_bigram <span class="op">=</span> torch.tensor(ys_bigram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-5" class="cell" data-execution_count="146">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> torch.randn((<span class="dv">27</span>, <span class="dv">27</span>), requires_grad<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="147">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># forward</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> torch.nn.functional.one_hot(xs_bigram).<span class="bu">float</span>()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> inputs <span class="op">@</span> W </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> torch.exp(logits) <span class="op">/</span> torch.exp(logits).<span class="bu">sum</span>(<span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> <span class="op">-</span>probs[torch.arange(ys_bigram.shape[<span class="dv">0</span>]), ys_bigram].log().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-7" class="cell" data-execution_count="148">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor(3.8877, grad_fn=&lt;NegBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="149">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># backward</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>W.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="150">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># updates</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>W.data <span class="op">+=</span> <span class="op">-</span><span class="dv">50</span> <span class="op">*</span> W.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="151">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># init and training for bigram model</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> torch.randn((<span class="dv">27</span>, <span class="dv">27</span>), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># forward</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    inputs <span class="op">=</span> torch.nn.functional.one_hot(xs_bigram).<span class="bu">float</span>()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> inputs <span class="op">@</span> W </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    probs <span class="op">=</span> torch.exp(logits) <span class="op">/</span> torch.exp(logits).<span class="bu">sum</span>(<span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="op">-</span>probs[torch.arange(ys_bigram.shape[<span class="dv">0</span>]), ys_bigram].log().mean()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i, loss)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># backward</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    W.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># updates</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    W.data <span class="op">+=</span> <span class="op">-</span><span class="dv">50</span> <span class="op">*</span> W.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 tensor(3.7675, grad_fn=&lt;NegBackward0&gt;)
+1 tensor(3.3568, grad_fn=&lt;NegBackward0&gt;)
+2 tensor(3.1371, grad_fn=&lt;NegBackward0&gt;)
+3 tensor(3.0079, grad_fn=&lt;NegBackward0&gt;)
+4 tensor(2.9158, grad_fn=&lt;NegBackward0&gt;)
+5 tensor(2.8464, grad_fn=&lt;NegBackward0&gt;)
+6 tensor(2.7934, grad_fn=&lt;NegBackward0&gt;)
+7 tensor(2.7524, grad_fn=&lt;NegBackward0&gt;)
+8 tensor(2.7200, grad_fn=&lt;NegBackward0&gt;)
+9 tensor(2.6940, grad_fn=&lt;NegBackward0&gt;)
+10 tensor(2.6726, grad_fn=&lt;NegBackward0&gt;)
+11 tensor(2.6547, grad_fn=&lt;NegBackward0&gt;)
+12 tensor(2.6395, grad_fn=&lt;NegBackward0&gt;)
+13 tensor(2.6263, grad_fn=&lt;NegBackward0&gt;)
+14 tensor(2.6148, grad_fn=&lt;NegBackward0&gt;)
+15 tensor(2.6046, grad_fn=&lt;NegBackward0&gt;)
+16 tensor(2.5956, grad_fn=&lt;NegBackward0&gt;)
+17 tensor(2.5876, grad_fn=&lt;NegBackward0&gt;)
+18 tensor(2.5805, grad_fn=&lt;NegBackward0&gt;)
+19 tensor(2.5740, grad_fn=&lt;NegBackward0&gt;)
+20 tensor(2.5682, grad_fn=&lt;NegBackward0&gt;)
+21 tensor(2.5629, grad_fn=&lt;NegBackward0&gt;)
+22 tensor(2.5581, grad_fn=&lt;NegBackward0&gt;)
+23 tensor(2.5536, grad_fn=&lt;NegBackward0&gt;)
+24 tensor(2.5495, grad_fn=&lt;NegBackward0&gt;)
+25 tensor(2.5457, grad_fn=&lt;NegBackward0&gt;)
+26 tensor(2.5421, grad_fn=&lt;NegBackward0&gt;)
+27 tensor(2.5388, grad_fn=&lt;NegBackward0&gt;)
+28 tensor(2.5357, grad_fn=&lt;NegBackward0&gt;)
+29 tensor(2.5328, grad_fn=&lt;NegBackward0&gt;)
+30 tensor(2.5301, grad_fn=&lt;NegBackward0&gt;)
+31 tensor(2.5275, grad_fn=&lt;NegBackward0&gt;)
+32 tensor(2.5251, grad_fn=&lt;NegBackward0&gt;)
+33 tensor(2.5228, grad_fn=&lt;NegBackward0&gt;)
+34 tensor(2.5206, grad_fn=&lt;NegBackward0&gt;)
+35 tensor(2.5185, grad_fn=&lt;NegBackward0&gt;)
+36 tensor(2.5166, grad_fn=&lt;NegBackward0&gt;)
+37 tensor(2.5147, grad_fn=&lt;NegBackward0&gt;)
+38 tensor(2.5129, grad_fn=&lt;NegBackward0&gt;)
+39 tensor(2.5113, grad_fn=&lt;NegBackward0&gt;)
+40 tensor(2.5097, grad_fn=&lt;NegBackward0&gt;)
+41 tensor(2.5081, grad_fn=&lt;NegBackward0&gt;)
+42 tensor(2.5067, grad_fn=&lt;NegBackward0&gt;)
+43 tensor(2.5053, grad_fn=&lt;NegBackward0&gt;)
+44 tensor(2.5040, grad_fn=&lt;NegBackward0&gt;)
+45 tensor(2.5027, grad_fn=&lt;NegBackward0&gt;)
+46 tensor(2.5015, grad_fn=&lt;NegBackward0&gt;)
+47 tensor(2.5003, grad_fn=&lt;NegBackward0&gt;)
+48 tensor(2.4992, grad_fn=&lt;NegBackward0&gt;)
+49 tensor(2.4981, grad_fn=&lt;NegBackward0&gt;)</code></pre>
+</div>
+</div>
+<p>E01: train a trigram language model, i.e.&nbsp;take two characters as an input to predict the 3rd one. Feel free to use either counting or a neural net. Evaluate the loss; Did it improve over a bigram model?</p>
+<div id="cell-12" class="cell" data-execution_count="331">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># trigrams</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>xs_trigram, ys_trigram <span class="op">=</span> [], []</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> names:</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="st">"."</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> n <span class="op">+</span> <span class="st">"."</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> first, second, third <span class="kw">in</span> <span class="bu">zip</span>(n, n[<span class="dv">1</span>:], n[<span class="dv">2</span>:]):</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(first, second, third)</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        xs_trigram.append([ltoi[first], ltoi[second]])</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        ys_trigram.append(ltoi[third])</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>xs_trigram <span class="op">=</span> torch.tensor(xs_trigram)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>ys_trigram <span class="op">=</span> torch.tensor(ys_trigram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-13" class="cell" data-execution_count="332">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> torch.nn.functional.one_hot(xs_trigram).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-14" class="cell" data-execution_count="333">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>W1 <span class="op">=</span> torch.randn((<span class="dv">27</span>, <span class="dv">27</span>), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>W2 <span class="op">=</span> torch.randn((<span class="dv">27</span>, <span class="dv">27</span>), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> inputs[:, <span class="dv">0</span>, :] <span class="op">@</span> W1 <span class="op">+</span> inputs[:, <span class="dv">1</span>, :] <span class="op">@</span> W2</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    probs <span class="op">=</span> torch.exp(logits) <span class="op">/</span> torch.exp(logits).<span class="bu">sum</span>(<span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="op">-</span>probs[torch.arange(ys_trigram.shape[<span class="dv">0</span>]), ys_trigram].log().mean()</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i, loss)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># backward</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    W1.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    W2.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># updates</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    W1.data <span class="op">+=</span> <span class="op">-</span><span class="dv">20</span> <span class="op">*</span> W1.grad</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    W2.data <span class="op">+=</span> <span class="op">-</span><span class="dv">20</span> <span class="op">*</span> W2.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 tensor(4.1870, grad_fn=&lt;NegBackward0&gt;)
+1 tensor(3.7626, grad_fn=&lt;NegBackward0&gt;)
+2 tensor(3.5288, grad_fn=&lt;NegBackward0&gt;)
+3 tensor(3.3593, grad_fn=&lt;NegBackward0&gt;)
+4 tensor(3.2326, grad_fn=&lt;NegBackward0&gt;)
+5 tensor(3.1353, grad_fn=&lt;NegBackward0&gt;)
+6 tensor(3.0582, grad_fn=&lt;NegBackward0&gt;)
+7 tensor(2.9955, grad_fn=&lt;NegBackward0&gt;)
+8 tensor(2.9438, grad_fn=&lt;NegBackward0&gt;)
+9 tensor(2.9003, grad_fn=&lt;NegBackward0&gt;)
+10 tensor(2.8631, grad_fn=&lt;NegBackward0&gt;)
+11 tensor(2.8310, grad_fn=&lt;NegBackward0&gt;)
+12 tensor(2.8029, grad_fn=&lt;NegBackward0&gt;)
+13 tensor(2.7780, grad_fn=&lt;NegBackward0&gt;)
+14 tensor(2.7558, grad_fn=&lt;NegBackward0&gt;)
+15 tensor(2.7358, grad_fn=&lt;NegBackward0&gt;)
+16 tensor(2.7176, grad_fn=&lt;NegBackward0&gt;)
+17 tensor(2.7011, grad_fn=&lt;NegBackward0&gt;)
+18 tensor(2.6859, grad_fn=&lt;NegBackward0&gt;)
+19 tensor(2.6719, grad_fn=&lt;NegBackward0&gt;)
+20 tensor(2.6590, grad_fn=&lt;NegBackward0&gt;)
+21 tensor(2.6470, grad_fn=&lt;NegBackward0&gt;)
+22 tensor(2.6358, grad_fn=&lt;NegBackward0&gt;)
+23 tensor(2.6253, grad_fn=&lt;NegBackward0&gt;)
+24 tensor(2.6156, grad_fn=&lt;NegBackward0&gt;)
+25 tensor(2.6064, grad_fn=&lt;NegBackward0&gt;)
+26 tensor(2.5977, grad_fn=&lt;NegBackward0&gt;)
+27 tensor(2.5896, grad_fn=&lt;NegBackward0&gt;)
+28 tensor(2.5819, grad_fn=&lt;NegBackward0&gt;)
+29 tensor(2.5746, grad_fn=&lt;NegBackward0&gt;)
+30 tensor(2.5677, grad_fn=&lt;NegBackward0&gt;)
+31 tensor(2.5611, grad_fn=&lt;NegBackward0&gt;)
+32 tensor(2.5549, grad_fn=&lt;NegBackward0&gt;)
+33 tensor(2.5490, grad_fn=&lt;NegBackward0&gt;)
+34 tensor(2.5433, grad_fn=&lt;NegBackward0&gt;)
+35 tensor(2.5379, grad_fn=&lt;NegBackward0&gt;)
+36 tensor(2.5328, grad_fn=&lt;NegBackward0&gt;)
+37 tensor(2.5278, grad_fn=&lt;NegBackward0&gt;)
+38 tensor(2.5231, grad_fn=&lt;NegBackward0&gt;)
+39 tensor(2.5186, grad_fn=&lt;NegBackward0&gt;)
+40 tensor(2.5143, grad_fn=&lt;NegBackward0&gt;)
+41 tensor(2.5101, grad_fn=&lt;NegBackward0&gt;)
+42 tensor(2.5061, grad_fn=&lt;NegBackward0&gt;)
+43 tensor(2.5023, grad_fn=&lt;NegBackward0&gt;)
+44 tensor(2.4986, grad_fn=&lt;NegBackward0&gt;)
+45 tensor(2.4951, grad_fn=&lt;NegBackward0&gt;)
+46 tensor(2.4917, grad_fn=&lt;NegBackward0&gt;)
+47 tensor(2.4884, grad_fn=&lt;NegBackward0&gt;)
+48 tensor(2.4852, grad_fn=&lt;NegBackward0&gt;)
+49 tensor(2.4821, grad_fn=&lt;NegBackward0&gt;)</code></pre>
+</div>
+</div>
+<p>Rewritten as a class below - training looks to be equivalent</p>
+<div id="cell-16" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Model(nn.Module):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w1 <span class="op">=</span> nn.Parameter(torch.randn((<span class="dv">27</span>, <span class="dv">27</span>)))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w2 <span class="op">=</span> nn.Parameter(torch.randn((<span class="dv">27</span>, <span class="dv">27</span>)))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, targets<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        inputs <span class="op">=</span> torch.nn.functional.one_hot(x).<span class="bu">float</span>()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        logits <span class="op">=</span> inputs[:, <span class="dv">0</span>, :] <span class="op">@</span> <span class="va">self</span>.w1 <span class="op">+</span> inputs[:, <span class="dv">1</span>, :] <span class="op">@</span> <span class="va">self</span>.w2</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        probs <span class="op">=</span> torch.exp(logits) <span class="op">/</span> torch.exp(logits).<span class="bu">sum</span>(<span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> targets <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">=</span> <span class="op">-</span>probs[torch.arange(targets.shape[<span class="dv">0</span>]), targets].log().mean()</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> probs, loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-17" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Model()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-18" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    probs, loss <span class="op">=</span> m.forward(xs_trigram, targets<span class="op">=</span>ys_trigram)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i, loss)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    m.zero_grad()</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># updates</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    m.w1.data <span class="op">+=</span> <span class="op">-</span><span class="dv">20</span> <span class="op">*</span> m.w1.grad</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    m.w2.data <span class="op">+=</span> <span class="op">-</span><span class="dv">20</span> <span class="op">*</span> m.w2.grad</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 tensor(4.3345, grad_fn=&lt;NegBackward0&gt;)
+1 tensor(3.9514, grad_fn=&lt;NegBackward0&gt;)
+2 tensor(3.6622, grad_fn=&lt;NegBackward0&gt;)
+3 tensor(3.4633, grad_fn=&lt;NegBackward0&gt;)
+4 tensor(3.3159, grad_fn=&lt;NegBackward0&gt;)
+5 tensor(3.1994, grad_fn=&lt;NegBackward0&gt;)
+6 tensor(3.1078, grad_fn=&lt;NegBackward0&gt;)
+7 tensor(3.0346, grad_fn=&lt;NegBackward0&gt;)
+8 tensor(2.9750, grad_fn=&lt;NegBackward0&gt;)
+9 tensor(2.9253, grad_fn=&lt;NegBackward0&gt;)
+10 tensor(2.8830, grad_fn=&lt;NegBackward0&gt;)
+11 tensor(2.8464, grad_fn=&lt;NegBackward0&gt;)
+12 tensor(2.8145, grad_fn=&lt;NegBackward0&gt;)
+13 tensor(2.7862, grad_fn=&lt;NegBackward0&gt;)
+14 tensor(2.7610, grad_fn=&lt;NegBackward0&gt;)
+15 tensor(2.7385, grad_fn=&lt;NegBackward0&gt;)
+16 tensor(2.7181, grad_fn=&lt;NegBackward0&gt;)
+17 tensor(2.6997, grad_fn=&lt;NegBackward0&gt;)
+18 tensor(2.6830, grad_fn=&lt;NegBackward0&gt;)
+19 tensor(2.6677, grad_fn=&lt;NegBackward0&gt;)
+20 tensor(2.6538, grad_fn=&lt;NegBackward0&gt;)
+21 tensor(2.6410, grad_fn=&lt;NegBackward0&gt;)
+22 tensor(2.6292, grad_fn=&lt;NegBackward0&gt;)
+23 tensor(2.6183, grad_fn=&lt;NegBackward0&gt;)
+24 tensor(2.6083, grad_fn=&lt;NegBackward0&gt;)
+25 tensor(2.5989, grad_fn=&lt;NegBackward0&gt;)
+26 tensor(2.5902, grad_fn=&lt;NegBackward0&gt;)
+27 tensor(2.5821, grad_fn=&lt;NegBackward0&gt;)
+28 tensor(2.5745, grad_fn=&lt;NegBackward0&gt;)
+29 tensor(2.5674, grad_fn=&lt;NegBackward0&gt;)
+30 tensor(2.5608, grad_fn=&lt;NegBackward0&gt;)
+31 tensor(2.5545, grad_fn=&lt;NegBackward0&gt;)
+32 tensor(2.5485, grad_fn=&lt;NegBackward0&gt;)
+33 tensor(2.5429, grad_fn=&lt;NegBackward0&gt;)
+34 tensor(2.5376, grad_fn=&lt;NegBackward0&gt;)
+35 tensor(2.5326, grad_fn=&lt;NegBackward0&gt;)
+36 tensor(2.5278, grad_fn=&lt;NegBackward0&gt;)
+37 tensor(2.5232, grad_fn=&lt;NegBackward0&gt;)
+38 tensor(2.5188, grad_fn=&lt;NegBackward0&gt;)
+39 tensor(2.5147, grad_fn=&lt;NegBackward0&gt;)
+40 tensor(2.5107, grad_fn=&lt;NegBackward0&gt;)
+41 tensor(2.5069, grad_fn=&lt;NegBackward0&gt;)
+42 tensor(2.5032, grad_fn=&lt;NegBackward0&gt;)
+43 tensor(2.4997, grad_fn=&lt;NegBackward0&gt;)
+44 tensor(2.4963, grad_fn=&lt;NegBackward0&gt;)
+45 tensor(2.4931, grad_fn=&lt;NegBackward0&gt;)
+46 tensor(2.4900, grad_fn=&lt;NegBackward0&gt;)
+47 tensor(2.4870, grad_fn=&lt;NegBackward0&gt;)
+48 tensor(2.4841, grad_fn=&lt;NegBackward0&gt;)
+49 tensor(2.4813, grad_fn=&lt;NegBackward0&gt;)</code></pre>
+</div>
+</div>
+<p>E02: split up the dataset randomly into 80% train set, 10% dev set, 10% test set. Train the bigram and trigram models only on the training set. Evaluate them on dev and test splits. What can you see?</p>
+<div id="cell-20" class="cell" data-execution_count="176">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> split_data(array):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    frac <span class="op">=</span> array.shape[<span class="dv">0</span>] <span class="op">*</span> <span class="fl">0.1</span> <span class="op">//</span> <span class="dv">1</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    train <span class="op">=</span> array[:<span class="bu">int</span>(frac <span class="op">*</span> <span class="dv">8</span>)]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    val <span class="op">=</span> array[<span class="bu">int</span>(frac <span class="op">*</span> <span class="dv">8</span>): <span class="bu">int</span>(frac <span class="op">*</span> <span class="dv">9</span>)]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    test <span class="op">=</span> array[<span class="bu">int</span>(frac <span class="op">*</span> <span class="dv">9</span>):]</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> train.shape[<span class="dv">0</span>] <span class="op">+</span> test.shape[<span class="dv">0</span>] <span class="op">+</span> val.shape[<span class="dv">0</span>] <span class="op">==</span> array.shape[<span class="dv">0</span>]</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> train, val, test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-21" class="cell" data-execution_count="185">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>train_xs_bigram, val_xs_bigram, test_xs_bigram <span class="op">=</span> split_data(xs_bigram)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>train_ys_bigram, val_ys_bigram, test_ys_bigram <span class="op">=</span> split_data(ys_bigram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="189">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># init and training for bigram model</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> torch.randn((<span class="dv">27</span>, <span class="dv">27</span>), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># forward</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    inputs <span class="op">=</span> torch.nn.functional.one_hot(train_xs_bigram).<span class="bu">float</span>()</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> inputs <span class="op">@</span> W </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    probs <span class="op">=</span> torch.exp(logits) <span class="op">/</span> torch.exp(logits).<span class="bu">sum</span>(<span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="op">-</span>probs[torch.arange(train_ys_bigram.shape[<span class="dv">0</span>]), train_ys_bigram].log().mean()</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    val_inputs <span class="op">=</span> torch.nn.functional.one_hot(val_xs_bigram).<span class="bu">float</span>()</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> val_inputs <span class="op">@</span> W</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    probs <span class="op">=</span> torch.exp(logits) <span class="op">/</span> torch.exp(logits).<span class="bu">sum</span>(<span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    val_loss <span class="op">=</span> <span class="op">-</span>probs[torch.arange(val_ys_bigram.shape[<span class="dv">0</span>]), val_ys_bigram].log().mean()</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i, <span class="ss">f"</span><span class="sc">{</span>loss<span class="sc">.</span>data<span class="sc">.</span>item()<span class="op">=</span><span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>val_loss<span class="sc">.</span>data<span class="sc">.</span>item()<span class="op">=</span><span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>test_loss<span class="sc">.</span>data<span class="sc">.</span>item()<span class="op">=</span><span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># backward</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    W.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># updates</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    W.data <span class="op">+=</span> <span class="op">-</span><span class="dv">50</span> <span class="op">*</span> W.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 loss.data.item()=3.7033, val_loss.data.item()=3.6566, test_loss.data.item()=3.6431
+1 loss.data.item()=3.2771, val_loss.data.item()=3.3136, test_loss.data.item()=3.3068
+2 loss.data.item()=3.0436, val_loss.data.item()=3.1405, test_loss.data.item()=3.1388
+3 loss.data.item()=2.9152, val_loss.data.item()=3.0434, test_loss.data.item()=3.0454
+4 loss.data.item()=2.8324, val_loss.data.item()=2.9776, test_loss.data.item()=2.9817
+5 loss.data.item()=2.7750, val_loss.data.item()=2.9334, test_loss.data.item()=2.9378
+6 loss.data.item()=2.7319, val_loss.data.item()=2.8967, test_loss.data.item()=2.9011
+7 loss.data.item()=2.6978, val_loss.data.item()=2.8670, test_loss.data.item()=2.8714
+8 loss.data.item()=2.6699, val_loss.data.item()=2.8417, test_loss.data.item()=2.8460
+9 loss.data.item()=2.6468, val_loss.data.item()=2.8203, test_loss.data.item()=2.8246
+10 loss.data.item()=2.6274, val_loss.data.item()=2.8018, test_loss.data.item()=2.8060
+11 loss.data.item()=2.6109, val_loss.data.item()=2.7859, test_loss.data.item()=2.7901
+12 loss.data.item()=2.5969, val_loss.data.item()=2.7721, test_loss.data.item()=2.7763
+13 loss.data.item()=2.5848, val_loss.data.item()=2.7601, test_loss.data.item()=2.7642
+14 loss.data.item()=2.5743, val_loss.data.item()=2.7496, test_loss.data.item()=2.7536
+15 loss.data.item()=2.5651, val_loss.data.item()=2.7404, test_loss.data.item()=2.7443
+16 loss.data.item()=2.5570, val_loss.data.item()=2.7321, test_loss.data.item()=2.7361
+17 loss.data.item()=2.5498, val_loss.data.item()=2.7248, test_loss.data.item()=2.7287
+18 loss.data.item()=2.5434, val_loss.data.item()=2.7182, test_loss.data.item()=2.7221
+19 loss.data.item()=2.5376, val_loss.data.item()=2.7123, test_loss.data.item()=2.7161
+20 loss.data.item()=2.5324, val_loss.data.item()=2.7069, test_loss.data.item()=2.7107
+21 loss.data.item()=2.5277, val_loss.data.item()=2.7019, test_loss.data.item()=2.7058
+22 loss.data.item()=2.5233, val_loss.data.item()=2.6974, test_loss.data.item()=2.7013
+23 loss.data.item()=2.5193, val_loss.data.item()=2.6932, test_loss.data.item()=2.6971
+24 loss.data.item()=2.5157, val_loss.data.item()=2.6894, test_loss.data.item()=2.6933
+25 loss.data.item()=2.5123, val_loss.data.item()=2.6858, test_loss.data.item()=2.6897
+26 loss.data.item()=2.5091, val_loss.data.item()=2.6825, test_loss.data.item()=2.6864
+27 loss.data.item()=2.5062, val_loss.data.item()=2.6794, test_loss.data.item()=2.6833
+28 loss.data.item()=2.5035, val_loss.data.item()=2.6764, test_loss.data.item()=2.6804
+29 loss.data.item()=2.5009, val_loss.data.item()=2.6737, test_loss.data.item()=2.6777
+30 loss.data.item()=2.4985, val_loss.data.item()=2.6711, test_loss.data.item()=2.6751
+31 loss.data.item()=2.4962, val_loss.data.item()=2.6687, test_loss.data.item()=2.6727
+32 loss.data.item()=2.4941, val_loss.data.item()=2.6664, test_loss.data.item()=2.6705
+33 loss.data.item()=2.4921, val_loss.data.item()=2.6643, test_loss.data.item()=2.6683
+34 loss.data.item()=2.4902, val_loss.data.item()=2.6622, test_loss.data.item()=2.6663
+35 loss.data.item()=2.4883, val_loss.data.item()=2.6603, test_loss.data.item()=2.6643
+36 loss.data.item()=2.4866, val_loss.data.item()=2.6584, test_loss.data.item()=2.6625
+37 loss.data.item()=2.4850, val_loss.data.item()=2.6566, test_loss.data.item()=2.6607
+38 loss.data.item()=2.4834, val_loss.data.item()=2.6550, test_loss.data.item()=2.6591
+39 loss.data.item()=2.4819, val_loss.data.item()=2.6534, test_loss.data.item()=2.6575
+40 loss.data.item()=2.4805, val_loss.data.item()=2.6518, test_loss.data.item()=2.6559
+41 loss.data.item()=2.4792, val_loss.data.item()=2.6504, test_loss.data.item()=2.6545
+42 loss.data.item()=2.4779, val_loss.data.item()=2.6490, test_loss.data.item()=2.6531
+43 loss.data.item()=2.4766, val_loss.data.item()=2.6476, test_loss.data.item()=2.6518
+44 loss.data.item()=2.4754, val_loss.data.item()=2.6463, test_loss.data.item()=2.6505
+45 loss.data.item()=2.4743, val_loss.data.item()=2.6451, test_loss.data.item()=2.6492
+46 loss.data.item()=2.4732, val_loss.data.item()=2.6439, test_loss.data.item()=2.6481
+47 loss.data.item()=2.4721, val_loss.data.item()=2.6427, test_loss.data.item()=2.6469
+48 loss.data.item()=2.4711, val_loss.data.item()=2.6416, test_loss.data.item()=2.6458
+49 loss.data.item()=2.4701, val_loss.data.item()=2.6406, test_loss.data.item()=2.6448</code></pre>
+</div>
+</div>
+<p>E03: use the dev set to tune the strength of smoothing (or regularization) for the trigram model - i.e.&nbsp;try many possibilities and see which one works best based on the dev set loss. What patterns can you see in the train and dev set loss as you tune this strength? Take the best setting of the smoothing and evaluate on the test set once and at the end. How good of a loss do you achieve?</p>
+<div id="cell-24" class="cell" data-execution_count="318">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>train_xs_trigram, val_xs_trigram, test_xs_trigram <span class="op">=</span> split_data(xs_trigram)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>train_ys_trigram, val_ys_trigram, test_ys_trigram <span class="op">=</span> split_data(ys_trigram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="448">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_name(model):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    trigram_input <span class="op">=</span> <span class="st">".."</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        model_input <span class="op">=</span> torch.tensor([[ltoi[x] <span class="cf">for</span> x <span class="kw">in</span> trigram_input]])</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        probs, _ <span class="op">=</span> model(model_input)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        next_letter <span class="op">=</span> itol[torch.multinomial(probs, <span class="dv">1</span>).item()]</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> next_letter <span class="op">==</span> <span class="st">"."</span>:</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        output <span class="op">+=</span> next_letter</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        trigram_input <span class="op">=</span> output[<span class="op">-</span><span class="dv">2</span>:]</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(trigram_input) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>            trigram_input <span class="op">=</span> <span class="st">"."</span> <span class="op">+</span> trigram_input</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="450">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Model(nn.Module):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, reg_weight<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w1 <span class="op">=</span> nn.Parameter(torch.randn((<span class="dv">27</span>, <span class="dv">27</span>)))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w2 <span class="op">=</span> nn.Parameter(torch.randn((<span class="dv">27</span>, <span class="dv">27</span>)))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.reg_weight <span class="op">=</span> reg_weight</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, targets<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        inputs <span class="op">=</span> torch.nn.functional.one_hot(x, num_classes<span class="op">=</span><span class="dv">27</span>).<span class="bu">float</span>()</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        logits <span class="op">=</span> inputs[:, <span class="dv">0</span>, :] <span class="op">@</span> <span class="va">self</span>.w1 <span class="op">+</span> inputs[:, <span class="dv">1</span>, :] <span class="op">@</span> <span class="va">self</span>.w2</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        probs <span class="op">=</span> torch.exp(logits) <span class="op">/</span> torch.exp(logits).<span class="bu">sum</span>(<span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> targets <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">=</span> <span class="op">-</span>probs[torch.arange(targets.shape[<span class="dv">0</span>]), targets].log().mean()</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="va">self</span>.reg_weight:</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                loss <span class="op">+=</span> <span class="va">self</span>.reg_weight <span class="op">*</span> torch.cat((<span class="va">self</span>.w1<span class="op">**</span><span class="dv">2</span>, <span class="va">self</span>.w2<span class="op">**</span><span class="dv">2</span>)).<span class="bu">sum</span>()</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> probs, loss</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, lr):</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w1.data <span class="op">+=</span> <span class="op">-</span>lr <span class="op">*</span> <span class="va">self</span>.w1.grad</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w2.data <span class="op">+=</span> <span class="op">-</span>lr <span class="op">*</span> <span class="va">self</span>.w2.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-27" class="cell" data-execution_count="430">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> Model(<span class="fl">1e-3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-28" class="cell" data-execution_count="437">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>probs, loss <span class="op">=</span> m(train_xs_trigram, targets<span class="op">=</span>train_ys_trigram)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>m.zero_grad()</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor(4.5851, grad_fn=&lt;AddBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="cell-29" class="cell" data-execution_count="435">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-30" class="cell" data-execution_count="436">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>m.update(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-31" class="cell" data-execution_count="414">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="414">
+<pre><code>tensor(3.5196, grad_fn=&lt;NegBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="cell-32" class="cell" data-execution_count="404">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>probs, loss <span class="op">=</span> m(train_xs_trigram, targets<span class="op">=</span>train_ys_trigram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-33" class="cell" data-execution_count="407">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>loss.data.item()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="407">
+<pre><code>3.7461421489715576</code></pre>
+</div>
+</div>
+<div id="cell-34" class="cell" data-execution_count="472">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> reg <span class="kw">in</span> [<span class="fl">1e-3</span>]: <span class="co">#[0, 1e-10, 1e-5, 1e-3]:</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> Model(reg_weight<span class="op">=</span>reg)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>        probs, loss <span class="op">=</span> m(train_xs_trigram, targets<span class="op">=</span>train_ys_trigram)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>        _, val_loss <span class="op">=</span> m(val_xs_trigram, targets<span class="op">=</span>val_ys_trigram)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>        _, test_loss <span class="op">=</span> m(test_xs_trigram, targets<span class="op">=</span>test_ys_trigram)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(i, f"{loss.data.item()=:.4f}, {val_loss.data.item()=:.4f}")</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>        m.zero_grad()</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>        m.update(<span class="dv">20</span>)</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>reg<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>, <span class="ss">f"</span><span class="sc">{</span>loss<span class="sc">.</span>data<span class="sc">.</span>item()<span class="op">=</span><span class="sc">:.4f}</span><span class="ss">"</span>, <span class="ss">f"</span><span class="sc">{</span>val_loss<span class="sc">.</span>data<span class="sc">.</span>item()<span class="op">=</span><span class="sc">:.4f}</span><span class="ss">"</span>, <span class="ss">f"</span><span class="sc">{</span>test_loss<span class="sc">.</span>data<span class="sc">.</span>item()<span class="op">=</span><span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>reg=0.001 loss.data.item()=2.6747 val_loss.data.item()=2.8234 test_loss.data.item()=2.8281</code></pre>
+</div>
+</div>
+<div id="cell-35" class="cell" data-execution_count="547">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>generate_name(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="547">
+<pre><code>'daca'</code></pre>
+</div>
+</div>
+<p>E04: we saw that our 1-hot vectors merely select a row of W, so producing these vectors explicitly feels wasteful. Can you delete our use of F.one_hot in favor of simply indexing into rows of W?</p>
+<p>E05: look up and use F.cross_entropy instead. You should achieve the same result. Can you think of why we’d prefer to use F.cross_entropy instead?</p>
+<p>E06: meta-exercise! Think of a fun/interesting exercise and complete it.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="sam-watts/blog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
