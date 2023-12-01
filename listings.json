@@ -1,5 +1,16 @@
 [
   {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/karpathy-zero-to-hero/makemore_2_mlp.html",
+      "/notes/karpathy-zero-to-hero/makemore_1_bigrams.html",
+      "/notes/karpathy-zero-to-hero/makemore_part4_backprop.html",
+      "/notes/karpathy-zero-to-hero/makemore_5_wavenet.html",
+      "/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html",
+      "/notes/karpathy-zero-to-hero/makemore_3_act_init_bn.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/google-timeline-emissions/index.html",
@@ -8,17 +19,6 @@
       "/posts/dockerized-debugging-ml/index.html",
       "/posts/futoshiki-semantic-seg/index.html",
       "/posts/solving-futoshiki-puzzles/index.html"
-    ]
-  },
-  {
-    "listing": "/notes.html",
-    "items": [
-      "/notes/karpathy-zero-to-hero/makemore_part4_backprop.html",
-      "/notes/karpathy-zero-to-hero/makemore_2_mlp.html",
-      "/notes/karpathy-zero-to-hero/makemore_1_bigrams.html",
-      "/notes/karpathy-zero-to-hero/makemore_5_wavenet.html",
-      "/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html",
-      "/notes/karpathy-zero-to-hero/makemore_3_act_init_bn.html"
     ]
   }
 ]
