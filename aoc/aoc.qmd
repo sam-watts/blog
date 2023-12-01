@@ -1,0 +1,72 @@
+---
+toc: true
+description: Advent of Code 2023 Solutions in Python
+categories: [python]
+title: 🎄
+date: "2023-12-01"
+  
+jupyter: python3
+code-line-numbers: true
+highlight-style: github
+---
+
+## 1
+Quite challenging for a day 1! Learned some new regex for part 2 which was fun - positive lookahead `?=...` essentially means you can extract overlapping matches
+
+::: {.column-page}
+```{python}
+with open("aoc/1/input.txt", "r") as f:
+    inp = f.readlines()
+
+ONE_TO_NINE = list(map(str, list(range(1, 10))))
+
+
+def extract_first_num(a):
+    for char in a:
+        if char in ONE_TO_NINE:
+            return char
+
+
+total = 0
+for row in inp:
+    total += int(extract_first_num(row) + extract_first_num(row[::-1]))
+
+print("Part 1 answer:")
+print(total)
+
+import re
+
+
+def convert_num(x):
+    num_map = dict(
+        zip(
+            ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"],
+            ONE_TO_NINE,
+        )
+    )
+
+    if x.isnumeric():
+        return x
+    else:
+        return num_map[x]
+
+
+total = 0
+for row in inp:
+    cap = re.findall(r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))", row)
+    total += int(convert_num(cap[0]) + convert_num(cap[-1]))
+
+
+print("Part 2 answer:")
+print(total)
+
+```
+:::
+## 2
+
+
+::: {.column-page}
+```{python}
+
+```
+:::

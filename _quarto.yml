@@ -11,6 +11,7 @@ website:
       - about.qmd
       - index.qmd
       - notes.qmd
+      - aoc/aoc.qmd
       - icon: github
         href: https://github.com/sam-watts
 
