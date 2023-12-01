@@ -1,0 +1,11 @@
+{
+  "hash": "f2153629741ffdb224d17506ac1334cc",
+  "result": {
+    "markdown": "---\ntoc: true\ndescription: Advent of Code 2023 Solutions in Python\ncategories:\n  - python\ntitle: \"\\U0001F384\"\ndate: '2023-12-01'\ncode-line-numbers: true\nhighlight-style: github\n---\n\n## 1\nQuite challenging for a day 1! Learned some new regex for part 2 which was fun - positive lookahead `?=...` essentially means you can extract overlapping matches\n\n::: {.column-page}\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nwith open(\"aoc/1/input.txt\", \"r\") as f:\n    inp = f.readlines()\n\nONE_TO_NINE = list(map(str, list(range(1, 10))))\n\n\ndef extract_first_num(a):\n    for char in a:\n        if char in ONE_TO_NINE:\n            return char\n\n\ntotal = 0\nfor row in inp:\n    total += int(extract_first_num(row) + extract_first_num(row[::-1]))\n\nprint(\"Part 1 answer:\")\nprint(total)\n\nimport re\n\n\ndef convert_num(x):\n    num_map = dict(\n        zip(\n            [\"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"],\n            ONE_TO_NINE,\n        )\n    )\n\n    if x.isnumeric():\n        return x\n    else:\n        return num_map[x]\n\n\ntotal = 0\nfor row in inp:\n    cap = re.findall(r\"(?=(\\d|one|two|three|four|five|six|seven|eight|nine))\", row)\n    total += int(convert_num(cap[0]) + convert_num(cap[-1]))\n\n\nprint(\"Part 2 answer:\")\nprint(total)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nPart 1 answer:\n54951\nPart 2 answer:\n55218\n```\n:::\n:::\n\n\n:::\n## 2\n\n\n::: {.column-page}\n\n:::\n\n",
+    "supporting": [
+      "aoc_files/figure-html"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
