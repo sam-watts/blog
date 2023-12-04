@@ -63,10 +63,200 @@ print(total)
 ```
 :::
 ## 2
-
+Feel like this should have been day one 😄
 
 ::: {.column-page}
 ```{python}
+with open("aoc/2/input.txt", "r") as f:
+    inp = f.readlines()
+    
+total = 0
+    
+for row in inp:
+    index, game = row.split(":")
+    index = int(index.replace("Game ", ""))
+    possible = True
+    
+    for game in game.split(";"):
+        bag_one = dict(
+            red=12,
+            green=13,
+            blue=14,
+        )
+        
+        for colours in game.split(","):
+            num, color = colours.strip().split(" ")
+            if int(num) > bag_one[color]:
+                possible = False
+                
+    if possible:
+        total += index
+                
+print("Part 1 answer:")
+print(total)
 
+import math
+
+total = 0
+
+for row in inp:
+    index, game = row.split(":")
+    index = int(index.replace("Game ", ""))
+    bag_max = dict(
+            red=0,
+            green=0,
+            blue=0,
+        )
+    for game in game.split(";"):   
+        for colours in game.split(","):
+            num, color = colours.strip().split(" ")
+            if int(num) > bag_max[color]:
+                bag_max[color] = int(num)
+                
+    total += math.prod(bag_max.values())
+    
+print("Part 2 answer:")
+print(total)
+```
+:::
+## 3
+I don't like grids 🫠 I probably made this harder than it needed to be. If I were to do this again I probably would have just used euclidian distance comparisons
+
+::: {.column-page}
+```{python}
+import re
+from collections import defaultdict
+from itertools import product
+
+with open("aoc/3/input.txt", "r") as f:
+    inp = f.readlines()
+    
+# examine all unique chars to populate regex pattern and SYMBOLS set
+# print(set(y for x in inp for y in x))
+    
+total = 0
+SYMBOLS = {"*", "#", "$", "+", "-", "%", "=", "/", "&", "@"}
+p = re.compile("\d+|\*|#|\$|\+|-|%|=|\/|&|@")
+
+grid = []
+syms = []
+
+def poss_neighbours(i: int, j: tuple):
+    i_s = list(filter(lambda x: x >= 0, [i, i-1, i+1]))
+    j_s = list(filter(lambda x: x >=0 and x < len(inp[0]), [*j, j[0]-1, j[-1]+1]))
+    
+    for out_i in i_s:
+        for out_j in j_s:
+            if out_i == i and out_j in j:
+                continue
+            
+            yield out_i, out_j
+
+assert set(poss_neighbours(0, (0,))) == {(1,0), (1,1), (0,1)}
+    
+# construct the data structures for iterating over numbers and symbols
+for i, row in enumerate(inp):
+    for m in p.finditer(row):
+        group = m.group()
+        js = tuple(range(*m.span()))
+        out = (group, i, js)
+        
+        if m.group() in SYMBOLS:
+            syms.append(
+                (group, i, js[0])
+            )
+        else:
+            grid.append(
+                (int(group), i, js)
+            )        
+            
+# part 1 logic
+for num, i, js in grid:
+    poss = list(poss_neighbours(i, js))
+    
+    for _, sym_i, sym_j in syms:
+        if (sym_i, sym_j) in poss:
+            total += num
+
+print("Part 1 answer:")
+print(total)
+
+import math
+total = 0
+
+# part 2 logic
+for sym, i, j in syms:
+    if sym == "*":
+        poss = list(poss_neighbours(i, (j, )))
+        
+        adj = set()
+        for num, num_i, num_js in grid:
+            for num_j in num_js:
+                if (num_i, num_j) in poss:
+                    adj.add(num)
+                
+        if len(adj) == 2:
+            total += math.prod(adj)
+
+print("Part 2 answer:")
+print(total)
+```
+:::
+## 4
+Enjoyed the logic for the second part with the copies. I'm sure there was potential to go on a wild goose chase with recursion here, so I'm happy to have avoided the temptation 🤣
+
+::: {.column-page}
+```{python}
+with open("aoc/4/input.txt", "r") as f:
+    inp = f.readlines()
+    
+total = 0
+
+# part 1 logic
+for row in inp:
+    index, rest = row.split(":")
+    
+    win, play = rest.split("|")
+    win = list(filter(lambda x: x.isnumeric(), win.strip().split(" ")))
+    play = list(filter(lambda x: x.isnumeric(), play.strip().split(" ")))
+    score = 0
+    
+    
+    for num in win:
+        if num in play:
+            score += 1
+            
+    if score > 0:
+        total += 2 ** (score - 1)
+        
+
+print("Part 1 answer:")
+print(total)
+
+total = 0
+copies = {}
+
+# part 2 logic
+for row in inp:
+    index, rest = row.split(":")
+    index = int(index.split("d")[1].strip())
+    
+    win, play = rest.split("|")
+    win = list(filter(lambda x: x.isnumeric(), win.strip().split(" ")))
+    play = list(filter(lambda x: x.isnumeric(), play.strip().split(" ")))
+    score = 0
+        
+    for num in win:
+        if num in play:
+            score += 1
+            
+    for x in range(index+1, index+score+1):
+        copies[x] = copies.get(x, 0) + copies.get(index, 0) + 1
+        
+    total += copies.get(index, 0) + 1
+    
+
+print("Part 2 answer:")
+print(total)
 ```
 :::
