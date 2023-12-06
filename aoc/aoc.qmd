@@ -260,3 +260,140 @@ print("Part 2 answer:")
 print(total)
 ```
 :::
+## 5
+Stuck on part 2 for now...
+
+::: {.column-page}
+```{python}
+from collections import OrderedDict
+from typing import Any
+
+with open("aoc/5/input.txt", "r") as f:
+    inp = f.readlines()
+    
+
+# create maps
+seeds = list(map(int, inp.pop(0).replace("seeds: ", "").strip().split(" ")))
+maps = OrderedDict()
+
+class Mapper:
+    def __init__(self, dest, source, rng):
+        self.dest = dest
+        self.source = source
+        self.rng = rng
+        
+    def check(self, x):
+        return self.source <= x < (self.source + self.rng)
+    
+    def __call__(self, x) -> Any:
+        return x + (self.dest - self.source)
+    
+    def __repr__(self):
+        return f"{self.dest=}|{self.source=}|{self.rng=}"
+
+
+for line in inp:
+    if line == "\n":
+        continue
+    
+    if "map" in line:
+        map_name = line.replace("\n", "").replace(" map:", "")
+    
+    else:
+        dest, source, rng = map(int, line.replace("\n", "").split(" "))
+         
+        maps.setdefault(map_name, []).append(
+            Mapper(dest, source, rng)
+        )
+        
+locations = []
+    
+for x in seeds:
+    print("seed:", x)
+    for k in maps.keys():
+        current_map = maps[k]
+        
+        for f in current_map:
+            if f.check(x):
+                x = f(x)
+                break
+                    
+    locations.append(x)
+    
+print("Part 1 answer:")
+print(min(locations))
+
+
+# This is incredibly slow as too many ints to check!
+# Need to try another approach using ranges!
+# locations = []
+    
+# for z, y in zip(seeds[::2], seeds[1::2]):
+#     for x in range(z, z+y):
+#         # print("seed:", x)
+#         for k in maps.keys():
+#             current_map = maps[k]
+            
+#             for f in current_map:
+#                 if f.check(x):
+#                     x = f(x)
+#                     break
+                        
+#         locations.append(x)
+
+# print("Part 2 answer:")
+# print(min(locations))
+
+```
+:::
+## 6
+There's definitely a more efficient way of doing part 2, but good enough :)
+
+::: {.column-page}
+```{python}
+import math
+
+with open("aoc/6/input.txt", "r") as f:
+    inp = f.readlines()
+    
+time = map(int, filter(lambda x: x.isnumeric(), inp[0].replace("Time:", "").strip().split(" ")))
+dist = map(int, filter(lambda x: x.isnumeric(), inp[1].replace("Distance:", "").strip().split(" ")))
+totals = []
+
+for t, d_record in zip(time, dist):
+    total = 0
+    for i in range(t):
+        v = i
+        d = v * (t - i)
+        
+        if d > d_record:
+            total += 1
+        
+    totals.append(total)
+    
+print("Part 1 answer:")
+print(math.prod(totals))
+
+
+time = int(inp[0].replace("Time:", "").replace(" ", ""))
+dist = int(inp[1].replace("Distance:", "").replace(" ", ""))
+totals = []
+
+t = time
+d_record = dist
+
+total = 0
+for i in range(t):
+    v = i
+    d = v * (t - i)
+    
+    if d > d_record:
+        total += 1
+    
+totals.append(total)
+
+print("Part 2 answer:")
+print(math.prod(totals))
+
+```
+:::

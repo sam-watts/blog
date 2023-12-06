@@ -22,6 +22,8 @@ notes = {
     2: "Feel like this should have been day one 😄",
     3: "I don't like grids 🫠 I probably made this harder than it needed to be. If I were to do this again I probably would have just used euclidian distance comparisons",
     4: "Enjoyed the logic for the second part with the copies. I'm sure there was potential to go on a wild goose chase with recursion here, so I'm happy to have avoided the temptation 🤣",
+    5: "Stuck on part 2 for now...",
+    6: "There's definitely a more efficient way of doing part 2, but good enough :)"
 }
 
 
