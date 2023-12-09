@@ -563,8 +563,9 @@ $$
 
 Where $n$ is the order of the term (constant, x, x^2 etc.) and $\text{diff}_n$ is the
 difference at the correct level in the sequence of inputs. The differencing
-table 
-    
+table is essentially what is constructed in the puzzle explanation. From this
+table, we take the first column of values to use as $diff$.
+
 
 ::: {.column-page}
 ```{python}
