@@ -103,6 +103,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 <meta property="og:title" content="Sam Watts - 🎄">
@@ -169,6 +171,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">4</a></li>
   <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">5</a></li>
   <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">6</a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">7</a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">8</a></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8">9</a></li>
   </ul>
 </nav>
 </nav>
@@ -214,6 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="section" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="section">1</h2>
+<p><a href="https://adventofcode.com/2023/day/1">https://adventofcode.com/2023/day/1</a></p>
 <p>Quite challenging for a day 1! Learned some new regex for part 2 which was fun - positive lookahead <code>?=...</code> essentially means you can extract overlapping matches</p>
 <div class="column-page">
 <div class="cell" data-execution_count="1">
@@ -272,6 +278,7 @@ Part 2 answer:
 </section>
 <section id="section-1" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="section-1">2</h2>
+<p><a href="https://adventofcode.com/2023/day/2">https://adventofcode.com/2023/day/2</a></p>
 <p>Feel like this should have been day one 😄</p>
 <div class="column-page">
 <div class="cell" data-execution_count="2">
@@ -336,6 +343,7 @@ Part 2 answer:
 </section>
 <section id="section-2" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="section-2">3</h2>
+<p><a href="https://adventofcode.com/2023/day/3">https://adventofcode.com/2023/day/3</a></p>
 <p>I don’t like grids 🫠 I probably made this harder than it needed to be. If I were to do this again I probably would have just used euclidian distance comparisons</p>
 <div class="column-page">
 <div class="cell" data-execution_count="3">
@@ -426,6 +434,7 @@ Part 2 answer:
 </section>
 <section id="section-3" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="section-3">4</h2>
+<p><a href="https://adventofcode.com/2023/day/4">https://adventofcode.com/2023/day/4</a></p>
 <p>Enjoyed the logic for the second part with the copies. I’m sure there was potential to go on a wild goose chase with recursion here, so I’m happy to have avoided the temptation 🤣</p>
 <div class="column-page">
 <div class="cell" data-execution_count="4">
@@ -491,6 +500,7 @@ Part 2 answer:
 </section>
 <section id="section-4" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="section-4">5</h2>
+<p><a href="https://adventofcode.com/2023/day/5">https://adventofcode.com/2023/day/5</a></p>
 <p>Stuck on part 2 for now…</p>
 <div class="column-page">
 <div class="cell" data-execution_count="5">
@@ -601,6 +611,7 @@ Part 1 answer:
 </section>
 <section id="section-5" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="section-5">6</h2>
+<p><a href="https://adventofcode.com/2023/day/6">https://adventofcode.com/2023/day/6</a></p>
 <p>There’s definitely a more efficient way of doing part 2, but good enough :)</p>
 <div class="column-page">
 <div class="cell" data-execution_count="6">
@@ -652,6 +663,222 @@ Part 1 answer:
 625968
 Part 2 answer:
 43663323</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="section-6" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section-6">7</h2>
+<p><a href="https://adventofcode.com/2023/day/7">https://adventofcode.com/2023/day/7</a></p>
+<p>Had a solution that I thought made sense but didn’t give the right answer. Went to reddit for inspiration!</p>
+<div class="column-page">
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># credit to https://www.reddit.com/r/adventofcode/comments/18cnzbm/comment/kcc4azi/?utm_source=share&amp;utm_medium=web3x&amp;utm_name=web3xcss&amp;utm_term=1&amp;utm_content=share_button</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"aoc/7/input.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb13-6"><a href="#cb13-6"></a>    inp <span class="op">=</span> f.readlines()</span>
+<span id="cb13-7"><a href="#cb13-7"></a></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="kw">def</span> classify_hand_type(hand: <span class="bu">list</span>[<span class="bu">int</span>]):</span>
+<span id="cb13-9"><a href="#cb13-9"></a>    counts <span class="op">=</span> Counter(hand)</span>
+<span id="cb13-10"><a href="#cb13-10"></a>    count_of_counts <span class="op">=</span> Counter(counts.values())</span>
+<span id="cb13-11"><a href="#cb13-11"></a>    </span>
+<span id="cb13-12"><a href="#cb13-12"></a>    <span class="cf">if</span> count_of_counts.get(<span class="dv">5</span>):</span>
+<span id="cb13-13"><a href="#cb13-13"></a>        <span class="cf">return</span> <span class="dv">6</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a>    </span>
+<span id="cb13-15"><a href="#cb13-15"></a>    <span class="cf">elif</span> count_of_counts.get(<span class="dv">4</span>):</span>
+<span id="cb13-16"><a href="#cb13-16"></a>        <span class="cf">return</span> <span class="dv">5</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a>    </span>
+<span id="cb13-18"><a href="#cb13-18"></a>    <span class="cf">elif</span> count_of_counts.get(<span class="dv">3</span>) <span class="kw">and</span> count_of_counts.get(<span class="dv">2</span>):</span>
+<span id="cb13-19"><a href="#cb13-19"></a>        <span class="cf">return</span> <span class="dv">4</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a>    </span>
+<span id="cb13-21"><a href="#cb13-21"></a>    <span class="cf">elif</span> count_of_counts.get(<span class="dv">3</span>):</span>
+<span id="cb13-22"><a href="#cb13-22"></a>        <span class="cf">return</span> <span class="dv">3</span></span>
+<span id="cb13-23"><a href="#cb13-23"></a>    </span>
+<span id="cb13-24"><a href="#cb13-24"></a>    <span class="cf">elif</span> count_of_counts.get(<span class="dv">2</span>) <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb13-25"><a href="#cb13-25"></a>        <span class="cf">return</span> <span class="dv">2</span></span>
+<span id="cb13-26"><a href="#cb13-26"></a>    </span>
+<span id="cb13-27"><a href="#cb13-27"></a>    <span class="cf">elif</span> count_of_counts.get(<span class="dv">2</span>):</span>
+<span id="cb13-28"><a href="#cb13-28"></a>        <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb13-29"><a href="#cb13-29"></a></span>
+<span id="cb13-30"><a href="#cb13-30"></a>    <span class="cf">else</span>:</span>
+<span id="cb13-31"><a href="#cb13-31"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb13-32"><a href="#cb13-32"></a></span>
+<span id="cb13-33"><a href="#cb13-33"></a><span class="kw">def</span> eval_hand(line, trans):</span>
+<span id="cb13-34"><a href="#cb13-34"></a>    hand, bid <span class="op">=</span> line.split(<span class="st">" "</span>)</span>
+<span id="cb13-35"><a href="#cb13-35"></a>    hand <span class="op">=</span> hand.translate(<span class="bu">str</span>.maketrans(<span class="st">'TJQKA'</span>, trans))</span>
+<span id="cb13-36"><a href="#cb13-36"></a>    top <span class="op">=</span> <span class="bu">max</span>(classify_hand_type(hand.replace(<span class="st">"1"</span>, x)) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">set</span>(hand))</span>
+<span id="cb13-37"><a href="#cb13-37"></a>    </span>
+<span id="cb13-38"><a href="#cb13-38"></a>    <span class="cf">return</span> top, hand, <span class="bu">int</span>(bid)</span>
+<span id="cb13-39"><a href="#cb13-39"></a></span>
+<span id="cb13-40"><a href="#cb13-40"></a><span class="bu">print</span>(<span class="st">"Part 1 answer:"</span>)</span>
+<span id="cb13-41"><a href="#cb13-41"></a><span class="bu">print</span>(</span>
+<span id="cb13-42"><a href="#cb13-42"></a>    <span class="bu">sum</span>(rank <span class="op">*</span> bid <span class="cf">for</span> rank, (<span class="op">*</span>_, bid) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">sorted</span>(<span class="bu">map</span>(<span class="kw">lambda</span> x: eval_hand(x,<span class="st">'ABCDE'</span>), inp)), start<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb13-43"><a href="#cb13-43"></a>)</span>
+<span id="cb13-44"><a href="#cb13-44"></a></span>
+<span id="cb13-45"><a href="#cb13-45"></a><span class="bu">print</span>(<span class="st">"Part 2 answer:"</span>)</span>
+<span id="cb13-46"><a href="#cb13-46"></a><span class="bu">print</span>(</span>
+<span id="cb13-47"><a href="#cb13-47"></a>    <span class="bu">sum</span>(rank <span class="op">*</span> bid <span class="cf">for</span> rank, (<span class="op">*</span>_, bid) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">sorted</span>(<span class="bu">map</span>(<span class="kw">lambda</span> x: eval_hand(x,<span class="st">'A1CDE'</span>), inp)), start<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb13-48"><a href="#cb13-48"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Part 1 answer:
+254024898
+Part 2 answer:
+254115617</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="section-7" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section-7">8</h2>
+<p><a href="https://adventofcode.com/2023/day/8">https://adventofcode.com/2023/day/8</a></p>
+<p>Tried to do part 2 a silly way at first - I didn’t realise that all z visits happen on the same cycle for a given starting point!</p>
+<div class="column-page">
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"aoc/8/input.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb15-2"><a href="#cb15-2"></a>    inp <span class="op">=</span> f.readlines()</span>
+<span id="cb15-3"><a href="#cb15-3"></a>    </span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="kw">class</span> Node:</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, left, right):</span>
+<span id="cb15-7"><a href="#cb15-7"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb15-8"><a href="#cb15-8"></a>        <span class="va">self</span>.L <span class="op">=</span> left</span>
+<span id="cb15-9"><a href="#cb15-9"></a>        <span class="va">self</span>.R <span class="op">=</span> right </span>
+<span id="cb15-10"><a href="#cb15-10"></a>    </span>
+<span id="cb15-11"><a href="#cb15-11"></a>    <span class="kw">def</span> transition(<span class="va">self</span>, direction):</span>
+<span id="cb15-12"><a href="#cb15-12"></a>        <span class="cf">return</span> <span class="bu">getattr</span>(<span class="va">self</span>, direction)   </span>
+<span id="cb15-13"><a href="#cb15-13"></a></span>
+<span id="cb15-14"><a href="#cb15-14"></a>total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a></span>
+<span id="cb15-16"><a href="#cb15-16"></a>ins <span class="op">=</span> inp[<span class="dv">0</span>].replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">""</span>)</span>
+<span id="cb15-17"><a href="#cb15-17"></a>all_nodes <span class="op">=</span> []</span>
+<span id="cb15-18"><a href="#cb15-18"></a></span>
+<span id="cb15-19"><a href="#cb15-19"></a><span class="cf">for</span> row <span class="kw">in</span> inp[<span class="dv">2</span>:]:</span>
+<span id="cb15-20"><a href="#cb15-20"></a>    start, rest <span class="op">=</span> row.split(<span class="st">"="</span>)</span>
+<span id="cb15-21"><a href="#cb15-21"></a>    start <span class="op">=</span> start.strip()</span>
+<span id="cb15-22"><a href="#cb15-22"></a>    </span>
+<span id="cb15-23"><a href="#cb15-23"></a>    left, right <span class="op">=</span> rest.split(<span class="st">","</span>)</span>
+<span id="cb15-24"><a href="#cb15-24"></a>    left <span class="op">=</span> left.replace(<span class="st">"("</span>,<span class="st">""</span>).strip()</span>
+<span id="cb15-25"><a href="#cb15-25"></a>    right <span class="op">=</span> right.replace(<span class="st">")"</span>, <span class="st">""</span>).strip()</span>
+<span id="cb15-26"><a href="#cb15-26"></a>    </span>
+<span id="cb15-27"><a href="#cb15-27"></a>    all_nodes.append(</span>
+<span id="cb15-28"><a href="#cb15-28"></a>        Node(start, left, right)</span>
+<span id="cb15-29"><a href="#cb15-29"></a>    )</span>
+<span id="cb15-30"><a href="#cb15-30"></a>    </span>
+<span id="cb15-31"><a href="#cb15-31"></a>current_node <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> all_nodes <span class="cf">if</span> x.name <span class="op">==</span> <span class="st">"AAA"</span>][<span class="dv">0</span>]</span>
+<span id="cb15-32"><a href="#cb15-32"></a>i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-33"><a href="#cb15-33"></a></span>
+<span id="cb15-34"><a href="#cb15-34"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb15-35"><a href="#cb15-35"></a>    direction <span class="op">=</span> ins[i <span class="op">%</span> <span class="bu">len</span>(ins)]</span>
+<span id="cb15-36"><a href="#cb15-36"></a>    </span>
+<span id="cb15-37"><a href="#cb15-37"></a>    current_node <span class="op">=</span> [</span>
+<span id="cb15-38"><a href="#cb15-38"></a>        x <span class="cf">for</span> x <span class="kw">in</span> all_nodes <span class="cf">if</span> x.name <span class="op">==</span> current_node.transition(direction)</span>
+<span id="cb15-39"><a href="#cb15-39"></a>    ][<span class="dv">0</span>]</span>
+<span id="cb15-40"><a href="#cb15-40"></a>    </span>
+<span id="cb15-41"><a href="#cb15-41"></a>    i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb15-42"><a href="#cb15-42"></a>    </span>
+<span id="cb15-43"><a href="#cb15-43"></a>    <span class="cf">if</span> current_node.name <span class="op">==</span> <span class="st">"ZZZ"</span>:</span>
+<span id="cb15-44"><a href="#cb15-44"></a>        <span class="cf">break</span></span>
+<span id="cb15-45"><a href="#cb15-45"></a>    </span>
+<span id="cb15-46"><a href="#cb15-46"></a>total <span class="op">=</span> i</span>
+<span id="cb15-47"><a href="#cb15-47"></a></span>
+<span id="cb15-48"><a href="#cb15-48"></a><span class="bu">print</span>(<span class="st">"Part 1 answer:"</span>)</span>
+<span id="cb15-49"><a href="#cb15-49"></a><span class="bu">print</span>(total)</span>
+<span id="cb15-50"><a href="#cb15-50"></a> </span>
+<span id="cb15-51"><a href="#cb15-51"></a>current_nodes <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> all_nodes <span class="cf">if</span> x.name[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="st">"A"</span>]</span>
+<span id="cb15-52"><a href="#cb15-52"></a>totals <span class="op">=</span> []</span>
+<span id="cb15-53"><a href="#cb15-53"></a></span>
+<span id="cb15-54"><a href="#cb15-54"></a><span class="cf">for</span> current_node <span class="kw">in</span> current_nodes:</span>
+<span id="cb15-55"><a href="#cb15-55"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-56"><a href="#cb15-56"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb15-57"><a href="#cb15-57"></a>        direction <span class="op">=</span> ins[i <span class="op">%</span> <span class="bu">len</span>(ins)]</span>
+<span id="cb15-58"><a href="#cb15-58"></a></span>
+<span id="cb15-59"><a href="#cb15-59"></a>        current_node <span class="op">=</span> [</span>
+<span id="cb15-60"><a href="#cb15-60"></a>            x <span class="cf">for</span> x <span class="kw">in</span> all_nodes <span class="cf">if</span> x.name <span class="op">==</span> current_node.transition(direction)</span>
+<span id="cb15-61"><a href="#cb15-61"></a>        ][<span class="dv">0</span>]</span>
+<span id="cb15-62"><a href="#cb15-62"></a>        </span>
+<span id="cb15-63"><a href="#cb15-63"></a>        i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb15-64"><a href="#cb15-64"></a>        </span>
+<span id="cb15-65"><a href="#cb15-65"></a>        <span class="cf">if</span> current_node.name[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="st">"Z"</span>:</span>
+<span id="cb15-66"><a href="#cb15-66"></a>            totals.append(i)</span>
+<span id="cb15-67"><a href="#cb15-67"></a>            <span class="cf">break</span></span>
+<span id="cb15-68"><a href="#cb15-68"></a>    </span>
+<span id="cb15-69"><a href="#cb15-69"></a><span class="im">import</span> math</span>
+<span id="cb15-70"><a href="#cb15-70"></a></span>
+<span id="cb15-71"><a href="#cb15-71"></a><span class="bu">print</span>(<span class="st">"Part 2 answer:"</span>)</span>
+<span id="cb15-72"><a href="#cb15-72"></a><span class="bu">print</span>(math.lcm(<span class="op">*</span>totals))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Part 1 answer:
+18023
+Part 2 answer:
+14449445933179</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="section-8" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="section-8">9</h2>
+<p><a href="https://adventofcode.com/2023/day/9">https://adventofcode.com/2023/day/9</a></p>
+<p>Learned about Lagrangian Interpolation which was …fun? In a slightly-too-small-nutshell, we can construct a summation of polynomials, where each term goes to zero when its corresponding x value is inputted to the function. Each term will be in the form:</p>
+<p><span class="math display">\[
+\frac{\text{diff}_n}{n!}\prod_{i=1}^{n}(x - i)
+\]</span></p>
+<p>Where <span class="math inline">\(n\)</span> is the order of the term (constant, x, x^2 etc.) and <span class="math inline">\(\text{diff}_n\)</span> is the difference at the correct level in the sequence of inputs. The differencing table</p>
+<div class="column-page">
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="im">import</span> math</span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"aoc/9/input.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    inp <span class="op">=</span> f.readlines()</span>
+<span id="cb17-5"><a href="#cb17-5"></a>    </span>
+<span id="cb17-6"><a href="#cb17-6"></a>total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="kw">def</span> calculate_next(diff_col, x):</span>
+<span id="cb17-9"><a href="#cb17-9"></a>    n <span class="op">=</span> <span class="bu">len</span>(diff_col)</span>
+<span id="cb17-10"><a href="#cb17-10"></a>    total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>    <span class="cf">for</span> i, diff <span class="kw">in</span> <span class="bu">zip</span>(<span class="bu">range</span>(n), diff_col):</span>
+<span id="cb17-12"><a href="#cb17-12"></a>        total <span class="op">+=</span> diff <span class="op">/</span> math.factorial(i) <span class="op">*</span> math.prod(x <span class="op">-</span> ns <span class="cf">for</span> ns <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,i<span class="op">+</span><span class="dv">1</span>))</span>
+<span id="cb17-13"><a href="#cb17-13"></a>        </span>
+<span id="cb17-14"><a href="#cb17-14"></a>    <span class="cf">return</span> total</span>
+<span id="cb17-15"><a href="#cb17-15"></a>    </span>
+<span id="cb17-16"><a href="#cb17-16"></a>outputs <span class="op">=</span> []</span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="cf">for</span> row <span class="kw">in</span> inp:</span>
+<span id="cb17-18"><a href="#cb17-18"></a>    seq <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">int</span>, row.split(<span class="st">" "</span>)))</span>
+<span id="cb17-19"><a href="#cb17-19"></a>    diffs <span class="op">=</span> [seq]</span>
+<span id="cb17-20"><a href="#cb17-20"></a>    </span>
+<span id="cb17-21"><a href="#cb17-21"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb17-22"><a href="#cb17-22"></a>        diffs.append([y <span class="op">-</span> x <span class="cf">for</span> x,y <span class="kw">in</span> <span class="bu">zip</span>(diffs[<span class="op">-</span><span class="dv">1</span>], diffs[<span class="op">-</span><span class="dv">1</span>][<span class="dv">1</span>:])])</span>
+<span id="cb17-23"><a href="#cb17-23"></a>        </span>
+<span id="cb17-24"><a href="#cb17-24"></a>        <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>(diffs[<span class="op">-</span><span class="dv">1</span>])) <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb17-25"><a href="#cb17-25"></a>            <span class="cf">break</span></span>
+<span id="cb17-26"><a href="#cb17-26"></a>                </span>
+<span id="cb17-27"><a href="#cb17-27"></a>    outputs.append(calculate_next([x[<span class="dv">0</span>] <span class="cf">for</span> x <span class="kw">in</span> diffs], <span class="bu">len</span>(seq) <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb17-28"><a href="#cb17-28"></a>    </span>
+<span id="cb17-29"><a href="#cb17-29"></a>    </span>
+<span id="cb17-30"><a href="#cb17-30"></a><span class="bu">print</span>(<span class="st">"Part 1 answer:"</span>)</span>
+<span id="cb17-31"><a href="#cb17-31"></a><span class="bu">print</span>(<span class="bu">int</span>(<span class="bu">sum</span>(outputs)))</span>
+<span id="cb17-32"><a href="#cb17-32"></a></span>
+<span id="cb17-33"><a href="#cb17-33"></a>outputs <span class="op">=</span> []</span>
+<span id="cb17-34"><a href="#cb17-34"></a><span class="cf">for</span> row <span class="kw">in</span> inp:</span>
+<span id="cb17-35"><a href="#cb17-35"></a>    seq <span class="op">=</span> <span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">int</span>, row.split(<span class="st">" "</span>)))</span>
+<span id="cb17-36"><a href="#cb17-36"></a>    diffs <span class="op">=</span> [seq]</span>
+<span id="cb17-37"><a href="#cb17-37"></a>    </span>
+<span id="cb17-38"><a href="#cb17-38"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb17-39"><a href="#cb17-39"></a>        diffs.append([y <span class="op">-</span> x <span class="cf">for</span> x,y <span class="kw">in</span> <span class="bu">zip</span>(diffs[<span class="op">-</span><span class="dv">1</span>], diffs[<span class="op">-</span><span class="dv">1</span>][<span class="dv">1</span>:])])</span>
+<span id="cb17-40"><a href="#cb17-40"></a>        </span>
+<span id="cb17-41"><a href="#cb17-41"></a>        <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>(diffs[<span class="op">-</span><span class="dv">1</span>])) <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb17-42"><a href="#cb17-42"></a>            <span class="cf">break</span></span>
+<span id="cb17-43"><a href="#cb17-43"></a>                </span>
+<span id="cb17-44"><a href="#cb17-44"></a>    outputs.append(calculate_next([x[<span class="dv">0</span>] <span class="cf">for</span> x <span class="kw">in</span> diffs], <span class="dv">0</span>))</span>
+<span id="cb17-45"><a href="#cb17-45"></a></span>
+<span id="cb17-46"><a href="#cb17-46"></a><span class="bu">print</span>(<span class="st">"Part 2 answer:"</span>)</span>
+<span id="cb17-47"><a href="#cb17-47"></a><span class="bu">print</span>(<span class="bu">int</span>(<span class="bu">sum</span>(outputs)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Part 1 answer:
+1861775706
+Part 2 answer:
+1082</code></pre>
 </div>
 </div>
 </div>

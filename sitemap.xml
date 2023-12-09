@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sam-watts.github.io/blog/notes.html</loc>
-    <lastmod>2023-12-06T14:53:10.812Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/posts/recsys-2022-highlights/index.html</loc>
-    <lastmod>2023-12-06T14:53:10.956Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/posts/dockerized-debugging-ml/index.html</loc>
-    <lastmod>2023-12-06T14:53:10.824Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/about.html</loc>
-    <lastmod>2023-12-06T14:53:10.812Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/index.html</loc>
-    <lastmod>2023-12-06T14:53:10.812Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_1_bigrams.html</loc>
-    <lastmod>2023-12-06T14:53:10.816Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_5_wavenet.html</loc>
-    <lastmod>2023-12-06T14:53:10.820Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_3_act_init_bn.html</loc>
-    <lastmod>2023-12-06T14:53:10.820Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html</loc>
-    <lastmod>2023-12-06T14:53:10.820Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_2_mlp.html</loc>
-    <lastmod>2023-12-06T14:53:10.816Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_part4_backprop.html</loc>
-    <lastmod>2023-12-06T14:53:10.820Z</lastmod>
-  </url>
-  <url>
     <loc>https://sam-watts.github.io/blog/aoc/aoc.html</loc>
-    <lastmod>2023-12-06T14:53:10.812Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/posts/futoshiki-semantic-seg/index.html</loc>
-    <lastmod>2023-12-06T14:53:10.880Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sam-watts.github.io/blog/posts/google-timeline-emissions/index.html</loc>
-    <lastmod>2023-12-06T14:53:10.956Z</lastmod>
+    <lastmod>2023-12-09T14:54:10.208Z</lastmod>
   </url>
   <url>
     <loc>https://sam-watts.github.io/blog/posts/tgtg-meetup-talk/index.html</loc>
-    <lastmod>2023-12-06T14:53:10.972Z</lastmod>
+    <lastmod>2023-12-09T14:54:10.368Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/posts/google-timeline-emissions/index.html</loc>
+    <lastmod>2023-12-09T14:54:10.352Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/posts/dockerized-debugging-ml/index.html</loc>
+    <lastmod>2023-12-09T14:54:10.220Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_4_backprop_ninja.html</loc>
+    <lastmod>2023-12-09T14:54:10.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_2_mlp.html</loc>
+    <lastmod>2023-12-09T14:54:10.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_5_wavenet.html</loc>
+    <lastmod>2023-12-09T14:54:10.216Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/about.html</loc>
+    <lastmod>2023-12-09T14:54:10.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/notes.html</loc>
+    <lastmod>2023-12-09T14:54:10.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/index.html</loc>
+    <lastmod>2023-12-09T14:54:10.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_3_act_init_bn.html</loc>
+    <lastmod>2023-12-09T14:54:10.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_part4_backprop.html</loc>
+    <lastmod>2023-12-09T14:54:10.216Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/notes/karpathy-zero-to-hero/makemore_1_bigrams.html</loc>
+    <lastmod>2023-12-09T14:54:10.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/posts/recsys-2022-highlights/index.html</loc>
+    <lastmod>2023-12-09T14:54:10.352Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sam-watts.github.io/blog/posts/futoshiki-semantic-seg/index.html</loc>
+    <lastmod>2023-12-09T14:54:10.276Z</lastmod>
   </url>
   <url>
     <loc>https://sam-watts.github.io/blog/posts/solving-futoshiki-puzzles/index.html</loc>
-    <lastmod>2023-12-06T14:53:10.964Z</lastmod>
+    <lastmod>2023-12-09T14:54:10.364Z</lastmod>
   </url>
 </urlset>
