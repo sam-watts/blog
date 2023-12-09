@@ -824,7 +824,7 @@ Part 2 answer:
 <p><span class="math display">\[
 \frac{\text{diff}_n}{n!}\prod_{i=1}^{n}(x - i)
 \]</span></p>
-<p>Where <span class="math inline">\(n\)</span> is the order of the term (constant, x, x^2 etc.) and <span class="math inline">\(\text{diff}_n\)</span> is the difference at the correct level in the sequence of inputs. The differencing table</p>
+<p>Where <span class="math inline">\(n\)</span> is the order of the term (constant, x, x^2 etc.) and <span class="math inline">\(\text{diff}_n\)</span> is the difference at the correct level in the sequence of inputs. The differencing table is essentially what is constructed in the puzzle explanation. From this table, we take the first column of values to use as <span class="math inline">\(diff\)</span>.</p>
 <div class="column-page">
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="im">import</span> math</span>
